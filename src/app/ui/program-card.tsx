@@ -16,9 +16,9 @@ const ProgramCard = () => {
               alt="Organization Logo"
               className="w-6 h-6 rounded-full"
             />
-            <h3 className="ml-2 text-sm font-semibold">Kita Peduli Org</h3>
+            <h3 className="ml-2 text-xs font-medium">Kita Peduli Org</h3>
           </div>
-          <h2 className="text-base font-bold">
+          <h2 className="text-sm font-bold">
             Bersama Raih Masa Depan Negeri yang Gemerlang dengan Beasiswa Cahaya
           </h2>
           <div className="mt-3">
@@ -28,8 +28,8 @@ const ProgramCard = () => {
                 style={{width: "70%"}}
               ></div>
             </div>
-            <p className="mt-2 text-sm text-gray-600">Terkumpul</p>
-            <p className="text-lg font-bold text-green-700">Rp 80.000.000</p>
+            <p className="mt-2 text-xs text-gray-600">Terkumpul</p>
+            <p className="text-md font-bold text-green-700">Rp 80.000.000</p>
           </div>
         </div>
       </div>
