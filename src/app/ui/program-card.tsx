@@ -2,8 +2,8 @@ import React from "react";
 
 const ProgramCard = () => {
   return (
-    <div className="flex-none w-1/2">
-      <div className="bg-white rounded-lg shadow-md overflow-hidden max-w-full mx-auto">
+    <div className="flex-none w-[225px]">
+      <div className="bg-green-50 rounded-lg shadow-md overflow-hidden max-w-full mx-auto">
         <img
           src="https://kitapeduli.id/img/slider/bantuan-peralatan-sekolahh.webp"
           alt="Program Image"
