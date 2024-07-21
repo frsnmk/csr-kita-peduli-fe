@@ -1,14 +1,14 @@
 import React from "react";
 import ProgramCard from "@/app/ui/program-card";
 
-const ListView = () => {
+const GridView = () => {
   return (
     <div className="">
       <div className="flex justify-between p-3">
-        <h1 className="text-md font-bold">Program Unggulan</h1>
+        <h1 className="text-md font-bold">Program</h1>
         <button className="text-sm text-green-700">Lihat semua</button>
       </div>
-      <div className="flex overflow-x-scroll space-x-4 p-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
         <ProgramCard />
         <ProgramCard />
         <ProgramCard />
@@ -20,4 +20,4 @@ const ListView = () => {
   );
 };
 
-export default ListView;
+export default GridView;

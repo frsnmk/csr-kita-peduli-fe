@@ -2,8 +2,7 @@ import type {Metadata} from "next";
 import {Inter} from "next/font/google";
 import "./globals.css";
 import Image from "next/image";
-import Carousel from "./ui/carousel";
-import BottomNav from "./ui/bottom-nav";
+import BottomNav from "@/app/ui/bottom-nav";
 
 const inter = Inter({subsets: ["latin"]});
 
@@ -59,9 +58,6 @@ export default function RootLayout({
                 </svg>
               </button>
             </div>
-          </div>
-          <div>
-            <Carousel />
           </div>
           {children}
           <div className="w-[480px]">

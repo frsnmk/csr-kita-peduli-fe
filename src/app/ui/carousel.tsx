@@ -21,7 +21,7 @@ const Carousel = () => {
     >
       <SwiperSlide>
         <Image
-          src="https://kitapeduli.id/img/slider/Kita%20Peduli%20Foundation.webp"
+          src="/Frame 4.png"
           alt="Slide 1"
           width={800}
           height={400}
@@ -30,7 +30,7 @@ const Carousel = () => {
       </SwiperSlide>
       <SwiperSlide>
         <Image
-          src="https://kitapeduli.id/img/slider/bantuan-peralatan-sekolahh.webp"
+          src="/Frame 5.png"
           alt="Slide 2"
           width={800}
           height={400}
@@ -39,7 +39,7 @@ const Carousel = () => {
       </SwiperSlide>
       <SwiperSlide>
         <Image
-          src="https://kitapeduli.id/img/slider/sedekah-beras.webp"
+          src="/Frame 6.png"
           alt="Slide 3"
           width={800}
           height={400}
