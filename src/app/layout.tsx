@@ -1,10 +1,9 @@
 import type {Metadata} from "next";
-import {Inter} from "next/font/google";
 import "./globals.css";
 import Image from "next/image";
 import BottomNav from "@/app/ui/bottom-nav";
+import { opensans } from "./ui/fonts";
 
-const inter = Inter({subsets: ["latin"]});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,9 +17,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={opensans.className}>
         <main className="my-0 mx-auto min-h-screen max-w-[480px] pb-20">
-          <div className="flex justify-between items-center p-5">
+          <div className="flex justify-between items-center p-5 bg-white">
             <div>
               <Image
                 src="https://kitapeduli.id/img/front/Logo.png"

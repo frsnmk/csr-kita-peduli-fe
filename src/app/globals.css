@@ -10,3 +10,8 @@
   --swiper-navigation-size: 35px !important;
   --swiper-theme-color: #098129 !important;
 }
+
+
+body {
+  background-color: #e5e7eb;
+}
