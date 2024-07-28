@@ -61,7 +61,7 @@ export default async function Page({ params }: { params: { id: string } }) {
         </div>
         {/* Do'a */}
         <div className="bg-white p-4 shadow-sm">
-        <h2 className="text-md font-semibold">Do'a-do'a</h2>
+        <h2 className="text-md font-semibold">Doa-doa</h2>
          <PrayerList />
          <PrayerList />
          <PrayerList />
