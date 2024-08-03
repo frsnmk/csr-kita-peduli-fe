@@ -7,11 +7,11 @@ import React from 'react'
 export default async function Page({ params }: { params: { id: string } }) {
     const id = params.id;
   return (
-    <div className="bg-gray-200 space-y-2">
-        <div>
+    <div className="space-y-2">
+        <div className="rounded-t-lg">
             <Image width={480} height={200} src={'/Frame 4.png'} alt="Banner Image"/>
         </div>
-        <div className="bg-white rounded-sm p-4 space-y-4">
+        <div className="bg-white p-4 space-y-4 shadow-md rounded-lg">
             <h2 className="text-md font-medium">
               Bersama Raih Masa Depan Negeri yang Gemerlang dengan Beasiswa Cahaya
             </h2>
@@ -34,7 +34,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             </div>
         </div>
         {/* Donasi */}
-        <div className="bg-white p-4">
+        <div className="bg-white p-4 rounded-lg shadow-md">
             <h2 className="text-md font-medium">Informasi Penggalang Dana</h2>
             <div className="flex items-center p-4">
                 <div className="w-10 h-10 relative">
@@ -52,7 +52,7 @@ export default async function Page({ params }: { params: { id: string } }) {
                 </div>
             </div>
         </div>
-        <div className="bg-white p-4">
+        <div className="bg-white p-4 rounded-lg shadow-md">
             <h2 className="text-md font-semibold">Donasi <span className="text-green-700 font-bold bg-green-200 p-2 px-3 rounded-xl ml-2 text-sm">200</span></h2>
             <AvatarListView key={1} name="Hamba Allah" amount={200000} timeAgo='1 bulan yang lalu' avatarUrl='https://via.placeholder.com/40' />
             <AvatarListView key={1} name="Hamba Allah" amount={200000} timeAgo='1 bulan yang lalu' avatarUrl='https://via.placeholder.com/40' />
@@ -60,7 +60,7 @@ export default async function Page({ params }: { params: { id: string } }) {
             <AvatarListView key={1} name="Hamba Allah" amount={200000} timeAgo='1 bulan yang lalu' avatarUrl='https://via.placeholder.com/40' />
         </div>
         {/* Do'a */}
-        <div className="bg-white p-4 shadow-sm">
+        <div className="bg-white p-4 rounded-lg shadow-md">
         <h2 className="text-md font-semibold">Doa-doa</h2>
          <PrayerList />
          <PrayerList />

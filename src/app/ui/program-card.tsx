@@ -5,7 +5,7 @@ const ProgramCard = () => {
   return (
     <Link href={`programs/1`}>
       <div className="flex-none w-[225px]">
-        <div className="bg-green-50 rounded-lg shadow-md overflow-hidden max-w-full mx-auto">
+        <div className="rounded-lg shadow-md overflow-hidden max-w-full mx-auto">
           <img
             src="https://kitapeduli.id/img/slider/bantuan-peralatan-sekolahh.webp"
             alt="Program Image"
@@ -20,7 +20,7 @@ const ProgramCard = () => {
               />
               <h3 className="ml-2 text-xs font-medium">Kita Peduli Org</h3>
             </div>
-            <h2 className="text-sm font-bold">
+            <h2 className="text-xs font-semibold truncate-multiline">
               Bersama Raih Masa Depan Negeri yang Gemerlang dengan Beasiswa Cahaya
             </h2>
             <div className="mt-3">
@@ -30,8 +30,8 @@ const ProgramCard = () => {
                   style={{width: "70%"}}
                 ></div>
               </div>
-              <p className="mt-2 text-xs text-gray-600">Terkumpul</p>
-              <p className="text-md font-bold text-green-700">Rp 80.000.000</p>
+              <p className="mt-2 text-[0.70rem] text-gray-600">Terkumpul</p>
+              <p className="text-sm font-bold text-green-700">Rp 80.000.000</p>
             </div>
           </div>
         </div>
