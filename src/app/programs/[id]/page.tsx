@@ -1,4 +1,5 @@
 import { AvatarListView } from '@/app/ui/avatar-list-view';
+import ArrowBackIconButton from '@/app/ui/icon/arrow-back';
 import PrayerList from '@/app/ui/prayer-list-view';
 import Image from 'next/image';
 import React from 'react'
@@ -7,7 +8,8 @@ import React from 'react'
 export default async function Page({ params }: { params: { id: string } }) {
     const id = params.id;
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 relative">
+        <ArrowBackIconButton />
         <div className="rounded-t-lg">
             <Image width={480} height={200} src={'/Frame 4.png'} alt="Banner Image"/>
         </div>
