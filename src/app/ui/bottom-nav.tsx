@@ -11,7 +11,9 @@ import { usePathname } from "next/navigation";
 
 const BottomNav = () => {
   const pathname = usePathname();
+  const isShowed = !pathname.startsWith(`/programs/`) || !pathname.startsWith(`/programs/`);
   return (
+    isShowed && (
     <div className="fixed bottom-0 w-full bg-white shadow-lg max-w-[480px] mx-auto left-0 right-0">
       <div className="flex justify-around items-center py-3">
         <Link href="/" className="flex flex-col items-center justify-center" passHref>
@@ -38,7 +40,7 @@ const BottomNav = () => {
         </div>
       </div>
     </div>
-  );
+  ));
 };
 
 export default BottomNav;
