@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from "react";
+import ArrowBackIconButton from "./icon/arrow-back";
 
 const DonationForm = () => {
     const [selectedPackage, setSelectedPackage] = useState(1);
@@ -33,7 +34,10 @@ const DonationForm = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md mt-10">
+    <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md relative">
+      <ArrowBackIconButton />
+      <br />
+      <br />
       <h1 className="text-lg font-bold mb-4">Pilih Nominal</h1>
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 mb-2">Jumlah Paket</label>
@@ -89,9 +93,11 @@ const DonationForm = () => {
           ))}
         </div>
       </div>
-      <button className="w-full bg-green-700 text-white font-bold p-3 rounded-lg mt-4">
-        Lanjut
-      </button>
+      <div className="fixed bottom-0 w-full bg-white shadow-lg max-w-[480px] mx-auto left-0 right-0 p-4">
+        <button className="w-full bg-green-700 text-white font-bold p-3 rounded-lg mt-4">
+          Lanjut
+        </button>
+      </div>
     </div>
   );
 }
