@@ -2,11 +2,13 @@
 
 import { useState } from "react";
 import ArrowBackIconButton from "./icon/arrow-back";
+import { useRouter } from "next/navigation";
 
 const DonationForm = () => {
-    const [selectedPackage, setSelectedPackage] = useState(1);
+  const [selectedPackage, setSelectedPackage] = useState(1);
   const [customAmount, setCustomAmount] = useState(1000000);
   const [packageCount, setPackageCount] = useState(20);
+  const router = useRouter();
 
   const packages = [
     { label: '2 paket', value: 100000, emoji: '😊' },
@@ -32,6 +34,10 @@ const DonationForm = () => {
       setCustomAmount((packageCount - 1) * 50000);
     }
   };
+
+  const handleSumit = () => {
+    router.push('donation-confirm')
+  }
 
   return (
     <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md relative">
@@ -94,7 +100,7 @@ const DonationForm = () => {
         </div>
       </div>
       <div className="fixed bottom-0 w-full bg-white shadow-lg max-w-[480px] mx-auto left-0 right-0 p-4">
-        <button className="w-full bg-green-700 text-white font-bold p-3 rounded-lg mt-4">
+        <button onClick={handleSumit} className="w-full bg-green-700 text-white font-bold p-3 rounded-lg mt-4">
           Lanjut
         </button>
       </div>
