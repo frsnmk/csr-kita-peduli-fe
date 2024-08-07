@@ -44,59 +44,61 @@ const DonationForm = () => {
       <ArrowBackIconButton />
       <br />
       <br />
-      <h1 className="text-lg font-bold mb-4">Pilih Nominal</h1>
-      <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700 mb-2">Jumlah Paket</label>
-        <div className="flex items-center">
-          <input
-            type="text"
-            value={`Rp ${customAmount.toLocaleString()}`}
-            readOnly
-            className="flex-1 p-2 border rounded-lg text-center bg-gray-100"
-          />
-          <button
-            onClick={handleDecrement}
-            className="p-2 bg-green-200 text-green-700 rounded-l-lg border-l"
-          >
-            -
-          </button>
-          <input
-            type="text"
-            value={packageCount}
-            readOnly
-            className="w-12 p-2 text-center bg-gray-100 border-l border-r"
-          />
-          <button
-            onClick={handleIncrement}
-            className="p-2 bg-green-200 text-green-700 rounded-r-lg border-l"
-          >
-            +
-          </button>
-        </div>
-      </div>
-      <div className="mb-4">
-        <p className="text-sm font-medium text-gray-700 mb-2">Atau Rekomendasi Jumlah Paket</p>
-        <div className="space-y-2">
-          {packages.map((pkg, index) => (
-            <label
-              key={index}
-              className={`flex items-center justify-between p-2 border rounded-lg cursor-pointer ${
-                selectedPackage === index ? 'bg-green-200 border-green-700' : 'bg-gray-100'
-              }`}
+      <div className="space-y-6">
+        <h1 className="text-lg font-bold mb-4">Pilih Nominal</h1>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700 mb-2">Jumlah Paket</label>
+          <div className="flex items-center">
+            <input
+              type="text"
+              value={`Rp ${customAmount.toLocaleString()}`}
+              readOnly
+              className="flex-1 p-2 border rounded-lg text-center bg-gray-100"
+            />
+            <button
+              onClick={handleDecrement}
+              className="p-2 bg-green-200 text-green-700 rounded-l-lg border-l"
             >
-              <span className="text-sm">{pkg.label}</span>
-              <span className="flex items-center text-sm">
-                Rp {pkg.value.toLocaleString()} {pkg.emoji}
-              </span>
-              <input
-                type="radio"
-                name="package"
-                checked={selectedPackage === index}
-                onChange={() => handlePackageChange(index)}
-                className="hidden"
-              />
-            </label>
-          ))}
+              -
+            </button>
+            <input
+              type="text"
+              value={packageCount}
+              readOnly
+              className="w-12 p-2 text-center bg-gray-100 border-l border-r"
+            />
+            <button
+              onClick={handleIncrement}
+              className="p-2 bg-green-200 text-green-700 rounded-r-lg border-l"
+            >
+              +
+            </button>
+          </div>
+        </div>
+        <div className="mb-4 space-y-4">
+          <p className="text-sm font-medium text-gray-700 mb-2">Atau Rekomendasi Jumlah Paket</p>
+          <div className="space-y-2">
+            {packages.map((pkg, index) => (
+              <label
+                key={index}
+                className={`flex items-center justify-between p-2 border rounded-lg cursor-pointer ${
+                  selectedPackage === index ? 'bg-green-200 border-green-700' : 'bg-gray-100'
+                }`}
+              >
+                <span className="text-sm">{pkg.label}</span>
+                <span className="flex items-center text-sm">
+                  Rp {pkg.value.toLocaleString()} {pkg.emoji}
+                </span>
+                <input
+                  type="radio"
+                  name="package"
+                  checked={selectedPackage === index}
+                  onChange={() => handlePackageChange(index)}
+                  className="hidden"
+                />
+              </label>
+            ))}
+          </div>
         </div>
       </div>
       <div className="fixed bottom-0 w-full bg-white shadow-lg max-w-[480px] mx-auto left-0 right-0 p-4">
