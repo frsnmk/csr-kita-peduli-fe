@@ -11,7 +11,7 @@ import { usePathname } from "next/navigation";
 
 const BottomNav = () => {
   const pathname = usePathname();
-  const isShowed = !pathname.startsWith(`/programs/`) || !pathname.startsWith(`/programs/`);
+  const isShowed = !pathname.startsWith(`/programs/`) && !pathname.startsWith(`/histories/`);
   return (
     isShowed && (
     <div className="fixed bottom-0 w-full bg-white shadow-lg max-w-[480px] mx-auto left-0 right-0">
