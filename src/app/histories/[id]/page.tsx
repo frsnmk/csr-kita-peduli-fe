@@ -1,8 +1,7 @@
-import UnpaidDetailHistoryForm from "@/app/ui/histories/unpaid-detail-history-form";
-
+import PaidDetailHistory from "@/app/ui/histories/paid-detail-history";
 
 export default function page() {
   return (
-    <UnpaidDetailHistoryForm/>
+    <PaidDetailHistory/>
   );
   }

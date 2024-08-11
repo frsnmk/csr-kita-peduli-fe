@@ -71,7 +71,7 @@ export default function page() {
             <TabPanel>
             <div className="p-4">
                 {data.map((item, index) => (
-                  <Link href={`histories/1`} key={index}>
+                  <Link href={`histories/1/unpaid`} key={index}>
                     <HistoryCard
                       key={index}
                       title={item.title}
@@ -81,7 +81,7 @@ export default function page() {
                     />
                   </Link>
                 ))}
-                <Link href={`histories/1`}>
+                <Link href={`histories/1/unpaid`}>
                   <HistoryCard
                       key={'index'}
                       title={'Free Palestine'}
