@@ -34,10 +34,12 @@ const BottomNav = () => {
           </div>
           <span className={clsx("text-xs", { 'text-green-700': pathname === '/histories', 'text-gray-700': pathname !== '/histories' })}>Riwayat</span>
         </Link>
-        <div className="flex flex-col items-center">
-          <AccountCircleIcon className="h-6 w-6 text-gray-700" />
-          <span className="text-xs text-gray-700">Akun</span>
-        </div>
+        <Link href="/profiles" className="flex flex-col items-center justify-center" passHref>
+          <div className={clsx("px-4 py-1 rounded-lg", { 'bg-green-200': pathname === '/profiles' })}>
+            <AccountCircleIcon className={clsx("h-6 w-6", { 'text-green-700': pathname === '/profiles', 'text-gray-700': pathname !== '/profiles' })} />
+          </div>
+          <span className={clsx("text-xs", { 'text-green-700': pathname === '/profiles', 'text-gray-700': pathname !== '/profiles' })}>Akun</span>
+        </Link>
       </div>
     </div>
   ));

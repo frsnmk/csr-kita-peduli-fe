@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 
 const AppBar = () => {
     const pathname = usePathname();
-    const isShowed = !pathname.startsWith(`/programs/`) && !pathname.startsWith(`/histories/`) && pathname != '/histories';
+    const isShowed = !pathname.startsWith(`/programs/`) && !pathname.startsWith(`/histories/`) && pathname != '/histories' && pathname != '/profiles';
     return (
         isShowed && (
         <div className="flex justify-between items-center p-5 bg-white">
