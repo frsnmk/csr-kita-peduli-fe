@@ -11,7 +11,7 @@ export const fetchFeaturedProgram = async () : Promise<Program[]> => {
                     search: '',
                     limit:3,
                     page:1,
-                    tag: 'Program Unggulan'
+                    // tag: 'Program Unggulan'
                 }
             }
         );
@@ -34,7 +34,7 @@ export const fetchPrograms = async (search:string='') : Promise<Program[]> => {
                 }
             }
         );
-
+        console.log(response.data.data, ':  root')
         return response.data.data;
     } catch (error) {
         console.error('Failed to fetch programs', error);

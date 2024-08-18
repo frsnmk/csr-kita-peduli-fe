@@ -8,7 +8,7 @@ interface ProgramCardProps {
 }
 
 const ProgramCard = ({ program }: ProgramCardProps) => {
-  console.log(program, 'dari program card')
+  console.log(program.total_donations_amount, 'dari program card')
   return (
     <Link href={`programs/${1}`}>
       <div className="flex-none w-[225px]">
@@ -34,11 +34,11 @@ const ProgramCard = ({ program }: ProgramCardProps) => {
               <div className="h-2 bg-gray-200 rounded-full">
                 <div
                   className="h-2 bg-green-500 rounded-full"
-                  style={{width: `${percentProgress(program.total_donations_amount||0, program.amount_target)}%`}}
+                  style={{width: `${percentProgress(program.total_donations_amount ?? 0, program.amount_target)}%`}}
                 ></div>
               </div>
               <p className="mt-2 text-[0.70rem] text-gray-600">Terkumpul</p>
-              <p className="text-sm font-bold text-green-700">Rp {Number(program.total_donations_amount || 0).toLocaleString('id-ID')}</p>
+              <p className="text-sm font-bold text-green-700">Rp {  (Number(program.total_donations_amount) ?? 0).toLocaleString('id-ID')}</p>
             </div>
           </div>
         </div>
