@@ -1,7 +1,12 @@
 import React from "react";
 import ProgramCard from "@/app/ui/program-card";
+import { Program } from "../lib/types/program";
 
-const ListView = () => {
+interface ListViewProps {
+  data: Program[]
+}
+
+const ListView = ({data}:ListViewProps) => {
   return (
     <div className="">
       <div className="flex justify-between p-3">
@@ -9,12 +14,11 @@ const ListView = () => {
         <button className="text-sm text-green-700">Lihat semua</button>
       </div>
       <div className="flex overflow-x-scroll space-x-4 p-3">
-        <ProgramCard />
-        <ProgramCard />
-        <ProgramCard />
-        <ProgramCard />
-        <ProgramCard />
-        <ProgramCard />
+        {
+          data.map((program) => (
+            <ProgramCard key={program.id} program={program} />
+          ))
+        }
       </div>
     </div>
   );
