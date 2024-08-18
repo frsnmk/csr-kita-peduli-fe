@@ -1,11 +1,29 @@
 'use client';
 
 import Image from "next/image"
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useState } from "react";
 
 const AppBar = () => {
+    const [searchQuery, setSearchQuery] = useState('');
+
     const pathname = usePathname();
     const isShowed = !pathname.startsWith(`/programs/`) && !pathname.startsWith(`/histories/`) && pathname != '/histories' && pathname != '/profiles';
+    const router = useRouter();
+    
+    const handleOnClick = () => {
+      if(pathname == '/') {
+        router.push('/programs')
+        return 0;
+      }
+    }
+
+    const handleSearchSubmit = () => {
+      if (searchQuery.trim()) {
+        router.push(`/programs?page=1&search=${encodeURIComponent(searchQuery)}`);
+      }
+    }
+
     return (
         isShowed && (
         <div className="flex justify-between items-center p-5 bg-white">
@@ -21,11 +39,12 @@ const AppBar = () => {
 
             <div className="flex items-center border border-gray-300 rounded-lg">
               <input
+                onClick={handleOnClick}
                 type="text"
                 className="flex-grow p-2 px-4 w-48 border-transparent bg-transparent text-xs focus:outline-none"
                 placeholder="Cari Program"
               />
-              <button className="p-2">
+              <button className="p-2" onClick={handleSearchSubmit}>
                 <svg
                   width="24"
                   height="24"

@@ -22,3 +22,22 @@ export const fetchFeaturedProgram = async () : Promise<Program[]> => {
         return [];
     }
 }
+
+export const fetchPrograms = async (search:string='') : Promise<Program[]> => {
+    try {
+        const response = await axios.get<{data: Program[]}>(`${API_URL}programs`,
+            {
+                params: {
+                    search: search,
+                    limit:100,
+                    page:1,
+                }
+            }
+        );
+
+        return response.data.data;
+    } catch (error) {
+        console.error('Failed to fetch programs', error);
+        return [];
+    }
+}
