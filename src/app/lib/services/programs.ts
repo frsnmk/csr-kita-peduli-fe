@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Program } from "../types/program";
 
-const API_URL = process.env.API_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const fetchFeaturedProgram = async () : Promise<Program[]> => {
     try {
@@ -34,7 +34,6 @@ export const fetchPrograms = async (search:string='') : Promise<Program[]> => {
                 }
             }
         );
-        console.log(response.data.data, ':  root')
         return response.data.data;
     } catch (error) {
         console.error('Failed to fetch programs', error);

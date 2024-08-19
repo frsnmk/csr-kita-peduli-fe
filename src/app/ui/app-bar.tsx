@@ -1,15 +1,22 @@
 'use client';
 
 import Image from "next/image"
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import ClearIcon from "./icon/clear-icon";
 
 const AppBar = () => {
     const [searchQuery, setSearchQuery] = useState('');
 
     const pathname = usePathname();
+    const searchParams = useSearchParams();
+    const initialSearchQuery = searchParams.get('search');
     const isShowed = !pathname.startsWith(`/programs/`) && !pathname.startsWith(`/histories/`) && pathname != '/histories' && pathname != '/profiles';
     const router = useRouter();
+
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setSearchQuery(e.target.value);
+    };
     
     const handleOnClick = () => {
       if(pathname == '/') {
@@ -20,8 +27,12 @@ const AppBar = () => {
 
     const handleSearchSubmit = () => {
       if (searchQuery.trim()) {
-        router.push(`/programs?page=1&search=${encodeURIComponent(searchQuery)}`);
+        router.push(`programs?page=1&search=${encodeURIComponent(searchQuery)}`);
       }
+    }
+
+    const clearSearch = () => {
+      router.push(window.location.pathname);
     }
 
     return (
@@ -40,10 +51,19 @@ const AppBar = () => {
             <div className="flex items-center border border-gray-300 rounded-lg">
               <input
                 onClick={handleOnClick}
+                onChange={handleSearchChange}
                 type="text"
                 className="flex-grow p-2 px-4 w-48 border-transparent bg-transparent text-xs focus:outline-none"
                 placeholder="Cari Program"
               />
+
+              {
+                (initialSearchQuery && <button onClick={clearSearch}>
+                  <ClearIcon className="text-red-700"/>
+                </button>)
+              }
+              
+
               <button className="p-2" onClick={handleSearchSubmit}>
                 <svg
                   width="24"
