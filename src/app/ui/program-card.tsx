@@ -10,7 +10,7 @@ interface ProgramCardProps {
 const ProgramCard = ({ program }: ProgramCardProps) => {
   console.log(program.total_donations_amount, 'dari program card')
   return (
-    <Link href={`programs/${1}`}>
+    <Link href={`programs/${program.id}`}>
       <div className="flex-none w-[225px]">
         <div className="rounded-lg shadow-md overflow-hidden max-w-full mx-auto">
           <img

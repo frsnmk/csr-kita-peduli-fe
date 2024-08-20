@@ -1,13 +1,19 @@
 import Image from 'next/image'
 import React from 'react'
+import { Prayer } from '../lib/types/prayer';
+import { formatDistanceToNow, parseISO } from 'date-fns';
 
-export default function PrayerList() {
+interface PrayerListProps{
+    prayer: Prayer
+}
+
+export default function PrayerList({prayer}:PrayerListProps) {
   return (
     <div className="flex flex-col p-4 border-b border-gray-200">
         <div className="flex items-center">
             <div className="w-10 h-10 relative">
             <Image
-                src={'https://via.placeholder.com/40'}
+                src={prayer.customer.photo}
                 alt="Avatar"
                 layout="fill"
                 objectFit="cover"
@@ -15,11 +21,11 @@ export default function PrayerList() {
             />
             </div>
             <div className="ml-4">
-            <div className="font-bold text-sm">{'Hamba Allah'}</div>
-            <div className="text-gray-500 text-xs">{'1 bulan yang lalu'}</div>
+            <div className="font-bold text-sm">{prayer.customer.name}</div>
+            <div className="text-gray-500 text-xs">{formatDistanceToNow(parseISO(prayer.created_at), { addSuffix: true })}</div>
             </div>
         </div>
-        <div className="mt-2 text-gray-700 text-sm">{'Bismillah. Ya Allah hamba mohon ringankan beban Adik hamba. Sehatkan jiwa, raga, pikirannya. Jauhkan dia dari orang² jahat dan pengkhianat. Beri dia rejeki barokah. Bahagia. Sayangi dia ya Allah. Aamiin.'}</div>
+        <div className="mt-2 text-gray-700 text-sm">{prayer.description}</div>
         <div className="flex mt-4 text-gray-500 text-sm justify-end">
             <button className="flex">
                 <span className="material-icons-outlined mr-1">

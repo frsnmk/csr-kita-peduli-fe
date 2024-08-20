@@ -19,6 +19,7 @@ export interface Program {
     deleted_at: string | null;
     reason_to_end: string | null;
     total_donations_amount: number | null;
+    total_donor: string | null;
     pic: Pic;
     categories: Category[];
     tags: Tag[];
