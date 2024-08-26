@@ -1,15 +1,20 @@
 'use client'
 
+import { formatDateIdn } from "@/app/lib/helper";
+import { Donation } from "@/app/lib/types/donation";
 import ArrowBackIconButton from "@/app/ui/icon/arrow-back";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-const UnpaidDetailHistoryForm = () => {
-    const router = useRouter();
+interface UnpaidDetailHistoryFormProps {
+    data: Donation;
+}
 
+const UnpaidDetailHistoryForm = ({data}:UnpaidDetailHistoryFormProps) => {
+    const router = useRouter();
+    console.log('dari unpaid : ', data)
     const handleSubmit = () => {
-        router.push('http://localhost:3000/programs/1/donation-confirm')
-      // Tambahkan logika untuk mengunggah bukti pembayaran
+        router.push('/programs/1/donation-confirm')
     };
   
     return ( 
@@ -24,7 +29,7 @@ const UnpaidDetailHistoryForm = () => {
             <div className="bg-gray-50 shadow-md rounded-lg flex mb-4 mx-4">
                 <div className="w-1/4 relative">
                     <Image
-                        src="/Frame 4.png"
+                        src={data.program.banner}
                         alt="programs porro"
                         layout="fill"
                         objectFit="cover"
@@ -32,9 +37,9 @@ const UnpaidDetailHistoryForm = () => {
                     />
                 </div>
                 <div className="w-3/4 pl-4 space-y-2 p-4">
-                    <p className="text-xs font-semibold truncate-multiline">Bersama Raih Masa Depan Negeri yang Gemerlang dengan Beasiswa Cahaya</p>
-                    <p className="text-sm font-bold text-green-700">Rp 25.000</p>
-                    <p className="text-xs text-thin text-gray-500">03 Agustus 2024</p>
+                    <p className="text-xs font-semibold truncate-multiline">{data.program.title}</p>
+                    <p className="text-sm font-bold text-green-700">Rp {data.amount.toLocaleString('id-ID')}</p>
+                    <p className="text-xs text-thin text-gray-500">{formatDateIdn(data.program.created_at ?? '1970-08-25T05:45:16.000000Z')}</p>
                 </div>
             </div>
 
@@ -42,11 +47,11 @@ const UnpaidDetailHistoryForm = () => {
                 <h3 className="text-md font-semibold mb-4">Informasi Pembayaran</h3>
                 <div className="flex justify-between mb-2">
                 <span className="text-sm text-gray-600">Tanggal</span>
-                <span className="text-sm text-gray-800 font-bold">03 Agustus 2024</span>
+                <span className="text-sm text-gray-800 font-bold">{formatDateIdn(data.created_at)}</span>
                 </div>
                 <div className="flex justify-between mb-2">
                 <span className="text-sm text-gray-600">Nama disembunyikan</span>
-                <span className="text-gray-800 font-bold">Ya</span>
+                <span className="text-gray-800 font-bold">{data.be_anonim ? 'Ya':'Tidak'}</span>
                 </div>
                 <div className="flex justify-between mb-2">
                 <span className="text-sm text-gray-600">Status</span>
@@ -54,7 +59,7 @@ const UnpaidDetailHistoryForm = () => {
                 </div>
                 <div className="flex justify-between mb-4">
                 <span className="text-sm text-gray-600">Jumlah Donasi</span>
-                <span className="text-sm text-green-600 font-bold">Rp 25.000</span>
+                <span className="text-sm text-green-600 font-bold">Rp {data.amount.toLocaleString('id-ID')}</span>
                 </div>
             </div>
             <div className="fixed bottom-0 w-full bg-white shadow-lg max-w-[480px] mx-auto left-0 right-0 p-4">

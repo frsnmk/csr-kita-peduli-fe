@@ -1,13 +1,13 @@
 import HistoryCard from "@/app/ui/history-card";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import Link from "next/link";
-import { fetchDonation } from "../lib/services/donations";
+import { fetchDonations } from "../lib/services/donations";
 
 export default async function page() {
-  const pendingDonation = await fetchDonation({payment_status: 'pending'});
-  const paidDonation = await fetchDonation({payment_status: 'paid'});
-  const confirmedDonation = await fetchDonation({payment_status: 'confirmed'});
-  const failedDonation = await fetchDonation({payment_status: 'failed'});
+  const pendingDonation = await fetchDonations({payment_status: 'pending'});
+  const paidDonation = await fetchDonations({payment_status: 'paid'});
+  const confirmedDonation = await fetchDonations({payment_status: 'confirmed'});
+  const failedDonation = await fetchDonations({payment_status: 'failed'});
   return (
     <div>
         <TabGroup>
@@ -76,7 +76,7 @@ export default async function page() {
             <TabPanel>
             <div className="p-4">
                 {paidDonation.map((item, index) => (
-                  <Link href={`histories/${item.id}/unpaid`} key={index}>
+                  <Link href={`histories/${item.id}/paid`} key={index}>
                     <HistoryCard
                       key={index}
                       title={item.program.title}
