@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
+import { formatDateIdn } from '../lib/helper';
 
 interface HistoryCardProps {
   title: string;
@@ -17,7 +18,7 @@ const HistoryCard: React.FC<HistoryCardProps> = ({ title, amount, date, imageUrl
       <div className="w-2/3 pl-4">
         <h2 className="text-xs font-semibold truncate-multiline">{title}</h2>
         <p className="text-green-700 text-sm font-bold mt-2">Rp {amount.toLocaleString()}</p>
-        <p className="text-gray-500 text-[0.70rem] mt-2">{date}</p>
+        <p className="text-gray-500 text-[0.70rem] mt-2">{formatDateIdn(date)}</p>
       </div>
     </div>
   );
