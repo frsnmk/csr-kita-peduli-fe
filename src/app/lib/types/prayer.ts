@@ -19,3 +19,10 @@ export interface Prayer {
     has_amened: boolean;
     customer: Customer;
 }
+
+export interface PrayerQueryParams {
+    search?:string;
+    limit?:number;
+    page?:number;
+    customer_id?:number;
+  }

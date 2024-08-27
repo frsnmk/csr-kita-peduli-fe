@@ -12,6 +12,7 @@ import PrayerList from '@/app/ui/prayer-list-view';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react'
+import { ProgramDetailSkeleton } from './program-detail-skeleton';
 
 interface ProgramDetailPageProps {
     id: string;
@@ -21,21 +22,22 @@ export const ProgramDetailPage = ({id}:ProgramDetailPageProps) => {
     const [program, setProgram] = useState<Program|null>(null);
     const [donations, setDonations] = useState<Donation[]>([]);
     const [prayers, setPrayers] = useState<Prayer[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     
     useEffect(() => {
         const fetchDetails = async () => {
             try {
+                setIsLoading(true)
                 const programRes = await getProgram(id);
                 setProgram(programRes);
 
-                const donationsRes = await getProgramDonor(id);
+                const donationsRes = await getProgramDonor(id, {limit:3});
                 setDonations(donationsRes);
 
-                const prayerRes = await fetchProgramPrayer(id);
+                const prayerRes = await fetchProgramPrayer(id, {limit:3});
                 setPrayers(prayerRes)
-
-                console.log(prayerRes, 'Data prayerRes');
+                setIsLoading(false)
             } catch (error) {
                 console.error('Error fetching data', error);
             }
@@ -44,6 +46,7 @@ export const ProgramDetailPage = ({id}:ProgramDetailPageProps) => {
         fetchDetails();
     }, [id]);
 
+    if(isLoading) return <ProgramDetailSkeleton />
 
     return (
         <div className="space-y-2 relative">
