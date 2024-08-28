@@ -52,16 +52,23 @@ export const getProgram = async (id:string) : Promise<Program|null> => {
     }
 }
 
-export const getProgramDonor = async (id:string, queryParam:DonationQueryParams) : Promise<Donation[]> => {
+export const getProgramDonor = async (id:string, queryParam?:DonationQueryParams) : Promise<Donation[]> => {
     try {
-        const filledQueryParam = Object.fromEntries(
-            Object.entries(queryParam).filter(([_, value]) => value !== null && value !== undefined)
-        );
+        let filledQueryParam:any = '' 
+        if(queryParam) {
+            filledQueryParam = Object.fromEntries(
+                Object.entries(queryParam).filter(([_, value]) => value !== null && value !== undefined)
+            );
+        } else {
+            filledQueryParam = null;
+        }
+        
         const response = await axios.get<{data:Donation[]}>(`${API_URL}programs/${id}/donations`,
             {
                 params: filledQueryParam
             }
         );
+        console.log('dari fungsi fetching ...  ', response)
         return response.data.data;
     } catch (error) {
         console.error('Failed to get programs donor', error);

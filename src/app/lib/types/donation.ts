@@ -22,6 +22,7 @@ export interface Donation {
   customer: {
     id: number;
     name: string;
+    photo?: string;
   };
   program: {
     id: number;
