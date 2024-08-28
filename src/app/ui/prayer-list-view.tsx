@@ -12,13 +12,13 @@ export default function PrayerList({prayer}:PrayerListProps) {
     <div className="flex flex-col p-4 border-b border-gray-200">
         <div className="flex items-center">
             <div className="w-10 h-10 relative">
-            <Image
-                src={prayer.customer.photo}
-                alt="Avatar"
-                layout="fill"
-                objectFit="cover"
-                className="rounded-full"
-            />
+                <Image
+                    src={prayer.customer.photo}
+                    alt="Avatar"
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded-full"
+                />
             </div>
             <div className="ml-4">
             <div className="font-bold text-sm">{prayer.customer.name}</div>
@@ -28,6 +28,7 @@ export default function PrayerList({prayer}:PrayerListProps) {
         <div className="mt-2 text-gray-700 text-sm">{prayer.description}</div>
         <div className="flex mt-4 text-gray-500 text-sm justify-end">
             <button className="flex">
+                <span className="pr-2">{prayer.total_amen}</span>
                 <span className="material-icons-outlined mr-1">
                 <div className="flex">
                 <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#5f6368" transform="scale(-1,1)">
@@ -38,7 +39,6 @@ export default function PrayerList({prayer}:PrayerListProps) {
                 </svg>
                 </div>
                 </span>
-                Aamiin
             </button>
         </div>
     </div>

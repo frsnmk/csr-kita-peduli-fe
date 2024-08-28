@@ -111,15 +111,18 @@ export const ProgramDetailPage = ({id}:ProgramDetailPageProps) => {
         </div>
         {/* Do'a */}
         <div className="bg-white p-4 rounded-lg shadow-md">
-        <h2 className="text-md font-semibold">Doa-doa</h2>
-        {
-            (prayers.length < 1) && <p className="py-6 text-center italic font-thin text-sm">Belum ada do'a</p>
-        }
-        {
-            (prayers.length > 0) && prayers.map(prayer => (
-                <PrayerList prayer={prayer} />
-            ))
-        }
+            <h2 className="text-md font-semibold">Doa-doa</h2>
+            {
+                (prayers.length < 1) && <p className="py-6 text-center italic font-thin text-sm">Belum ada do'a</p>
+            }
+            {
+                (prayers.length > 0) && prayers.map(prayer => (
+                    <PrayerList prayer={prayer} />
+                ))
+            }
+            <div className="flex justify-center pt-4">
+                <Link href={`${id}/prayer`} className="text-green-700 font-medium">Lihat semua</Link>
+            </div>
         </div>
         <div className="fixed bottom-0 w-full bg-white shadow-lg max-w-[480px] mx-auto left-0 right-0">
             <div className="flex justify-around items-center py-3">
