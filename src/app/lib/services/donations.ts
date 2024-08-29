@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Prayer } from "../types/prayer";
-import { Donation, DonationQueryParams } from "../types/donation";
+import { Donation, DonationDTO, DonationQueryParams } from "../types/donation";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -30,6 +30,16 @@ export const fetchDonation = async (id: string): Promise<Result<Donation>> => {
         return { success: true, data: response.data };
     } catch (error) {
         console.error('Failed to get donation', error);
+        return { success: false, error };
+    }
+}
+
+export const createDonation = async (data:DonationDTO): Promise<Result<Donation>> => {
+    try {
+        const response = await axios.post<{ data: Donation }>(`${API_URL}donations`, data);
+        return { success: true, data: response.data.data };
+    } catch (error) {
+        console.error('Failed to create donation', error);
         return { success: false, error };
     }
 }

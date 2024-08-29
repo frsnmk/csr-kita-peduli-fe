@@ -24,3 +24,11 @@ export interface Program {
     categories: Category[];
     tags: Tag[];
   }
+
+  export interface ProgramPrice {
+    id: number;
+    program_id: number;
+    amount: number;
+    created_at: string | null;
+    updated_at: string | null;
+}

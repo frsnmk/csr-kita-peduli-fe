@@ -101,8 +101,8 @@ export const ProgramDetailPage = ({id}:ProgramDetailPageProps) => {
                     (donations.length < 1) && <p className="py-6 text-center italic font-thin text-sm">Belum ada donasi</p>
                 }
                 {
-                    (donations.length > 0) && donations.map(donation => (
-                        <AvatarListView key={1} name={donation.be_anonim ? 'Hamba Allah' :donation.customer.name} amount={donation.amount} createdAt={donation.created_at} avatarUrl='https://via.placeholder.com/40' />
+                    (donations.length > 0) && donations.map((donation, key) => (
+                        <AvatarListView key={key} name={donation.be_anonim ? 'Hamba Allah' :donation.customer.name} amount={donation.amount} createdAt={donation.created_at} avatarUrl='https://via.placeholder.com/40' />
                     ))
                 }
             <div className="flex justify-center pt-4">
@@ -116,8 +116,8 @@ export const ProgramDetailPage = ({id}:ProgramDetailPageProps) => {
                 (prayers.length < 1) && <p className="py-6 text-center italic font-thin text-sm">Belum ada do'a</p>
             }
             {
-                (prayers.length > 0) && prayers.map(prayer => (
-                    <PrayerList prayer={prayer} />
+                (prayers.length > 0) && prayers.map((prayer, key) => (
+                    <PrayerList key={key} prayer={prayer} />
                 ))
             }
             <div className="flex justify-center pt-4">

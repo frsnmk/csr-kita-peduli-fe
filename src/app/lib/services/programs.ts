@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Program } from "../types/program";
+import { Program, ProgramPrice } from "../types/program";
 import { Donation, DonationQueryParams } from "../types/donation";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -72,6 +72,17 @@ export const getProgramDonor = async (id:string, queryParam?:DonationQueryParams
         return response.data.data;
     } catch (error) {
         console.error('Failed to get programs donor', error);
+        return [];
+    }
+}
+
+
+export const getProgramPackagePrice = async (id:string) : Promise<ProgramPrice[]> => {
+    try {
+        const response = await axios.get<{data: ProgramPrice[]}>(`${API_URL}programs/${id}/prices`);
+        return response.data.data;
+    } catch (error) {
+        console.error('Failed to get programs package price', error);
         return [];
     }
 }

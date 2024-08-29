@@ -39,3 +39,15 @@ export interface DonationQueryParams {
   payment_status?:string;
   customer_id?:number;
 }
+
+export interface DonationDTO {
+  email: string | null;
+  program_id: number|string; // Assuming `program_id` is a number
+  customer_id?: number | null; // Optional or nullable
+  amount: number;
+  be_anonim?: boolean | null; // Assuming it's a boolean, nullable
+  phone_number: string|null;
+  payment_status?: string | null; // Optional or nullable
+  prayer?: string | null; // Optional or nullable, assuming it's a string
+  is_follow: boolean;
+}
