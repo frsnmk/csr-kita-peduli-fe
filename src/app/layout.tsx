@@ -4,6 +4,7 @@ import Image from "next/image";
 import BottomNav from "@/app/ui/bottom-nav";
 import { opensans } from "./ui/fonts";
 import AppBar from "./ui/app-bar";
+import { Toaster } from "react-hot-toast";
 
 
 export const metadata: Metadata = {
@@ -19,6 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={opensans.className}>
+       <Toaster />
         <main className="my-0 mx-auto min-h-screen max-w-[480px] pb-20">
           <AppBar />
           {children}
