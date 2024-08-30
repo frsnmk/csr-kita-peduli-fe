@@ -17,8 +17,10 @@ const [customAmount, setCustomAmount] = useState(0);
 const router = useRouter();
 const [packages, setPackages] = useState<ProgramPrice[]>([]);
 const [beAnonim, setBeAnonim] = useState<boolean>(false);
-const [prayerDonation, setPrayerDonation] = useState<string>('Yang terbaik buatmu');
+const [prayerDonation, setPrayerDonation] = useState<string>('');
 const [isFollow, setIsFollow] = useState<boolean>(false);
+const [email, setEmail] = useState<string>('frsnmk@gmail.com');
+const [phoneNumber, setPhoneNumber] = useState<string>('');
 const [loading, setLoading] = useState(true);
 
 useEffect(() => {
@@ -48,17 +50,18 @@ const handlePrayerChange = (value: string) => {
 
 const handleSumit = async () => {
   const reqBody = {
-    email: 'adadeh@gmail.com',
+    email: email,
     program_id: programId,
     customer_id: 4, 
     amount: customAmount,
     be_anonim: beAnonim,
-    phone_number: null,
+    phone_number: phoneNumber,
     prayer:  prayerDonation,
     is_follow: isFollow
   }
 
   const res = await createDonation(reqBody);
+
   if (res.success) {
     router.replace('donation-confirm');
   } else {
