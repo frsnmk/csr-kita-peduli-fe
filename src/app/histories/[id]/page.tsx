@@ -8,7 +8,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   return (
     (unpaidDonationDetail.success)
-    ? <UnpaidDetailHistoryForm data={unpaidDonationDetail.data}/>
+    ? <UnpaidDetailHistoryForm id={id} data={unpaidDonationDetail.data}/>
     : <p>Error</p>
   );
   }

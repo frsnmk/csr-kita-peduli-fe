@@ -7,14 +7,16 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 interface UnpaidDetailHistoryFormProps {
+    id:string
     data: Donation;
 }
 
-const UnpaidDetailHistoryForm = ({data}:UnpaidDetailHistoryFormProps) => {
+const UnpaidDetailHistoryForm = ({id, data}:UnpaidDetailHistoryFormProps) => {
     const router = useRouter();
-    console.log('dari unpaid : ', data)
+
     const handleSubmit = () => {
-        router.push('/programs/1/donation-confirm')
+        localStorage.setItem('donation_id', id)
+        router.push(`/programs/${id}/donation-confirm`)
     };
   
     return ( 
