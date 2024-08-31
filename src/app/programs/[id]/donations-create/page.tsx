@@ -63,6 +63,7 @@ const handleSumit = async () => {
   const res = await createDonation(reqBody);
 
   if (res.success) {
+    localStorage.setItem('donation_id', JSON.stringify(res.data.id))
     router.replace('donation-confirm');
   } else {
     console.error("Failed to create donation:", res.error);

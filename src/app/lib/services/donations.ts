@@ -43,3 +43,13 @@ export const createDonation = async (data:DonationDTO): Promise<Result<Donation>
         return { success: false, error };
     }
 }
+
+export const confirmDonation = async (id:string, data:FormData): Promise<Result<Donation>> => {
+    try {
+        const response = await axios.post<{ data: Donation }>(`${API_URL}donations/${id}/confirm`, data);
+        return { success: true, data: response.data.data };
+    } catch (error) {
+        console.error('Failed to create donation', error);
+        return { success: false, error };
+    }
+}

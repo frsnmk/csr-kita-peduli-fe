@@ -1,21 +1,32 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import CopyIconButton from "@/app/ui/icon/copy-icon-button";
 import AddPhotoIcon from "@/app/ui/icon/add-photo";
 import { fetchBanks } from "../lib/services/bank-account";
 import { BankAccount } from "../lib/types/bank-account";
 import BankAccountCard from "./form-component/bank-account";
 import toast from "react-hot-toast";
+import { confirmDonation } from "../lib/services/donations";
+import { useRouter } from "next/navigation";
 
 const DonationConfirmationForm = () => {
+  const router = useRouter();
+
   const [banks, setBanks]= useState<BankAccount[]>([]);
-  const [loading, setLoading] = useState();
+  const [loading, setLoading] = useState(true);
+  
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedAccount, setSelectedAccount] = useState<string| number | null>(null);
+
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true)
       const banks = await fetchBanks({});
       setBanks(banks);
+      setLoading(false)
     }
 
     fetchData()
@@ -26,13 +37,55 @@ const DonationConfirmationForm = () => {
     toast.success('Nomor Rekening berhasil disalin');
   }
 
-  const handleUploadClick = () => {
-    console.log('Upload Bukti Pembayaran clicked');
-    // Tambahkan logika untuk mengunggah bukti pembayaran
+  const handleButtonClicked = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
   };
 
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setPreviewImage(imageUrl);
+      setSelectedFile(file);
+    }
+  };
+
+  const handleSubmitForm = async () => {
+    const formData = new FormData();
+    const donationId = localStorage.getItem('donation_id');
+
+    formData.append('receipt_image_path', selectedFile)
+    formData.append('bank_id', 1)
+
+    if(!selectedAccount) {
+      toast.error('Silahkan pilih nomor rekening')
+      return
+    }
+
+    if(!selectedFile) {
+      toast.error('Silahkan upload bukti pembayaran')
+      return
+    }
+
+    if(donationId) {
+      const res = await confirmDonation(donationId, formData)
+      if(res.success) {
+        toast.success('Berhasil melakukan konfirmasi pembayaran');
+        localStorage.removeItem('donation_id')
+        router.replace(`/programs/${res.data.program_id}/`)
+      } else {
+        console.log(res.error)
+        toast.error('Gagal melakukan konfimasi pembayaran');
+      }
+    } else {
+      toast.error('Donasi tidak ditemukan')
+    }
+  }
+
   return (
-    <div className="max-w-md mx-auto bg-white p-2 rounded-lg mt-10 text-center space-y-4">
+    <div className="max-w-md mx-auto bg-white p-2 rounded-lg mt-3 text-center space-y-4">
       <Image src="/payment-waiting.png" alt="Payment Waiting" width={400} height={200} />
       
       <h1 className="text-orange-600 text-md font-bold my-4">Menunggu Pembayaran</h1>
@@ -41,35 +94,56 @@ const DonationConfirmationForm = () => {
         banks.length > 0
         ? banks.map((bank, key) => (
           <BankAccountCard
-            key={key}
-            bankName={bank.name}
-            logoUrl={bank.logo_url}
-            inTheNameOf={bank.in_the_name_of}
-            accountNumber={bank.norek}
-            onClipboardClick={() => handleOnClipBoardClick(bank.norek)}
-          />
+          key={key}
+          accountNumber={bank.norek}
+          bankName={bank.name}
+          inTheNameOf={bank.in_the_name_of}
+          logoUrl={bank.logo_url}
+          onClipboardClick={()=>handleOnClipBoardClick(bank.norek)}
+          selected={selectedAccount === bank.id}
+          onSelect={() => setSelectedAccount(bank.id)}
+        />
         ))
-        : <p>List bank kosong</p>
+        : loading ? <p className="text-sm font-thin italic">Tunggu sebentar...</p> : <p className="text-sm font-thin italic">Tidak ada list rekening</p>
       }
-      {/* <div className="flex justify-center items-center my-4">
-        <span className="text-sm mr-2">12715180971231781</span>
-        <button onClick={() => navigator.clipboard.writeText('12715180971231781')}>
-          <CopyIconButton />
-        </button>
-      </div> */}
       <div className="my-4">
         <p className="text-gray-700 text-xs">Total Bayar</p>
         <p className="text-green-700 text-xl font-bold">Rp 10.000</p>
       </div>
       <div className="flex justify-center w-full">
+        <input
+          type="file"
+          ref={fileInputRef}
+          onChange={handleFileChange}
+          style={{ display: 'none' }}
+        />
         <button
-          onClick={handleUploadClick}
+          onClick={handleButtonClicked}
           className="flex items-center space-x-2 bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-green-800 transition duration-300"
         >
           <span className="text-xs">Upload Bukti Pembayaran</span>
           <AddPhotoIcon />
         </button>
       </div>
+      {previewImage && (
+        <div className="mt-4">
+          <p className="text-sm text-gray-700 pb-2">Pratinjau Gambar:</p>
+          <img
+            src={previewImage}
+            alt="Preview"
+            className="w-64 h-64 object-cover rounded-lg mx-auto"
+          />
+        </div>
+      )}
+
+        {
+          selectedFile && (<button
+            onClick={handleSubmitForm}
+            className="flex items-center mx-auto space-x-2 bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-green-800 transition duration-300"
+          >
+            <span className="text-xs">Konfirmasi</span>
+          </button>)
+        }
     </div>
   );
 }
