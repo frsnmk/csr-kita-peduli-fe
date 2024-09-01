@@ -2,6 +2,7 @@ import HistoryCard from "@/app/ui/history-card";
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
 import Link from "next/link";
 import { fetchDonations } from "../lib/services/donations";
+import Image from "next/image";
 
 export default async function page() {
   const pendingDonation = await fetchDonations({payment_status: 'pending'});
@@ -60,17 +61,22 @@ export default async function page() {
           <TabPanels>
             <TabPanel>
               <div className="p-4">
-                {pendingDonation.map((item, index) => (
-                  <Link href={`histories/${item.id}`} key={index}>
-                    <HistoryCard
-                      key={index}
-                      title={item.program.title}
-                      amount={item.amount}
-                      date={item.created_at}
-                      imageUrl={item.program.banner}
-                    />
-                  </Link>
-                ))}
+                {(pendingDonation.length > 0) ?
+                  pendingDonation.map((item, index) => (
+                    <Link href={`histories/${item.id}`} key={index}>
+                      <HistoryCard
+                        key={index}
+                        title={item.program.title}
+                        amount={item.amount}
+                        date={item.created_at}
+                        imageUrl={item.program.banner}
+                      />
+                    </Link>
+                  ))
+                  : <div className="flex justify-center">
+                  <Image width={300} height={300} src={'/empty_data_csr.svg'} alt="" />
+                </div>
+                }
               </div>
             </TabPanel>
             <TabPanel>

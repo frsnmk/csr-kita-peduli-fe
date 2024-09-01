@@ -4,6 +4,7 @@ import React from "react";
 import ProgramCard from "@/app/ui/program-card";
 import { Program } from "@/app/lib/types/program";
 import { useSearchParams } from "next/navigation";
+import Image from "next/image";
 
 interface GridViewProps {
   title:string;
@@ -31,7 +32,9 @@ const GridView = ({title, data}: GridViewProps) => {
       }
       </div>
       {
-        data.length < 1 && <p className="pt-8 text-center">Tidak ada program</p>
+        data.length < 1 && <div className="flex justify-center">
+        <Image width={300} height={300} src={'/empty_data_csr.svg'} alt="" />
+      </div>
       }
     </div>
   );

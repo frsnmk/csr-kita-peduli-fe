@@ -32,6 +32,8 @@ const AppBar = () => {
     }
 
     const clearSearch = () => {
+      setSearchQuery('')
+      console.log('Clear search dijalankan ... ', searchQuery)
       router.push(window.location.pathname);
     }
 
