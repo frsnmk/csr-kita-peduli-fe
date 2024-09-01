@@ -42,7 +42,7 @@ const AppBar = () => {
         <div className="flex justify-between items-center p-5 bg-white">
             <div>
               <Image
-                src="https://kitapeduli.id/img/front/Logo.png"
+                src="/kitapeduli.png"
                 alt="Example Image"
                 width={150}
                 height={0}
