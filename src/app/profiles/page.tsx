@@ -22,7 +22,6 @@ export default function page() {
         try {
             const result = await signInWithPopup(auth, provider);
             const credential = GoogleAuthProvider.credentialFromResult(result)
-            console.log(result.user)
             setUser(result.user);
             setToken(credential?.idToken);
         } catch (error) {
@@ -79,7 +78,6 @@ export default function page() {
         setExistingToken(authData?.token)
         setLogedInUser({displayName:authData?.displayName, email:authData?.email})
         setLoading(false);
-        console.log(logedInUser)
     },[])
 
     if (loading) {
