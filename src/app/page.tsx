@@ -1,3 +1,5 @@
+'use client';
+
 import ListView from "@/app/ui/list-view";
 import Carousel from "@/app/ui/carousel";
 import { fetchFeaturedProgram } from "./lib/services/programs";
@@ -14,5 +16,6 @@ export default async function Home() {
         <ListView data={programs} />
       </div>
     </div>
+
   );
 }
