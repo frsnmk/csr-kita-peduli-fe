@@ -18,8 +18,8 @@ const PrayerTextArea: React.FC<PrayerTextAreaProps> = ({ maxLength = 280, onChan
 
   return (
     <div className="mb-4">
-      <label htmlFor="prayer" className="block text-sm font-medium text-gray-700">
-        Sertakan doa dan dukungan (opsional)
+      <label htmlFor="prayer" className="block text-sm font-medium text-gray-700 mb-2">
+        Sertakan doa dan dukungan <span className="italic">(opsional)</span>
       </label>
       <textarea
         id="prayer"

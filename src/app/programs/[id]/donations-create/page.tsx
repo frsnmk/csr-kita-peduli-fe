@@ -6,6 +6,7 @@ import { DonationDTO } from "@/app/lib/types/donation";
 import { ProgramPrice } from "@/app/lib/types/program";
 import Checkbox from "@/app/ui/form-component/checkbox";
 import PrayerTextArea from "@/app/ui/form-component/prayer-text-area";
+import TextInput from "@/app/ui/form-component/text-input";
 import ArrowBackIconButton from "@/app/ui/icon/arrow-back";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -19,7 +20,8 @@ const [packages, setPackages] = useState<ProgramPrice[]>([]);
 const [beAnonim, setBeAnonim] = useState<boolean>(false);
 const [prayerDonation, setPrayerDonation] = useState<string>('');
 const [isFollow, setIsFollow] = useState<boolean>(false);
-const [email, setEmail] = useState<string>('frsnmk@gmail.com');
+const [name, setName] = useState<string>('');
+const [email, setEmail] = useState<string>('');
 const [phoneNumber, setPhoneNumber] = useState<string>('');
 const [loading, setLoading] = useState(true);
 
@@ -113,18 +115,43 @@ return (
           ))}
         </div>
       </div>
-      <PrayerTextArea onChange={handlePrayerChange} />
-      <Checkbox
-        label="Sembunyikan nama saya (donasi sebagai anonim)"
-        checked={false}
-        onChange={(checked) => setBeAnonim(checked)}
-      />
+      <div>
+        <h1 className="text-md font-semibold mb-4"><span className="text-green-700 cursor-pointer">Masuk</span> atau lengkapi data dibawah ini</h1>
+        <TextInput
+          label="Nama"
+          placeholder="Masukkan nama Anda"
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <TextInput
+          label="Email"
+          placeholder="Masukkan email Anda"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <TextInput
+          label="Nomor Handphone"
+          placeholder="Masukkan nomor handphone Anda"
+          type="tel"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+        />
 
-      <Checkbox
-        label="Ikuti Program"
-        checked={false}
-        onChange={(checked) => setIsFollow(checked)}
-      />
+        <PrayerTextArea onChange={handlePrayerChange} />
+        <Checkbox
+          label="Sembunyikan nama saya (donasi sebagai anonim)"
+          checked={false}
+          onChange={(checked) => setBeAnonim(checked)}
+        />
+
+        <Checkbox
+          label="Ikuti Program"
+          checked={false}
+          onChange={(checked) => setIsFollow(checked)}
+        />
+      </div>
 
     </div>
     <div className="fixed bottom-0 w-full bg-white shadow-lg max-w-[480px] mx-auto left-0 right-0 p-4">
