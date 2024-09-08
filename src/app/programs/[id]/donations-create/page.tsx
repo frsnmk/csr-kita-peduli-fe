@@ -24,6 +24,7 @@ const [isFollow, setIsFollow] = useState<boolean>(false);
 const [name, setName] = useState<string>('');
 const [email, setEmail] = useState<string>('');
 const [phoneNumber, setPhoneNumber] = useState<string>('');
+const [affiliateCode, setAffiliateCode] = useState<string>('');
 const [loading, setLoading] = useState(true);
 const {isLoggedIn, loginWithGoogle} = useAuth();
 
@@ -61,7 +62,8 @@ const handleSumit = async () => {
     be_anonim: beAnonim,
     phone_number: phoneNumber,
     prayer:  prayerDonation,
-    is_follow: isFollow
+    is_follow: isFollow,
+    affiliate_code: affiliateCode
   }
 
   const res = await createDonation(reqBody);
