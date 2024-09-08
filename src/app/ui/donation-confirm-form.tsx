@@ -7,13 +7,15 @@ import { fetchBanks } from "../lib/services/bank-account";
 import { BankAccount } from "../lib/types/bank-account";
 import BankAccountCard from "./form-component/bank-account";
 import toast from "react-hot-toast";
-import { confirmDonation } from "../lib/services/donations";
+import { confirmDonation, fetchDonation } from "../lib/services/donations";
 import { useRouter } from "next/navigation";
+import { Donation } from "../lib/types/donation";
 
 const DonationConfirmationForm = () => {
   const router = useRouter();
 
   const [banks, setBanks]= useState<BankAccount[]>([]);
+  const [donation, setDonation] = useState<Donation|undefined>();
   const [loading, setLoading] = useState(true);
   
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -27,6 +29,17 @@ const DonationConfirmationForm = () => {
       const banks = await fetchBanks({});
       setBanks(banks);
       setLoading(false)
+      const donationId = localStorage.getItem('donation_id');
+      if(donationId){
+        const res = await fetchDonation(donationId);
+        if(res.success) {
+          setDonation(res.data)
+        } else {
+          toast.error(res.error)
+        }
+      } else {
+        toast.error('Kamu masuk dengan cara tidak normal');
+      }
     }
 
     fetchData()
@@ -84,6 +97,8 @@ const DonationConfirmationForm = () => {
     }
   }
 
+  console.log('dari luar : ', donation)
+
   return (
     <div className="max-w-md mx-auto bg-white p-2 rounded-lg mt-3 text-center space-y-4">
       <Image src="/payment-waiting.png" alt="Payment Waiting" width={400} height={200} />
@@ -108,7 +123,7 @@ const DonationConfirmationForm = () => {
       }
       <div className="my-4">
         <p className="text-gray-700 text-xs">Total Bayar</p>
-        <p className="text-green-700 text-xl font-bold">Rp 10.000</p>
+        <p className="text-green-700 text-xl font-bold">Rp {donation?.amount.toLocaleString()}</p>
       </div>
       <div className="flex justify-center w-full">
         <input
