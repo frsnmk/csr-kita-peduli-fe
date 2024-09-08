@@ -1,5 +1,6 @@
 'use client'
 
+import { useAuth } from "@/app/lib/context/auth-context";
 import { createDonation } from "@/app/lib/services/donations";
 import { getProgramPackagePrice } from "@/app/lib/services/programs";
 import { DonationDTO } from "@/app/lib/types/donation";
@@ -24,6 +25,7 @@ const [name, setName] = useState<string>('');
 const [email, setEmail] = useState<string>('');
 const [phoneNumber, setPhoneNumber] = useState<string>('');
 const [loading, setLoading] = useState(true);
+const {isLoggedIn, loginWithGoogle} = useAuth();
 
 useEffect(() => {
   const fetchData = async () => {
@@ -72,6 +74,14 @@ const handleSumit = async () => {
   }
 }
 
+if (loading) {
+  // Tampilkan loading state saat memeriksa status login
+  return (
+      <div className="flex items-center justify-center h-screen">
+          <p>Loading...</p>
+      </div>
+  );
+}
 return (
   <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md relative">
     <ArrowBackIconButton />
@@ -115,30 +125,36 @@ return (
           ))}
         </div>
       </div>
-      <div>
-        <h1 className="text-md font-semibold mb-4"><span className="text-green-700 cursor-pointer">Masuk</span> atau lengkapi data dibawah ini</h1>
-        <TextInput
-          label="Nama"
-          placeholder="Masukkan nama Anda"
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <TextInput
-          label="Email"
-          placeholder="Masukkan email Anda"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <TextInput
-          label="Nomor Handphone"
-          placeholder="Masukkan nomor handphone Anda"
-          type="tel"
-          value={phoneNumber}
-          onChange={(e) => setPhoneNumber(e.target.value)}
-        />
+      {
+        !isLoggedIn && (
+          <div>
+            <h1 className="text-md font-semibold mb-4"><span className="text-green-700 cursor-pointer" onClick={() => loginWithGoogle()}>Masuk</span> atau lengkapi data dibawah ini</h1>
+            <TextInput
+              label="Nama"
+              placeholder="Masukkan nama Anda"
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <TextInput
+              label="Email"
+              placeholder="Masukkan email Anda"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <TextInput
+              label="Nomor Handphone"
+              placeholder="Masukkan nomor handphone Anda"
+              type="tel"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+            />
+          </div>
+        )
+      }
 
+      <div>
         <PrayerTextArea onChange={handlePrayerChange} />
         <Checkbox
           label="Sembunyikan nama saya (donasi sebagai anonim)"
