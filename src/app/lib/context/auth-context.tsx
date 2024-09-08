@@ -60,13 +60,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                     email:user.email
                 }));
                 setIsLoggedIn(true);
-                setLoading(false)
                 loadExistingData()
                 toast.success('Login berhasil')
             } else {
                 console.error(validatedTokenRes.error)
                 toast.error('Login gagal')
             }
+            setLoading(false)
         } catch (error) {
             console.error("Login gagal ", error)
             setLoading(false)
