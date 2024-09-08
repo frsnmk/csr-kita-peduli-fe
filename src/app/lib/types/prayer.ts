@@ -1,3 +1,5 @@
+import { Donation } from "./donation";
+
 interface Customer {
     id: number;
     name: string;
@@ -6,7 +8,6 @@ interface Customer {
 
 export interface Prayer {
     id: number;
-    customer_id: number;
     program_id: number;
     description: string;
     status: number;
@@ -17,7 +18,7 @@ export interface Prayer {
     donation_id: number | null;
     total_amen: number;
     has_amened: boolean;
-    customer: Customer;
+    donation: Donation
 }
 
 export interface PrayerQueryParams {

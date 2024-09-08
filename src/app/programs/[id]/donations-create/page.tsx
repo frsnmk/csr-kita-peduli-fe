@@ -14,9 +14,9 @@ import { useEffect, useState } from "react";
 
 export default function page({ params }: { params: { id: string } }) {
 const programId = params.id;
+const router = useRouter();
 const [selectedPackage, setSelectedPackage] = useState(0);
 const [customAmount, setCustomAmount] = useState(0);
-const router = useRouter();
 const [packages, setPackages] = useState<ProgramPrice[]>([]);
 const [beAnonim, setBeAnonim] = useState<boolean>(false);
 const [prayerDonation, setPrayerDonation] = useState<string>('');
@@ -26,7 +26,7 @@ const [email, setEmail] = useState<string>('');
 const [phoneNumber, setPhoneNumber] = useState<string>('');
 const [affiliateCode, setAffiliateCode] = useState<string>('');
 const [loading, setLoading] = useState(true);
-const {isLoggedIn, loginWithGoogle} = useAuth();
+const {isLoggedIn, authData, loginWithGoogle} = useAuth();
 
 useEffect(() => {
   const fetchData = async () => {
@@ -55,9 +55,10 @@ const handlePrayerChange = (value: string) => {
 
 const handleSumit = async () => {
   const reqBody = {
-    email: email,
+    email: isLoggedIn ? authData?.email : email,
+    name:name,
     program_id: programId,
-    customer_id: 4, 
+    customer_id: authData?.customer_id, 
     amount: customAmount,
     be_anonim: beAnonim,
     phone_number: phoneNumber,
@@ -65,6 +66,7 @@ const handleSumit = async () => {
     is_follow: isFollow,
     affiliate_code: affiliateCode
   }
+console.log(reqBody);
 
   const res = await createDonation(reqBody);
 

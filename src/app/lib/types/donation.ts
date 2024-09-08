@@ -1,6 +1,7 @@
 export interface Donation {
   id: number;
   customer_id: number;
+  name: string|null;
   program_id: number;
   administrator_id: number | null;
   amount: number;
@@ -23,7 +24,7 @@ export interface Donation {
     id: number;
     name: string;
     photo?: string;
-  };
+  }|null;
   program: {
     id: number;
     title: string;
@@ -41,9 +42,9 @@ export interface DonationQueryParams {
 }
 
 export interface DonationDTO {
-  email: string | null;
+  email: string | null | undefined;
   program_id: number|string; // Assuming `program_id` is a number
-  customer_id?: number | null; // Optional or nullable
+  customer_id?: string|number | null; // Optional or nullable
   amount: number;
   be_anonim?: boolean | null; // Assuming it's a boolean, nullable
   phone_number: string|null;

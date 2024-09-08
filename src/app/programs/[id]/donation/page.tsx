@@ -58,7 +58,7 @@ export default function page({ params }: { params: { id: string } }) {
         {
           (donations.length > 0)
           ? donations.map((d,i) => (
-            <AvatarListView key={i} name={d.customer.name} amount={d.amount} createdAt={d.created_at} avatarUrl={d.customer.photo ?? 'https://via.placeholder.com/40'} />
+            <AvatarListView key={i} name={d.customer == null ? d.name! :d.customer.name} amount={d.amount} createdAt={d.created_at} avatarUrl={d.customer == null ? '/default-avatar-2.png' : d.customer.photo!} />
           ))
           : !loading &&  <div className="flex justify-center">
               <Image width={300} height={300} src={'/empty_data_csr.svg'} alt="" />

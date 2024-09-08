@@ -8,12 +8,13 @@ interface PrayerListProps{
 }
 
 export default function PrayerList({prayer}:PrayerListProps) {
-  return (
+  console.log('Prayer :  ', prayer)
+    return (
     <div className="flex flex-col p-4 border-b border-gray-200">
         <div className="flex items-center">
             <div className="w-10 h-10 relative">
                 <Image
-                    src={prayer.customer.photo}
+                    src={(prayer.donation.customer == null) ? '/default-avatar-2.png': (prayer.donation.customer.photo ??'/default-avatar-2.png')}
                     alt="Avatar"
                     layout="fill"
                     objectFit="cover"
@@ -21,7 +22,7 @@ export default function PrayerList({prayer}:PrayerListProps) {
                 />
             </div>
             <div className="ml-4">
-            <div className="font-bold text-sm">{prayer.customer.name}</div>
+            <div className="font-bold text-sm">{prayer.donation.customer == null ? prayer.donation.name : prayer.donation.customer.name }</div>
             <div className="text-gray-500 text-xs">{formatDistanceToNow(parseISO(prayer.created_at), { addSuffix: true })}</div>
             </div>
         </div>

@@ -46,6 +46,8 @@ export const ProgramDetailPage = ({id}:ProgramDetailPageProps) => {
         fetchDetails();
     }, [id]);
 
+    console.log('Donation :  ', donations);
+
     if(isLoading) return <ProgramDetailSkeleton />
 
     return (
@@ -102,7 +104,7 @@ export const ProgramDetailPage = ({id}:ProgramDetailPageProps) => {
                 }
                 {
                     (donations.length > 0) && donations.map((donation, key) => (
-                        <AvatarListView key={key} name={donation.be_anonim ? 'Hamba Allah' :donation.customer.name} amount={donation.amount} createdAt={donation.created_at} avatarUrl='https://via.placeholder.com/40' />
+                        <AvatarListView key={key} name={donation.be_anonim ? 'Hamba Allah' : (donation.customer == null ? donation.name! : (donation.customer.name))} amount={donation.amount} createdAt={donation.created_at} avatarUrl='/default-avatar-2.png' />
                     ))
                 }
             <div className="flex justify-center pt-4">
