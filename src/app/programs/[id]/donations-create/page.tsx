@@ -29,6 +29,10 @@ const [phoneNumber, setPhoneNumber] = useState<string>('');
 const [loading, setLoading] = useState(true);
 const {isLoggedIn, authData, loginWithGoogle} = useAuth();
 
+const [nameError, setNameError] = useState<string>('');
+const [emailError, setEmailError] = useState<string>('');
+const [phoneError, setPhoneError] = useState<string>('');
+
 useEffect(() => {
   const fetchData = async () => {
     setLoading(true);
@@ -52,9 +56,50 @@ const handlePrayerChange = (value: string) => {
   setPrayerDonation(value);
 };
 
+const validateForm = () => {
+  let isValid = true;
+
+  // Validasi Nama
+  if (!name.trim()) {
+    setNameError('Nama wajib diisi');
+    isValid = false;
+  } else {
+    setNameError('');
+  }
+
+  // Validasi Email
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!email.trim()) {
+    setEmailError('Email wajib diisi');
+    isValid = false;
+  } else if (!emailRegex.test(email)) {
+    setEmailError('Format email tidak valid');
+    isValid = false;
+  } else {
+    setEmailError('');
+  }
+
+  // Validasi Nomor Handphone
+  const phoneRegex = /^[0-9]+$/;
+  if (!phoneNumber.trim()) {
+    setPhoneError('Nomor handphone wajib diisi');
+    isValid = false;
+  } else if (!phoneRegex.test(phoneNumber)) {
+    setPhoneError('Nomor handphone tidak valid');
+    isValid = false;
+  } else {
+    setPhoneError('');
+  }
+
+  return isValid;
+};
 
 
 const handleSumit = async () => {
+  if (!validateForm()) {
+    return;
+  }
+
   const reqBody = {
     email: isLoggedIn ? authData?.email : email,
     name:name,
@@ -139,6 +184,7 @@ return (
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              validationMessage={nameError}
             />
             <TextInput
               label="Email"
@@ -146,6 +192,7 @@ return (
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              validationMessage={emailError}
             />
             <TextInput
               label="Nomor Handphone"
@@ -153,6 +200,7 @@ return (
               type="tel"
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
+              validationMessage={phoneError}
             />
           </div>
         )
