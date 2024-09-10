@@ -22,7 +22,7 @@ export default function PrayerList({prayer}:PrayerListProps) {
                 />
             </div>
             <div className="ml-4">
-            <div className="font-bold text-sm">{prayer.donation.customer == null ? prayer.donation.name : prayer.donation.customer.name }</div>
+            <div className="font-bold text-sm">{(prayer.donation.be_anonim) ? 'Hamba Allah' : prayer.donation.customer == null ? prayer.donation.name : prayer.donation.customer.name }</div>
             <div className="text-gray-500 text-xs">{formatDistanceToNow(parseISO(prayer.created_at), { addSuffix: true })}</div>
             </div>
         </div>
