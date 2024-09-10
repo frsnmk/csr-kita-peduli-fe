@@ -9,12 +9,14 @@ import Checkbox from "@/app/ui/form-component/checkbox";
 import PrayerTextArea from "@/app/ui/form-component/prayer-text-area";
 import TextInput from "@/app/ui/form-component/text-input";
 import ArrowBackIconButton from "@/app/ui/icon/arrow-back";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function page({ params }: { params: { id: string } }) {
 const programId = params.id;
 const router = useRouter();
+const searchParams = useSearchParams();
+const affiliateCode = searchParams.get('affiliate_code');
 const [selectedPackage, setSelectedPackage] = useState(0);
 const [customAmount, setCustomAmount] = useState(0);
 const [packages, setPackages] = useState<ProgramPrice[]>([]);
@@ -24,7 +26,6 @@ const [isFollow, setIsFollow] = useState<boolean>(false);
 const [name, setName] = useState<string>('');
 const [email, setEmail] = useState<string>('');
 const [phoneNumber, setPhoneNumber] = useState<string>('');
-const [affiliateCode, setAffiliateCode] = useState<string>('');
 const [loading, setLoading] = useState(true);
 const {isLoggedIn, authData, loginWithGoogle} = useAuth();
 
