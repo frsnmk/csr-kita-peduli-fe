@@ -67,7 +67,6 @@ const handleSumit = async () => {
     is_follow: isFollow,
     affiliate_code: affiliateCode
   }
-console.log(reqBody);
 
   const res = await createDonation(reqBody);
 

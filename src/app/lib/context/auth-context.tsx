@@ -37,6 +37,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         if(savedAuthData) {
             setAuthData(JSON.parse(savedAuthData));
             setIsLoggedIn(true);
+        } else {
+            setAuthData(null)
         }
         setLoading(false)
 
@@ -79,6 +81,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             setLoading(true)
             await signOut(auth);
             localStorage.removeItem('authData')
+            setAuthData(null)
             setLoading(false)
             setIsLoggedIn(false)
             toast.success('Logout berhasil');
