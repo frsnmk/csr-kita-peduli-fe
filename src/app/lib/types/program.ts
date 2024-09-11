@@ -14,6 +14,7 @@ export interface Program {
     story: string;
     short_story: string | null;
     status: string;
+    unique_no:number;
     created_at: string;
     updated_at: string;
     deleted_at: string | null;

@@ -8,13 +8,17 @@ import { BankAccount } from "../lib/types/bank-account";
 import BankAccountCard from "./form-component/bank-account";
 import toast from "react-hot-toast";
 import { confirmDonation, fetchDonation } from "../lib/services/donations";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Donation } from "../lib/types/donation";
+import { getProgram } from "../lib/services/programs";
+import { Program } from "../lib/types/program";
 
 const DonationConfirmationForm = () => {
   const router = useRouter();
+  const params = useParams()
 
   const [banks, setBanks]= useState<BankAccount[]>([]);
+  const [existingProgram, setExistingProgram] = useState<Program|null>(null);
   const [donation, setDonation] = useState<Donation|undefined>();
   const [loading, setLoading] = useState(true);
   
@@ -27,6 +31,8 @@ const DonationConfirmationForm = () => {
     const fetchData = async () => {
       setLoading(true)
       const banks = await fetchBanks({});
+      const program = await getProgram(params.id[0]);
+      setExistingProgram(program)
       setBanks(banks);
       setLoading(false)
       const donationId = localStorage.getItem('donation_id');
@@ -97,8 +103,6 @@ const DonationConfirmationForm = () => {
     }
   }
 
-  console.log('dari luar : ', donation)
-
   return (
     <div className="max-w-md mx-auto bg-white p-2 rounded-lg mt-3 text-center space-y-4">
       <Image src="/payment-waiting.png" alt="Payment Waiting" width={400} height={200} />
@@ -123,7 +127,7 @@ const DonationConfirmationForm = () => {
       }
       <div className="my-4">
         <p className="text-gray-700 text-xs">Total Bayar</p>
-        <p className="text-green-700 text-xl font-bold">Rp {donation?.amount.toLocaleString()}</p>
+        <p className="text-green-700 text-xl font-bold">Rp {(((donation == undefined) ? 0 : donation?.amount) + ((existingProgram != null) ? existingProgram!.unique_no : 0)).toLocaleString()}</p>
       </div>
       <div className="flex justify-center w-full">
         <input

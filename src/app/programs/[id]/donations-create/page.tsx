@@ -96,7 +96,7 @@ const validateForm = () => {
 
 
 const handleSumit = async () => {
-  if (!validateForm()) {
+  if (!validateForm() && !isLoggedIn) {
     return;
   }
 
