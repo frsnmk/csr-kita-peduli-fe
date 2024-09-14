@@ -87,3 +87,13 @@ export const getProgramPackagePrice = async (id:string) : Promise<ProgramPrice[]
     }
 }
 
+export const fetchZakat = async () : Promise<Program|null> => {
+    try {
+        const response = await axios.get<Program>(`${API_URL}programs/zakat`);
+        return response.data;
+    } catch (error) {
+        console.error('Failed to get programs', error);
+        return null;
+    }
+}
+

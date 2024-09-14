@@ -11,7 +11,7 @@ const AppBar = () => {
     const pathname = usePathname();
     const searchParams = useSearchParams();
     const initialSearchQuery = searchParams.get('search');
-    const isShowed = !pathname.startsWith(`/programs/`) && !pathname.startsWith(`/histories/`) && pathname != '/histories' && pathname != '/profiles';
+    const isShowed = !pathname.startsWith(`/programs/`) && !pathname.startsWith(`/histories/`) && pathname != '/histories' && pathname != '/profiles' && !pathname.startsWith('/zakat/');
     const router = useRouter();
 
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {

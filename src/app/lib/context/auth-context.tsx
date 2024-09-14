@@ -50,6 +50,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             const result = await signInWithPopup(auth, provider);
             const credential = GoogleAuthProvider.credentialFromResult(result)
             const user = result.user;
+            
             const accessToken = await credential?.accessToken!;
             const token = credential?.idToken;
 

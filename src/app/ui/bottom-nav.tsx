@@ -12,7 +12,7 @@ import InfoIcon from "./icon/info";
 
 const BottomNav = () => {
   const pathname = usePathname();
-  const isShowed = !pathname.startsWith(`/programs/`) && !pathname.startsWith(`/histories/`);
+  const isShowed = !pathname.startsWith(`/programs/`) && !pathname.startsWith(`/histories/`) && !pathname.startsWith(`/zakat/`);
   return (
     isShowed && (
     <div className="fixed bottom-0 w-full bg-white shadow-lg max-w-[480px] mx-auto left-0 right-0">
