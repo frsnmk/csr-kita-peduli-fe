@@ -6,9 +6,15 @@ import {useState} from "react";
 import {Alert, Modal, Tabs} from "flowbite-react";
 import {useAuth} from "@/app/lib/context/auth-context";
 import TextInput from "@/app/ui/form-component/text-input";
+import { createDonation } from "@/app/lib/services/donations";
+import { useRouter } from "next/navigation";
+import PrayerTextArea from "@/app/ui/form-component/prayer-text-area";
+import Checkbox from "@/app/ui/form-component/checkbox";
 
 export default function Page({params}: {params: {id: string}}) {
   const id = params.id;
+    const router = useRouter();
+    
   const [incomePerMonth, setIncomePerMonth] = useState<number>(0);
   const [anotherIncomePerMonth, setAnotherIncomePerMonth] = useState<number>(0);
   const [deposito, setDeposito] = useState(0);
@@ -19,6 +25,9 @@ export default function Page({params}: {params: {id: string}}) {
 
   const [openModal, setOpenModal] = useState(false);
   const [zakatAmount, setZakatAmount] = useState<number>(0);
+
+    const [prayerDonation, setPrayerDonation] = useState('');
+    const [beAnonim, setBeAnonim] = useState<boolean>(false);
 
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -34,6 +43,10 @@ export default function Page({params}: {params: {id: string}}) {
 
   const [activeTab, setActiveTab] = useState(0);
 
+    const handlePrayerChange = (value: string) => {
+      setPrayerDonation(value);
+    };
+
   const handleButtonClicked = () => {
     if (incomePerMonth + anotherIncomePerMonth < nisabPerMonth) {
       setAlertVisibility(true);
@@ -45,6 +58,135 @@ export default function Page({params}: {params: {id: string}}) {
   const hideAlert = () => {
     setAlertVisibility(false);
   };
+
+    const validateZakatForm = () => {
+      let isValid = true;
+
+      // Validasi Nama
+      if (!name.trim()) {
+        setNameError('Nama wajib diisi');
+        isValid = false;
+      } else {
+        setNameError('');
+      }
+
+      // Validasi Email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email.trim()) {
+        setEmailError('Email wajib diisi');
+        isValid = false;
+      } else if (!emailRegex.test(email)) {
+        setEmailError('Format email tidak valid');
+        isValid = false;
+      } else {
+        setEmailError('');
+      }
+
+      // Validasi Nomor Handphone
+      const phoneRegex = /^[0-9]+$/;
+      if (!phoneNumber.trim()) {
+        setPhoneError('Nomor handphone wajib diisi');
+        isValid = false;
+      } else if (!phoneRegex.test(phoneNumber)) {
+        setPhoneError('Nomor handphone tidak valid');
+        isValid = false;
+      } else {
+        setPhoneError('');
+      }
+
+      return isValid;
+    }
+  };
+
+    const submitZakatForm = async () => {
+      if (!validateZakatForm() && !isLoggedIn) {
+        return;
+      }
+
+      const reqBody = {
+        email: isLoggedIn ? authData?.email : email,
+        name:name,
+        program_id: id,
+        customer_id: authData?.customer_id, 
+        amount: Math.round(((incomePerMonth+anotherIncomePerMonth)*.025)),
+        be_anonim: beAnonim,
+        phone_number: phoneNumber,
+        prayer:  prayerDonation,
+        is_follow: false,
+      }
+
+      const res = await createDonation(reqBody);
+    
+      if (res.success) {
+        router.replace('donation-confirm');
+      } else {
+        console.error("Failed to create donation:", res.error);
+      }
+    }
+
+    const validateZakatForm = () => {
+      let isValid = true;
+
+      // Validasi Nama
+      if (!name.trim()) {
+        setNameError('Nama wajib diisi');
+        isValid = false;
+      } else {
+        setNameError('');
+      }
+
+      // Validasi Email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email.trim()) {
+        setEmailError('Email wajib diisi');
+        isValid = false;
+      } else if (!emailRegex.test(email)) {
+        setEmailError('Format email tidak valid');
+        isValid = false;
+      } else {
+        setEmailError('');
+      }
+
+      // Validasi Nomor Handphone
+      const phoneRegex = /^[0-9]+$/;
+      if (!phoneNumber.trim()) {
+        setPhoneError('Nomor handphone wajib diisi');
+        isValid = false;
+      } else if (!phoneRegex.test(phoneNumber)) {
+        setPhoneError('Nomor handphone tidak valid');
+        isValid = false;
+      } else {
+        setPhoneError('');
+      }
+
+      return isValid;
+    }
+
+    const submitZakatForm = async () => {
+      if (!validateZakatForm() && !isLoggedIn) {
+        return;
+      }
+
+      const reqBody = {
+        email: isLoggedIn ? authData?.email : email,
+        name:name,
+        program_id: id,
+        customer_id: authData?.customer_id, 
+        amount: Math.round(((incomePerMonth+anotherIncomePerMonth)*.025)),
+        be_anonim: beAnonim,
+        phone_number: phoneNumber,
+        prayer:  prayerDonation,
+        is_follow: false,
+      }
+
+      const res = await createDonation(reqBody);
+    
+      if (res.success) {
+        router.replace('donation-confirm');
+      } else {
+        console.error("Failed to create donation:", res.error);
+      }
+    }
 
   return (
     <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md relative">
@@ -192,48 +334,48 @@ export default function Page({params}: {params: {id: string}}) {
               )}
               onChange={(newAmount) => setZakatAmount(newAmount)}
             />
-            {!isLoggedIn && (
-              <div>
-                <h1 className="text-md font-semibold mb-4">
-                  <span
-                    className="text-green-700 cursor-pointer"
-                    onClick={() => loginWithGoogle()}
-                  >
-                    Masuk
-                  </span>{" "}
-                  atau lengkapi data dibawah ini
-                </h1>
-                <TextInput
-                  label="Nama"
-                  placeholder="Masukkan nama Anda"
-                  type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  validationMessage={nameError}
-                />
-                <TextInput
-                  label="Email"
-                  placeholder="Masukkan email Anda"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  validationMessage={emailError}
-                />
-                <TextInput
-                  label="Nomor Handphone"
-                  placeholder="Masukkan nomor handphone Anda"
-                  type="tel"
-                  value={phoneNumber}
-                  onChange={(e) => setPhoneNumber(e.target.value)}
-                  validationMessage={phoneError}
-                />
-              </div>
-            )}
+            <PrayerTextArea onChange={handlePrayerChange} />
+            <Checkbox
+              label="Sembunyikan nama saya (donasi sebagai anonim)"
+              checked={false}
+              onChange={(checked) => setBeAnonim(checked)}
+            />
+            {
+              !isLoggedIn && (
+                <div>
+                  <h1 className="text-md font-semibold mb-4"><span className="text-green-700 cursor-pointer" onClick={() => loginWithGoogle()}>Masuk</span> atau lengkapi data dibawah ini</h1>
+                  <TextInput
+                    label="Nama"
+                    placeholder="Masukkan nama Anda"
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    validationMessage={nameError}
+                  />
+                  <TextInput
+                    label="Email"
+                    placeholder="Masukkan email Anda"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    validationMessage={emailError}
+                  />
+                  <TextInput
+                    label="Nomor Handphone"
+                    placeholder="Masukkan nomor handphone Anda"
+                    type="tel"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    validationMessage={phoneError}
+                  />
+                </div>
+              )
+            }
           </div>
         </Modal.Body>
         <Modal.Footer className="flex justify-center">
           <button
-            onClick={handleButtonClicked}
+            onClick={submitZakatForm}
             className="flex items-center space-x-2 bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-green-800 transition duration-300"
           >
             <span className="text-xs">Bayar Zakat</span>
@@ -247,8 +389,9 @@ export default function Page({params}: {params: {id: string}}) {
 interface ZakatAlertConfirmProps {
   openModal: boolean;
   setOpenModal: (value: boolean) => void;
+  hideAlert: () => void;
 }
-function ZakatAlertConfirm({openModal, setOpenModal}: ZakatAlertConfirmProps) {
+function ZakatAlertConfirm({openModal, setOpenModal, hideAlert}:ZakatAlertConfirmProps) {
   return (
     <>
       <div className="mb-4 mt-2 text-sm font-bold text-yellow-700 dark:text-yellow-800">
@@ -262,7 +405,8 @@ function ZakatAlertConfirm({openModal, setOpenModal}: ZakatAlertConfirmProps) {
         >
           Ya
         </button>
-        <button
+        <button 
+          onClick={hideAlert}
           type="button"
           className="rounded-lg border border-cyan-700 bg-transparent px-3 py-1.5 text-center text-xs font-medium text-cyan-700 hover:bg-cyan-800 hover:text-white focus:ring-4 focus:ring-cyan-300 dark:border-cyan-800 dark:text-cyan-800 dark:hover:text-white"
         >
