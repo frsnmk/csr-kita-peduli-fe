@@ -1,8 +1,7 @@
 'use client';
 import CurrencyInput from "@/app/ui/form-component/currency-input";
 import ArrowBackIconButton from "@/app/ui/icon/arrow-back";
-import { useRef, useState } from "react";
-import toast from "react-hot-toast";
+import { useState } from "react";
 
 import { Alert, Modal } from "flowbite-react";
 import { useAuth } from "@/app/lib/context/auth-context";
@@ -25,17 +24,22 @@ export default function Page({ params }: { params: { id: string } }) {
     const [emailError, setEmailError] = useState<string>('');
     const [phoneError, setPhoneError] = useState<string>('');
 
+    const [alertVisibility, setAlertVisibility] = useState(false);
+
     const {isLoggedIn, authData, loginWithGoogle} = useAuth();
 
     const handleButtonClicked = () => {
       if(incomePerMonth < nisabPerMonth) {
-        toast('Penghasilan kamu masih kurang dari nisab!', {
-          icon: '👏',
-        });
+        setAlertVisibility(true)
       } else {
         setOpenModal(true)
       }
     }
+
+    const hideAlert = () => {
+      setAlertVisibility(false)
+    }
+
   return (
     <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md relative">
       <ArrowBackIconButton />
@@ -44,9 +48,13 @@ export default function Page({ params }: { params: { id: string } }) {
       <div className="space-y-6">
         <h1 className="text-lg font-bold mb-4">Kalkulator Zakat</h1>
       </div>
-      <Alert color="warning" rounded>
-        <span className="font-medium">Info alert!</span> Change a few things up and try submitting again.
-      </Alert>
+     {
+      alertVisibility && (
+        <Alert color="warning" additionalContent={<ZakatAlertConfirm openModal={openModal} setOpenModal={setOpenModal} />} onDismiss={hideAlert}>
+          Penghasilan kamu masih kurang dari nisab. Jika dilanjutkan akan menjadi sedekah.
+        </Alert>
+      )
+     }
       <CurrencyInput
         label="Penghasilan per bulan"
         placeholder="Masukkan jumlah"
@@ -128,4 +136,33 @@ export default function Page({ params }: { params: { id: string } }) {
       </Modal>
     </div>
   )
-} 
+}
+
+interface ZakatAlertConfirmProps {
+  openModal: boolean;
+  setOpenModal: (value: boolean) => void;
+}
+function ZakatAlertConfirm({openModal, setOpenModal}:ZakatAlertConfirmProps) {
+  return (
+    <>
+      <div className="mb-4 mt-2 text-sm font-bold text-yellow-700 dark:text-yellow-800">
+        Apakah ingin dilanjutkan dengan sedekah?
+      </div>
+      <div className="flex">
+      
+        <button onClick={()=>setOpenModal(true)}
+          type="button"
+          className="mr-2 inline-flex items-center rounded-lg bg-cyan-700 px-3 py-1.5 text-center text-xs font-medium text-white hover:bg-cyan-800 focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-800 dark:hover:bg-cyan-900"
+        >
+          Ya
+        </button>
+        <button
+          type="button"
+          className="rounded-lg border border-cyan-700 bg-transparent px-3 py-1.5 text-center text-xs font-medium text-cyan-700 hover:bg-cyan-800 hover:text-white focus:ring-4 focus:ring-cyan-300 dark:border-cyan-800 dark:text-cyan-800 dark:hover:text-white"
+        >
+          Tidak
+        </button>
+      </div>
+    </>
+  );
+}
