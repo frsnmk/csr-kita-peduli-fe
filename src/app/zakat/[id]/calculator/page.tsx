@@ -29,7 +29,7 @@ export default function Page({ params }: { params: { id: string } }) {
     const {isLoggedIn, authData, loginWithGoogle} = useAuth();
 
     const handleButtonClicked = () => {
-      if(incomePerMonth < nisabPerMonth) {
+      if(incomePerMonth+anotherIncomePerMonth < nisabPerMonth) {
         setAlertVisibility(true)
       } else {
         setOpenModal(true)
