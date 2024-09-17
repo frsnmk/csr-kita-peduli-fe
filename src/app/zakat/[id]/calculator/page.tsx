@@ -142,7 +142,8 @@ export default function Page({params}: {params: {id: string}}) {
     const res = await createDonation(reqBody);
   
     if (res.success) {
-      router.replace('donation-confirm');
+      localStorage.setItem('donation_id', JSON.stringify(res.data.id))
+      router.replace('zakat-confirm');
     } else {
       console.error("Failed to create donation:", res.error);
     }
