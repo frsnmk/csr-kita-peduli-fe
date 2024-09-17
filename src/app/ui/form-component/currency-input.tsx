@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 interface CurrencyInputProps {
   label: string;
   placeholder: string;
-  value: number;
+  value: number|string;
   onChange: (value: number) => void;
 }
 

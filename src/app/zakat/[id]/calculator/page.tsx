@@ -1,33 +1,36 @@
 "use client";
 import CurrencyInput from "@/app/ui/form-component/currency-input";
 import ArrowBackIconButton from "@/app/ui/icon/arrow-back";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
-import {Alert, Modal, Tabs} from "flowbite-react";
+import {Alert, Modal, Tabs, TextInput as  FBTextInput, Label as FBLabel} from "flowbite-react";
 import {useAuth} from "@/app/lib/context/auth-context";
 import TextInput from "@/app/ui/form-component/text-input";
 import { createDonation } from "@/app/lib/services/donations";
 import { useRouter } from "next/navigation";
 import PrayerTextArea from "@/app/ui/form-component/prayer-text-area";
 import Checkbox from "@/app/ui/form-component/checkbox";
+import { fetchZakat } from "@/app/lib/services/programs";
+import { Program } from "@/app/lib/types/program";
 
 export default function Page({params}: {params: {id: string}}) {
   const id = params.id;
-    const router = useRouter();
-    
+  const router = useRouter();
+  
+  const [program, setProgram] = useState<Program|null>(null);
   const [incomePerMonth, setIncomePerMonth] = useState<number>(0);
   const [anotherIncomePerMonth, setAnotherIncomePerMonth] = useState<number>(0);
-  const [deposito, setDeposito] = useState(0);
-  const [propertyValue, setPropertyValue] = useState(0);
-  const [jewellery, setJewellery] = useState(0);
+  const [deposito, setDeposito] = useState<number>(0);
+  const [gold, setGold] = useState<number>(0);
+  const [silver, setSilver] = useState<number>(0);
   const [nisabPerMonth, setNisabPerMonth] = useState(6859394); //6.859.394
   const [nisabPerYear, setNisabPerYear] = useState(82312725); //82.312.725
 
   const [openModal, setOpenModal] = useState(false);
   const [zakatAmount, setZakatAmount] = useState<number>(0);
 
-    const [prayerDonation, setPrayerDonation] = useState('');
-    const [beAnonim, setBeAnonim] = useState<boolean>(false);
+  const [prayerDonation, setPrayerDonation] = useState('');
+  const [beAnonim, setBeAnonim] = useState<boolean>(false);
 
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -39,27 +42,50 @@ export default function Page({params}: {params: {id: string}}) {
 
   const [alertVisibility, setAlertVisibility] = useState(false);
 
+
+  const [loading, setLoading] = useState(true);
   const {isLoggedIn, authData, loginWithGoogle} = useAuth();
 
-  const [activeTab, setActiveTab] = useState(0);
-
-    const handlePrayerChange = (value: string) => {
-      setPrayerDonation(value);
-    };
-
-  const handleButtonClicked = () => {
-    if (incomePerMonth + anotherIncomePerMonth < nisabPerMonth) {
-      setAlertVisibility(true);
-    } else {
-      setOpenModal(true);
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true)
+      const program = await fetchZakat();
+      setProgram(program)
+      setLoading(false)
     }
+
+    fetchData()
+  },[])
+
+  useEffect(() => {
+    setZakatAmount(0);
+    setZakatAmount(Math.round(((incomePerMonth+anotherIncomePerMonth)*.025)));
+  }, [incomePerMonth, anotherIncomePerMonth])
+
+  useEffect(() => {
+    setZakatAmount(0);
+    setZakatAmount((deposito + (gold * (!program? 0 : program.gold_price!.amount)) + (silver* (!program? 0 : program.silver_price!.amount)))*.025)
+  }, [deposito, gold, silver])
+
+
+  const handlePrayerChange = (value: string) => {
+    setPrayerDonation(value);
+  };
+
+  const handleButtonClicked = (isMaal=false) => {
+    console.log(zakatAmount,  '<' , (isMaal ? nisabPerYear : nisabPerMonth))
+      if ((isMaal ? deposito+(gold * (!program? 0 : program.gold_price!.amount))+(silver* (!program? 0 : program.silver_price!.amount)) : incomePerMonth+anotherIncomePerMonth) < (isMaal ? nisabPerYear : nisabPerMonth)) {
+        setAlertVisibility(true);
+      } else {
+        setOpenModal(true);
+      }
   };
 
   const hideAlert = () => {
     setAlertVisibility(false);
   };
 
-    const validateZakatForm = () => {
+  const validateZakatForm = () => {
       let isValid = true;
 
       // Validasi Nama
@@ -95,100 +121,32 @@ export default function Page({params}: {params: {id: string}}) {
       }
 
       return isValid;
+  }
+
+  const submitZakatForm = async () => {
+    if (!validateZakatForm() && !isLoggedIn) {
+      return;
     }
-  };
-
-    const submitZakatForm = async () => {
-      if (!validateZakatForm() && !isLoggedIn) {
-        return;
-      }
-
-      const reqBody = {
-        email: isLoggedIn ? authData?.email : email,
-        name:name,
-        program_id: id,
-        customer_id: authData?.customer_id, 
-        amount: Math.round(((incomePerMonth+anotherIncomePerMonth)*.025)),
-        be_anonim: beAnonim,
-        phone_number: phoneNumber,
-        prayer:  prayerDonation,
-        is_follow: false,
-      }
-
-      const res = await createDonation(reqBody);
+    const reqBody = {
+      email: isLoggedIn ? authData?.email : email,
+      name:name,
+      program_id: id,
+      customer_id: authData?.customer_id, 
+      amount: zakatAmount,
+      be_anonim: beAnonim,
+      phone_number: phoneNumber,
+      prayer:  prayerDonation,
+      is_follow: false,
+    }
     
-      if (res.success) {
-        router.replace('donation-confirm');
-      } else {
-        console.error("Failed to create donation:", res.error);
-      }
+    const res = await createDonation(reqBody);
+  
+    if (res.success) {
+      router.replace('donation-confirm');
+    } else {
+      console.error("Failed to create donation:", res.error);
     }
-
-    const validateZakatForm = () => {
-      let isValid = true;
-
-      // Validasi Nama
-      if (!name.trim()) {
-        setNameError('Nama wajib diisi');
-        isValid = false;
-      } else {
-        setNameError('');
-      }
-
-      // Validasi Email
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!email.trim()) {
-        setEmailError('Email wajib diisi');
-        isValid = false;
-      } else if (!emailRegex.test(email)) {
-        setEmailError('Format email tidak valid');
-        isValid = false;
-      } else {
-        setEmailError('');
-      }
-
-      // Validasi Nomor Handphone
-      const phoneRegex = /^[0-9]+$/;
-      if (!phoneNumber.trim()) {
-        setPhoneError('Nomor handphone wajib diisi');
-        isValid = false;
-      } else if (!phoneRegex.test(phoneNumber)) {
-        setPhoneError('Nomor handphone tidak valid');
-        isValid = false;
-      } else {
-        setPhoneError('');
-      }
-
-      return isValid;
-    }
-
-    const submitZakatForm = async () => {
-      if (!validateZakatForm() && !isLoggedIn) {
-        return;
-      }
-
-      const reqBody = {
-        email: isLoggedIn ? authData?.email : email,
-        name:name,
-        program_id: id,
-        customer_id: authData?.customer_id, 
-        amount: Math.round(((incomePerMonth+anotherIncomePerMonth)*.025)),
-        be_anonim: beAnonim,
-        phone_number: phoneNumber,
-        prayer:  prayerDonation,
-        is_follow: false,
-      }
-
-      const res = await createDonation(reqBody);
-    
-      if (res.success) {
-        localStorage.setItem('donation_id', JSON.stringify(res.data.id))
-        router.replace('zakat-confirm');
-      } else {
-        console.error("Failed to create donation:", res.error);
-      }
-    }
-
+  }
   return (
     <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md relative">
       <ArrowBackIconButton />
@@ -205,6 +163,7 @@ export default function Page({params}: {params: {id: string}}) {
             <ZakatAlertConfirm
               openModal={openModal}
               setOpenModal={setOpenModal}
+              hideAlert={hideAlert}
             />
           }
           onDismiss={hideAlert}
@@ -259,7 +218,7 @@ export default function Page({params}: {params: {id: string}}) {
 
           <div className="flex justify-center w-full mt-8">
             <button
-              onClick={handleButtonClicked}
+              onClick={() => handleButtonClicked()}
               className="flex items-center space-x-2 bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-green-800 transition duration-300"
             >
               <span className="text-xs">Tunaikan</span>
@@ -284,35 +243,43 @@ export default function Page({params}: {params: {id: string}}) {
           }
         >
           <CurrencyInput
-            label="Nilai Deposito"
+            label="Deposito"
             placeholder="Masukkan jumlah"
             value={deposito}
             onChange={(newAmount) => setDeposito(newAmount)}
           />
-          <CurrencyInput
-            label="Nilai properti & kendaraan"
+          <TextInput
+            label="Emas dalam gram"
+            type="number"
             placeholder="Masukkan jumlah"
-            value={propertyValue}
-            onChange={(newAmount) => setPropertyValue(newAmount)}
+            value={gold!}
+            onChange={(e) => setGold(+e.target.value)}
+            required={false}
           />
-          <CurrencyInput
-            label="Perhiasan (Emas, Perak, Permata dll)"
+          <TextInput
+            label="Perak dalam gram"
+            type="number"
             placeholder="Masukkan jumlah"
-            value={jewellery}
-            onChange={(newAmount) => setJewellery(newAmount)}
+            value={silver!}
+            onChange={(e) => setSilver(+e.target.value)}
+            required={false}
           />
-          <CurrencyInput
-            label="Saham, piutang, surat-surat berharga lainnya"
-            placeholder="Masukkan jumlah"
-            value={jewellery}
-            onChange={(newAmount) => setJewellery(newAmount)}
-          />
-          <CurrencyInput
-            label="Hutang pribadi yang jatuh tempo tahun ini"
-            placeholder="Masukkan jumlah"
-            value={jewellery}
-            onChange={(newAmount) => setJewellery(newAmount)}
-          />
+          <div className="bg-green-100 p-6 rounded-lg shadow-md text-center">
+            <h2 className="text-sm font-semibold text-gray-800">
+              Jumlah Zakat
+            </h2>
+            <p className="text-xl font-bold text-green-700 mt-2">
+              Rp {Math.round(zakatAmount).toLocaleString("id-ID")}
+            </p>
+          </div>
+          <div className="flex justify-center w-full mt-8">
+            <button
+              onClick={() => handleButtonClicked(true)}
+              className="flex items-center space-x-2 bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-green-800 transition duration-300"
+            >
+              <span className="text-xs">Tunaikan</span>
+            </button>
+          </div>
         </Tabs.Item>
       </Tabs>
       <Modal
@@ -330,9 +297,7 @@ export default function Page({params}: {params: {id: string}}) {
             <CurrencyInput
               label="Nominal Zakat"
               placeholder="Masukkan jumlah"
-              value={Math.round(
-                (incomePerMonth + anotherIncomePerMonth) * 0.025
-              )}
+              value={Math.round(zakatAmount)}
               onChange={(newAmount) => setZakatAmount(newAmount)}
             />
             <PrayerTextArea onChange={handlePrayerChange} />

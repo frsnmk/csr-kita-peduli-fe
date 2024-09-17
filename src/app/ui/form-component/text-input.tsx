@@ -4,15 +4,16 @@ interface TextInputProps {
   label: string;
   placeholder: string;
   type: string;
-  value: string;
+  value: string|number;
   validationMessage?:string;
+  required?:boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const TextInput: React.FC<TextInputProps> = ({ label, placeholder, type, value, validationMessage, onChange }) => {
+const TextInput: React.FC<TextInputProps> = ({ label, placeholder, type, value, validationMessage, required=true, onChange }) => {
   return (
     <div className="mb-2">
-      <label className="block text-sm font-medium text-gray-700 mb-2">{label} <span className="font-thin text-xs text-red-600">*</span></label>
+      <label className="block text-sm font-medium text-gray-700 mb-2">{label} {required ? <span className="font-thin text-xs text-red-600">*</span>: <span className='italic'>(Opsional)</span>}</label>
       <input
         type={type}
         placeholder={placeholder}

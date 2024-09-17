@@ -24,8 +24,20 @@ export interface Program {
     pic: Pic;
     categories: Category[];
     tags: Tag[];
-  }
+    gold_price?: GoldPrice;
+    silver_price?: SilverPrice;
+}
 
+
+interface GoldPrice {
+    program_id: number;
+    amount: number;
+}
+
+interface SilverPrice {
+    program_id: number;
+    amount: number;
+}
   export interface ProgramPrice {
     id: number;
     program_id: number;
