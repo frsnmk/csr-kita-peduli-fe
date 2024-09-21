@@ -48,6 +48,7 @@ export const ZakatDetailPage = ({id}:ZakatDetailPageProps) => {
     const {isLoggedIn, authData, loginWithGoogle} = useAuth();
 
     const handlePrayerChange = (value: string) => {
+        console.log('Handle prayer change : ', value)
         setPrayerDonation(value);
       };
     
@@ -115,7 +116,7 @@ export const ZakatDetailPage = ({id}:ZakatDetailPageProps) => {
       }
       const reqBody = {
         email: isLoggedIn ? authData?.email : email,
-        name:name,
+        name:isLoggedIn ? authData?.displayName : name,
         program_id: id,
         customer_id: authData?.customer_id, 
         amount: zakatAmount,
@@ -218,7 +219,7 @@ export const ZakatDetailPage = ({id}:ZakatDetailPageProps) => {
             setOpenModal={setZakatModal}
             zakatAmount={zakatAmount}
             setZakatAmount={setZakatAmount}
-            handlePrayerChange={()=> handlePrayerChange}
+            handlePrayerChange={handlePrayerChange}
             setBeAnonim={setBeAnonim}
             isLoggedIn={isLoggedIn}
             name={name}

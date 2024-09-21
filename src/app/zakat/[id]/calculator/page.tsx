@@ -74,7 +74,6 @@ export default function Page({params}: {params: {id: string}}) {
   };
 
   const handleButtonClicked = (isMaal=false) => {
-    console.log(zakatAmount,  '<' , (isMaal ? nisabPerYear : nisabPerMonth))
       if ((isMaal ? deposito+(gold * (!program? 0 : program.gold_price!.amount))+(silver* (!program? 0 : program.silver_price!.amount)) : incomePerMonth+anotherIncomePerMonth) < (isMaal ? nisabPerYear : nisabPerMonth)) {
         setAlertVisibility(true);
       } else {
@@ -130,7 +129,7 @@ export default function Page({params}: {params: {id: string}}) {
     }
     const reqBody = {
       email: isLoggedIn ? authData?.email : email,
-      name:name,
+      name: isLoggedIn ? authData?.displayName : name,
       program_id: id,
       customer_id: authData?.customer_id, 
       amount: zakatAmount,
@@ -284,12 +283,12 @@ export default function Page({params}: {params: {id: string}}) {
           </div>
         </Tabs.Item>
       </Tabs>
-      <ZakatModal 
+      <ZakatModal  
         openModal={openModal}
         setOpenModal={setOpenModal}
         zakatAmount={zakatAmount}
         setZakatAmount={setZakatAmount}
-        handlePrayerChange={()=> handlePrayerChange}
+        handlePrayerChange={handlePrayerChange}
         setBeAnonim={setBeAnonim}
         isLoggedIn={isLoggedIn}
         name={name}

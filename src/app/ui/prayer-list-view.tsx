@@ -8,7 +8,6 @@ interface PrayerListProps{
 }
 
 export default function PrayerList({prayer}:PrayerListProps) {
-  console.log('Prayer :  ', prayer)
     return (
     <div className="flex flex-col p-4 border-b border-gray-200">
         <div className="flex items-center">
