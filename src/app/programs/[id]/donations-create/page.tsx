@@ -102,7 +102,7 @@ const handleSumit = async () => {
 
   const reqBody = {
     email: isLoggedIn ? authData?.email : email,
-    name:name,
+    name:isLoggedIn ? authData?.displayName : name,
     program_id: programId,
     customer_id: authData?.customer_id, 
     amount: customAmount,

@@ -13,7 +13,7 @@ export default function PrayerList({prayer}:PrayerListProps) {
         <div className="flex items-center">
             <div className="w-10 h-10 relative">
                 <Image
-                    src={(prayer.donation.customer == null) ? '/default-avatar-2.png': (prayer.donation.customer.photo ??'/default-avatar-2.png')}
+                    src={(prayer.donation == null || prayer.donation.customer == null) ? '/default-avatar-2.png': (prayer.donation.customer.photo ??'/default-avatar-2.png')}
                     alt="Avatar"
                     layout="fill"
                     objectFit="cover"
