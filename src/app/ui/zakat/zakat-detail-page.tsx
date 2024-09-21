@@ -45,7 +45,7 @@ export const ZakatDetailPage = ({id}:ZakatDetailPageProps) => {
     const [emailError, setEmailError] = useState<string>("");
     const [phoneError, setPhoneError] = useState<string>("");
 
-    const {isLoggedIn, authData, loginWithGoogle} = useAuth();
+    const {isLoggedIn, authData, loading, loginWithGoogle} = useAuth();
 
     const handlePrayerChange = (value: string) => {
         console.log('Handle prayer change : ', value)
@@ -233,6 +233,7 @@ export const ZakatDetailPage = ({id}:ZakatDetailPageProps) => {
             phoneNumberError={phoneError}
             submitZakatForm={submitZakatForm}
             loginWithGoogle={loginWithGoogle}
+            loading={loading}
         />
         <div className="fixed bottom-0 w-full bg-white shadow-lg max-w-[480px] mx-auto left-0 right-0">
             <div className="flex justify-around items-center py-3">
