@@ -120,7 +120,7 @@ export const ProgramDetailPage = ({id}: ProgramDetailPageProps) => {
           </div>
         </div>
       </div>
-      <StoryCard id={id} text={program?.short_story!} />
+      <StoryCard id={id} shortText={program?.short_story!} text={program?.story} />
 
       <div className="bg-white p-4 rounded-lg shadow-md">
         <h2 className="text-md font-semibold">
