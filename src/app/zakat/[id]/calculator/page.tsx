@@ -12,6 +12,7 @@ import PrayerTextArea from "@/app/ui/form-component/prayer-text-area";
 import Checkbox from "@/app/ui/form-component/checkbox";
 import { fetchZakat } from "@/app/lib/services/programs";
 import { Program } from "@/app/lib/types/program";
+import ZakatModal from "@/app/ui/modals/zakat-modal";
 
 export default function Page({params}: {params: {id: string}}) {
   const id = params.id;
@@ -283,7 +284,27 @@ export default function Page({params}: {params: {id: string}}) {
           </div>
         </Tabs.Item>
       </Tabs>
-      <Modal
+      <ZakatModal 
+        openModal={openModal}
+        setOpenModal={setOpenModal}
+        zakatAmount={zakatAmount}
+        setZakatAmount={setZakatAmount}
+        handlePrayerChange={()=> handlePrayerChange}
+        setBeAnonim={setBeAnonim}
+        isLoggedIn={isLoggedIn}
+        name={name}
+        setName={setName}
+        nameError={nameError}
+        email={email}
+        setEmail={setEmail}
+        emailError={emailError}
+        phoneNumber={phoneNumber}
+        setPhoneNumber={setPhoneNumber}
+        phoneNumberError={phoneError}
+        submitZakatForm={submitZakatForm}
+        loginWithGoogle={loginWithGoogle}
+      />
+      {/* <Modal
         show={openModal}
         size="md"
         popup
@@ -348,7 +369,7 @@ export default function Page({params}: {params: {id: string}}) {
             <span className="text-xs">Bayar Zakat</span>
           </button>
         </Modal.Footer>
-      </Modal>
+      </Modal> */}
     </div>
   );
 }
