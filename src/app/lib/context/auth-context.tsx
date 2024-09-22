@@ -54,7 +54,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             const accessToken = await credential?.accessToken!;
             const token = credential?.idToken;
 
-            const validatedTokenRes = await validatedToken({token}, accessToken)
+            const validatedTokenRes = await validatedToken({token,accessToken})
             if(validatedTokenRes.success) {
                 localStorage.setItem('authData', JSON.stringify({
                     token: validatedTokenRes.data[0].token,
