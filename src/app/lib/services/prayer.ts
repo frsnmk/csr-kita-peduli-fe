@@ -1,5 +1,5 @@
 import { Prayer, PrayerQueryParams } from "../types/prayer";
-import axiosInstance from "../axiosInstance";
+import axios from "axios";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -8,7 +8,7 @@ export const fetchProgramPrayer = async (id:string, queryParam:PrayerQueryParams
         const filledQueryParam = Object.fromEntries(
             Object.entries(queryParam).filter(([_, value]) => value !== null && value !== undefined)
         );
-        const response = await axiosInstance.get<{data:Prayer[]}>(`${API_URL}programs/${id}/prayers`, 
+        const response = await axios.get<{data:Prayer[]}>(`${API_URL}programs/${id}/prayers`, 
             {
                 params: filledQueryParam
             }
