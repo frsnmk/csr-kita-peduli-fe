@@ -1,5 +1,6 @@
 // lib/axiosInstance.ts
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 // Membuat instance axios
 const axiosInstance = axios.create({
@@ -37,7 +38,7 @@ axiosInstance.interceptors.response.use(
     // Tangani error di sini, misalnya redirect ke login jika token tidak valid
     if (error.response.status === 401) {
       // Misalnya redirect ke halaman login jika unauthorized
-      window.location.href = '/login';
+      toast.error('Unauthorized')
     }
     return Promise.reject(error);
   }

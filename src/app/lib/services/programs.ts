@@ -1,12 +1,13 @@
 import axios from "axios";
 import { Program, ProgramPrice } from "../types/program";
 import { Donation, DonationQueryParams } from "../types/donation";
+import axiosInstance from "../axiosInstance";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export const fetchFeaturedProgram = async () : Promise<Program[]> => {
     try {
-        const response = await axios.get<{data: Program[]}>(`${API_URL}programs`,
+        const response = await axiosInstance.get<{data: Program[]}>(`${API_URL}programs`,
             {
                 params: {
                     search: '',
@@ -26,7 +27,7 @@ export const fetchFeaturedProgram = async () : Promise<Program[]> => {
 
 export const fetchPrograms = async (search:string='') : Promise<Program[]> => {
     try {
-        const response = await axios.get<{data: Program[]}>(`${API_URL}programs`,
+        const response = await axiosInstance.get<{data: Program[]}>(`${API_URL}programs`,
             {
                 params: {
                     search: search,
@@ -44,7 +45,7 @@ export const fetchPrograms = async (search:string='') : Promise<Program[]> => {
 
 export const getProgram = async (id:string) : Promise<Program|null> => {
     try {
-        const response = await axios.get<Program>(`${API_URL}programs/${id}`);
+        const response = await axiosInstance.get<Program>(`${API_URL}programs/${id}`);
         return response.data;
     } catch (error) {
         console.error('Failed to get programs', error);
@@ -63,7 +64,7 @@ export const getProgramDonor = async (id:string, queryParam?:DonationQueryParams
             filledQueryParam = null;
         }
         
-        const response = await axios.get<{data:Donation[]}>(`${API_URL}programs/${id}/donations`,
+        const response = await axiosInstance.get<{data:Donation[]}>(`${API_URL}programs/${id}/donations`,
             {
                 params: filledQueryParam
             }
@@ -79,7 +80,7 @@ export const getProgramDonor = async (id:string, queryParam?:DonationQueryParams
 
 export const getProgramPackagePrice = async (id:string) : Promise<ProgramPrice[]> => {
     try {
-        const response = await axios.get<{data: ProgramPrice[]}>(`${API_URL}programs/${id}/prices`);
+        const response = await axiosInstance.get<{data: ProgramPrice[]}>(`${API_URL}programs/${id}/prices`);
         return response.data.data;
     } catch (error) {
         console.error('Failed to get programs package price', error);
@@ -89,7 +90,7 @@ export const getProgramPackagePrice = async (id:string) : Promise<ProgramPrice[]
 
 export const fetchZakat = async () : Promise<Program|null> => {
     try {
-        const response = await axios.get<Program>(`${API_URL}programs/zakat`);
+        const response = await axiosInstance.get<Program>(`${API_URL}programs/zakat`);
         return response.data;
     } catch (error) {
         console.error('Failed to get programs', error);
