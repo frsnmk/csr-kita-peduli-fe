@@ -36,7 +36,7 @@ export const fetchDonation = async (id: string): Promise<Result<Donation>> => {
 
 export const createDonation = async (data:DonationDTO): Promise<Result<Donation>> => {
     try {
-        const response = await axios.post<{ data: Donation }>(`${API_URL}donations`, data);
+        const response = await axiosInstance.post<{ data: Donation }>(`${API_URL}donations`, data);
         return { success: true, data: response.data.data };
     } catch (error) {
         console.error('Failed to create donation', error);

@@ -38,7 +38,7 @@ export interface DonationQueryParams {
   limit?:number;
   page?:number;
   payment_status?:string;
-  customer_id?:number;
+  customer_id?:number|string|null|undefined;
 }
 
 export interface DonationDTO {

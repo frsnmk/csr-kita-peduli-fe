@@ -7,8 +7,9 @@ import { fetchDonations } from "../lib/services/donations";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Donation } from "../lib/types/donation";
+import { useAuth } from "../lib/context/auth-context";
 
-export default async function page() {
+export default function page() {
 
   const [pendingDonation, setPendingDonation] = useState<Donation[]|undefined>();
   const [paidDonation, setPaidDonation] = useState<Donation[]|undefined>();
@@ -16,25 +17,30 @@ export default async function page() {
   const [failedDonation, setFailedDonation] = useState<Donation[]|undefined>();
   const [isLoading, setIsLoading] = useState(true);
 
+  const {authData} = useAuth();
+
   useEffect(()=>{
     const fetchData = async () => {
       setIsLoading(true)
-      const resPendingDonation = await fetchDonations({ payment_status: 'pending' });
-      setPendingDonation(resPendingDonation);
-
-      const resPaidDonation = await fetchDonations({ payment_status: 'paid' });
-      setPaidDonation(resPaidDonation);
-
-      const resConfirmedDonation = await fetchDonations({ payment_status: 'confirmed' });
-      setConfirmedDonation(resConfirmedDonation);
-
-      const resFailedDonation = await fetchDonations({ payment_status: 'failed' });
-      setFailedDonation(resFailedDonation)
+      if(authData?.customer_id) {
+        const resPendingDonation = await fetchDonations({ payment_status: 'pending', customer_id: authData?.customer_id});
+        setPendingDonation(resPendingDonation);
+  
+        const resPaidDonation = await fetchDonations({ payment_status: 'paid', customer_id: authData?.customer_id });
+        setPaidDonation(resPaidDonation);
+  
+        const resConfirmedDonation = await fetchDonations({ payment_status: 'confirmed', customer_id: authData?.customer_id });
+        setConfirmedDonation(resConfirmedDonation);
+  
+        const resFailedDonation = await fetchDonations({ payment_status: 'failed', customer_id: authData?.customer_id });
+        setFailedDonation(resFailedDonation)
+      }
       setIsLoading(false)
     }
 
     fetchData();
-  },[]);
+    console.log('fetch lagi dong')
+  },[authData]);
 
   return (
     <div>
