@@ -46,7 +46,6 @@ export const ProgramDetailPage = ({id}: ProgramDetailPageProps) => {
     fetchDetails();
   }, [id]);
 
-  console.log("Donation :  ", donations);
 
   if (isLoading) return <ProgramDetailSkeleton />;
 
@@ -152,7 +151,7 @@ export const ProgramDetailPage = ({id}: ProgramDetailPageProps) => {
           ))}
 
         {
-          donations.length > 3 && (
+          donations.length > 2 && (
             <div className="flex justify-center pt-4">
               <Link href={`${id}/donation`} className="text-green-700 font-medium">
                 Lihat semua
@@ -174,7 +173,7 @@ export const ProgramDetailPage = ({id}: ProgramDetailPageProps) => {
             <PrayerList key={key} prayer={prayer} />
           ))}
           {
-            prayers.length > 3 && (
+            prayers.length > 2 && (
               <div className="flex justify-center pt-4">
                 <Link href={`${id}/prayer`} className="text-green-700 font-medium">
                   Lihat semua
