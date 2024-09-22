@@ -16,7 +16,7 @@ const UnpaidDetailHistoryForm = ({id, data}:UnpaidDetailHistoryFormProps) => {
 
     const handleSubmit = () => {
         localStorage.setItem('donation_id', id)
-        router.push(`/programs/${id}/donation-confirm`)
+        router.push(`/programs/${data?.program_id}/donation-confirm`)
     };
 
     if(!data) {
