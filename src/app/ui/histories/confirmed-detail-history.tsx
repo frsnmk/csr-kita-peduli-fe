@@ -7,11 +7,15 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 interface ConfirmedDetailHistoryProps {
-    data: Donation;
+    data: Donation|null|undefined;
 }
 
 const ConfirmedDetailHistory = ({data}:ConfirmedDetailHistoryProps) => {
     const router = useRouter();
+
+    if(!data) {
+        return '404';
+    }
 
     return ( 
         <div className="p-4 relative">

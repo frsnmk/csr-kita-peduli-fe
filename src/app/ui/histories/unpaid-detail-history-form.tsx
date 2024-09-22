@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 
 interface UnpaidDetailHistoryFormProps {
     id:string
-    data: Donation;
+    data: Donation|undefined|null;
 }
 
 const UnpaidDetailHistoryForm = ({id, data}:UnpaidDetailHistoryFormProps) => {
@@ -18,6 +18,10 @@ const UnpaidDetailHistoryForm = ({id, data}:UnpaidDetailHistoryFormProps) => {
         localStorage.setItem('donation_id', id)
         router.push(`/programs/${id}/donation-confirm`)
     };
+
+    if(!data) {
+        return '404';
+    }
   
     return ( 
         <div className="p-4 relative">

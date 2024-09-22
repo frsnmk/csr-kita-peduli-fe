@@ -22,7 +22,7 @@ export const fetchDonations = async (queryParam:DonationQueryParams) : Promise<D
     }
 }
 
-type Result<T> = { success: true; data: T } | { success: false; error: any };
+export type Result<T> = { success: true; data: T } | { success: false; error: any };
 
 export const fetchDonation = async (id: string): Promise<Result<Donation>> => {
     try {

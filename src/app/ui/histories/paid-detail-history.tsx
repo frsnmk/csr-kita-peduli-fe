@@ -7,12 +7,14 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 interface PaidDetailHistoryProps {
-    data: Donation;
+    data: Donation|undefined|null;
 }
 
 const PaidDetailHistory = ({data}:PaidDetailHistoryProps) => {
     const router = useRouter();
-
+    if(!data) {
+        return '404';
+    }
     return ( 
         <div className="p-4 relative">
             <ArrowBackIconButton />
