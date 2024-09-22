@@ -76,7 +76,7 @@ const DonationConfirmationForm = () => {
     const donationId = localStorage.getItem('donation_id');
 
     formData.append('receipt_image_path', selectedFile)
-    formData.append('bank_id', 1)
+    formData.append('bank_id', selectedAccount ?? 1)
 
     if(!selectedAccount) {
       toast.error('Silahkan pilih nomor rekening')

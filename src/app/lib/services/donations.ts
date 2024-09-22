@@ -45,7 +45,11 @@ export const createDonation = async (data:DonationDTO): Promise<Result<Donation>
 
 export const confirmDonation = async (id:string, data:FormData): Promise<Result<Donation>> => {
     try {
-        const response = await axiosInstance.post<{ data: Donation }>(`${API_URL}donations/${id}/confirm`, data);
+        const response = await axiosInstance.post<{ data: Donation }>(`${API_URL}donations/${id}/confirm`, data, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            },
+        });
         return { success: true, data: response.data.data };
     } catch (error) {
         console.error('Failed to create donation', error);
