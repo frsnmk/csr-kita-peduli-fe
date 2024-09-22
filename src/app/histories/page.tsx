@@ -8,6 +8,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { Donation } from "../lib/types/donation";
 import { useAuth } from "../lib/context/auth-context";
+import EmptyComponent from "../ui/empty-component";
 
 export default function page() {
 
@@ -106,15 +107,14 @@ export default function page() {
                     />
                   </Link>
                 ))
-                : <div className="flex justify-center">
-                  <Image width={300} height={300} src={'/empty_data_csr.svg'} alt="" />
-                </div>
+                : <EmptyComponent />
               }
             </div>
           </TabPanel>
           <TabPanel>
             <div className="p-4">
-              {paidDonation && paidDonation.map((item, index) => (
+              {(paidDonation && paidDonation.length > 0)
+              ? paidDonation.map((item, index) => (
                 <Link href={`histories/${item.id}/paid`} key={index}>
                   <HistoryCard
                     key={index}
@@ -124,12 +124,15 @@ export default function page() {
                     imageUrl={item.program.banner}
                   />
                 </Link>
-              ))}
+              ))
+              : <EmptyComponent />
+            }
             </div>
           </TabPanel>
           <TabPanel>
             <div className="p-4">
-              {confirmedDonation && confirmedDonation.map((item, index) => (
+              {confirmedDonation && confirmedDonation.length > 0 
+                ? confirmedDonation.map((item, index) => (
                 <Link href={`histories/${item.id}/confirmed`} key={index}>
                   <HistoryCard
                     key={index}
@@ -139,12 +142,13 @@ export default function page() {
                     imageUrl={item.program.banner}
                   />
                 </Link>
-              ))}
+              )): <EmptyComponent/>}
             </div>
           </TabPanel>
           <TabPanel>
             <div className="p-4">
-              {failedDonation && failedDonation.map((item, index) => (
+              {failedDonation && failedDonation.length>0  
+              ? failedDonation.map((item, index) => (
                 <Link href={`histories/${item.id}/failed`} key={index}>
                   <HistoryCard
                     key={index}
@@ -154,7 +158,7 @@ export default function page() {
                     imageUrl={item.program.banner}
                   />
                 </Link>
-              ))}
+              )):<EmptyComponent/>}
             </div>
           </TabPanel>
         </TabPanels>
