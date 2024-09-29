@@ -9,6 +9,9 @@ const nextConfig = {
       "localhost:8000/storage/logos",
     ],
   },
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
+  },
 };
 
 export default nextConfig;
