@@ -7,11 +7,11 @@ import { Donation } from "@/app/lib/types/donation";
 import { Report } from "@/app/lib/types/report";
 import { AvatarListView } from "@/app/ui/avatar-list-view";
 import ArrowBackIconButton from "@/app/ui/icon/arrow-back";
+import CalendarIcon from "@/app/ui/icon/calendar";
 import { SkeletonList } from "@/app/ui/skeleton-list";
 import { Timeline } from "flowbite-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { HiArrowNarrowRight, HiCalendar } from "react-icons/hi";
 
 export default function Page({ params }: { params: { id: string } }) {
   const programId = params.id;
@@ -63,7 +63,7 @@ console.log(reports)
         {
           reports.length > 0 && reports.map((report, i) => (
             <Timeline.Item key={i}>
-              <Timeline.Point icon={HiCalendar} />
+              <Timeline.Point icon={CalendarIcon} />
               <Timeline.Content>
                 <Timeline.Time>{formatDateIdn(report.created_at)}</Timeline.Time>
                 <Timeline.Title>{report.title}</Timeline.Title>
