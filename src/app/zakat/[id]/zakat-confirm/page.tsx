@@ -75,9 +75,6 @@ export default function Page() {
       const formData = new FormData();
       const donationId = localStorage.getItem('donation_id');
   
-      formData.append('receipt_image_path', selectedFile)
-      formData.append('bank_id', 1)
-  
       if(!selectedAccount) {
         toast.error('Silahkan pilih nomor rekening')
         return
@@ -87,6 +84,9 @@ export default function Page() {
         toast.error('Silahkan upload bukti pembayaran')
         return
       }
+
+      formData.append('receipt_image_path', selectedFile)
+      formData.append('bank_id', selectedAccount.toString() ?? "1")
   
       if(donationId) {
         const res = await confirmDonation(donationId, formData)
