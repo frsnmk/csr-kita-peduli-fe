@@ -11,7 +11,7 @@ interface ZakatModalProps {
     setOpenModal: (v:boolean) => void;
     zakatAmount: number;
     setZakatAmount: (v:number) => void;
-    handlePrayerChange: () => void;
+    handlePrayerChange: (v:string) => void;
     setBeAnonim: (v:boolean) => void;
     isLoggedIn: boolean;
     name:string;
