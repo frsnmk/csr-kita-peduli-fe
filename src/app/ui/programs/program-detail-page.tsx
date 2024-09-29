@@ -149,7 +149,7 @@ export const ProgramDetailPage = ({id}: ProgramDetailPageProps) => {
           ))}
 
         {
-          donations.length > 2 && (
+          reports && reports.length > 2 && (
             <div className="flex justify-center pt-4">
               <Link href={`${id}/report`} className="text-green-700 font-medium">
                 Lihat semua
