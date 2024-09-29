@@ -302,6 +302,7 @@ export default function Page({params}: {params: {id: string}}) {
         phoneNumberError={phoneError}
         submitZakatForm={submitZakatForm}
         loginWithGoogle={loginWithGoogle}
+        loading={loading}
       />
       {/* <Modal
         show={openModal}
