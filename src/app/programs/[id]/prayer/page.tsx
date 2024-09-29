@@ -54,7 +54,7 @@ export default function Page({ params }: { params: { id: string } }) {
       <br />
       <br />
       <div className="space-y-6">
-        <h1 className="text-lg font-bold mb-4">Do'a-do'a</h1>
+        <h1 className="text-lg font-bold mb-4">Doa-doa</h1>
         {
           (prayers.length > 0)
           ? prayers.map((d,i) => (
