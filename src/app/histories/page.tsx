@@ -10,7 +10,7 @@ import { Donation } from "../lib/types/donation";
 import { useAuth } from "../lib/context/auth-context";
 import EmptyComponent from "../ui/empty-component";
 
-export default function page() {
+export default function Page() {
 
   const [pendingDonation, setPendingDonation] = useState<Donation[]|undefined>();
   const [paidDonation, setPaidDonation] = useState<Donation[]|undefined>();

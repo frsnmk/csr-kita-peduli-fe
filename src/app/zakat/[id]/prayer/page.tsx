@@ -9,7 +9,7 @@ import { SkeletonList } from "@/app/ui/skeleton-list";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-export default function page({ params }: { params: { id: string } }) {
+export default function Page({ params }: { params: { id: string } }) {
   const programId = params.id;
   const [prayers, setPrayers] = useState<Prayer[]>([]);
   const [page, setPage] = useState(1);

@@ -203,7 +203,7 @@ export const ProgramDetailPage = ({id}: ProgramDetailPageProps) => {
         <h2 className="text-md font-semibold">Doa-doa</h2>
         {prayers.length < 1 && (
           <p className="py-6 text-center italic font-thin text-sm">
-            Belum ada do'a
+            Belum ada doa
           </p>
         )}
         {prayers.length > 0 &&

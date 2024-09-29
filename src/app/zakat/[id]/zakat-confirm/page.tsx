@@ -13,7 +13,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
-export default function page() {
+export default function Page() {
     const router = useRouter();
     const params = useParams()
   

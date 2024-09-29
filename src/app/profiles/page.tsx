@@ -12,7 +12,7 @@ import { auth, provider } from "../lib/firebase-config";
 import { getFirstLetter } from "../lib/helper";
 import { useAuth } from "../lib/context/auth-context";
 
-export default function page() {
+export default function Page() {
     const { isLoggedIn, authData, loading, loginWithGoogle, logout } = useAuth();
     if (loading) {
         // Tampilkan loading state saat memeriksa status login

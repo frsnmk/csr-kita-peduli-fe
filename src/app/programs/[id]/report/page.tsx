@@ -13,7 +13,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { HiArrowNarrowRight, HiCalendar } from "react-icons/hi";
 
-export default function page({ params }: { params: { id: string } }) {
+export default function Page({ params }: { params: { id: string } }) {
   const programId = params.id;
   const [reports, setReports] = useState<Report[]>([]);
   const [page, setPage] = useState(1);

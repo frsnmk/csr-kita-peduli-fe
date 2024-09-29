@@ -199,11 +199,11 @@ export const ZakatDetailPage = ({id}:ZakatDetailPageProps) => {
                 <Link href={`${id}/donation`} className="text-green-700 font-medium">Lihat semua</Link>
             </div>
         </div>
-        {/* Do'a */}
+        {/* Doa */}
         <div className="bg-white p-4 rounded-lg shadow-md">
             <h2 className="text-md font-semibold">Doa-doa</h2>
             {
-                (prayers.length < 1) && <p className="py-6 text-center italic font-thin text-sm">Belum ada do'a</p>
+                (prayers.length < 1) && <p className="py-6 text-center italic font-thin text-sm">Belum ada doa</p>
             }
             {
                 (prayers.length > 0) && prayers.map((prayer, key) => (
