@@ -14,7 +14,11 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     // Tambahkan token ke header Authorization jika ada
-    const savedAuthData = localStorage.getItem('authData')
+    let savedAuthData;
+    if (typeof window != 'undefined') {
+      savedAuthData = localStorage.getItem('authData')
+    }
+    
     let token = '';
     if(savedAuthData) {
         token = JSON.parse(savedAuthData).token
