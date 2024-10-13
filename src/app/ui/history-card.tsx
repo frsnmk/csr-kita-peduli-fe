@@ -13,7 +13,7 @@ const HistoryCard: React.FC<HistoryCardProps> = ({ title, amount, date, imageUrl
   return (
     <div className="flex bg-gray-50 rounded-lg shadow-md p-4 mb-4">
       <div className="relative w-1/3">
-        <Image src={imageUrl} alt="Card Image" layout="fill" objectFit="cover" className="rounded-lg" />
+        <Image src={imageUrl ?? '/no-images.png'} alt="Card Image" layout="fill" objectFit="cover" className="rounded-lg" />
       </div>
       <div className="w-2/3 pl-4">
         <h2 className="text-xs font-semibold truncate-multiline">{title}</h2>
