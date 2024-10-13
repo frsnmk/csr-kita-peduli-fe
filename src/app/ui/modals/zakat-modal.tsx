@@ -27,6 +27,7 @@ interface ZakatModalProps {
     loginWithGoogle: () => void;
     loading:boolean;
     isSubmitting:boolean;
+    isSedekah?:boolean;
 }
 
 const ZakatModal = (
@@ -35,7 +36,8 @@ const ZakatModal = (
         setZakatAmount, handlePrayerChange, setBeAnonim,
         isLoggedIn, setName, name, nameError,
         setEmail, email, emailError,
-        phoneNumber, setPhoneNumber, phoneNumberError, loginWithGoogle,submitZakatForm, loading, isSubmitting
+        phoneNumber, setPhoneNumber, phoneNumberError, loginWithGoogle,submitZakatForm,
+        loading, isSubmitting, isSedekah
         
     }:ZakatModalProps) => {
   return (
@@ -49,10 +51,10 @@ const ZakatModal = (
         <Modal.Body>
           <div className="space-y-6">
             <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-              Nominal Zakat
+              Nominal {isSedekah ? 'Sedekah' : 'Zakat'}
             </h3>
             <CurrencyInput
-              label="Nominal Zakat"
+              label={`Nominal ${isSedekah ? 'Sedekah' : 'Zakat'}`}
               placeholder="Masukkan jumlah"
               value={Math.round(zakatAmount)}
               onChange={(newAmount) => setZakatAmount(newAmount)}
@@ -115,7 +117,7 @@ const ZakatModal = (
                 </svg>
                 <small>Sedang memproses</small>
               </>
-            ): <span className="text-xs">Bayar Zakat</span>
+            ): <span className="text-xs">Bayar {isSedekah ? 'Sedekah':'Zakat'}</span>
           }
           </button>
         </Modal.Footer>

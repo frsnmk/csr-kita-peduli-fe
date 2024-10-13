@@ -43,7 +43,7 @@ export default function Page({params}: {params: {id: string}}) {
 
   const [alertVisibility, setAlertVisibility] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const [isSedekah, setIsSedekah] = useState(false);
   const [loading, setLoading] = useState(true);
   const {isLoggedIn, authData, loginWithGoogle} = useAuth();
 
@@ -74,6 +74,7 @@ export default function Page({params}: {params: {id: string}}) {
   };
 
   const handleButtonClicked = (isMaal=false) => {
+    setIsSedekah(false)
       if ((isMaal ? deposito+(gold * (!program? 0 : program.gold_price!.amount))+(silver* (!program? 0 : program.silver_price!.amount)) : incomePerMonth+anotherIncomePerMonth) < (isMaal ? nisabPerYear : nisabPerMonth)) {
         setAlertVisibility(true);
       } else {
@@ -83,6 +84,7 @@ export default function Page({params}: {params: {id: string}}) {
 
   const hideAlert = () => {
     setAlertVisibility(false);
+    setIsSedekah(false)
   };
 
   const validateZakatForm = () => {
@@ -129,6 +131,7 @@ export default function Page({params}: {params: {id: string}}) {
     if (!validateZakatForm() && !isLoggedIn) {
       return;
     }
+
     const reqBody = {
       email: isLoggedIn ? authData?.email : email,
       name: isLoggedIn ? authData?.displayName : name,
@@ -139,6 +142,7 @@ export default function Page({params}: {params: {id: string}}) {
       phone_number: phoneNumber,
       prayer:  prayerDonation,
       is_follow: false,
+      is_sedekah: isSedekah
     }
     
     const res = await createDonation(reqBody);
@@ -168,6 +172,7 @@ export default function Page({params}: {params: {id: string}}) {
               openModal={openModal}
               setOpenModal={setOpenModal}
               hideAlert={hideAlert}
+              setIsSedekah={setIsSedekah}
             />
           }
           onDismiss={hideAlert}
@@ -307,73 +312,8 @@ export default function Page({params}: {params: {id: string}}) {
         loginWithGoogle={loginWithGoogle}
         loading={loading}
         isSubmitting = {isSubmitting}
+        isSedekah={isSedekah}
       />
-      {/* <Modal
-        show={openModal}
-        size="md"
-        popup
-        onClose={() => setOpenModal(false)}
-      >
-        <Modal.Header />
-        <Modal.Body>
-          <div className="space-y-6">
-            <h3 className="text-xl font-medium text-gray-900 dark:text-white">
-              Nominal Zakat
-            </h3>
-            <CurrencyInput
-              label="Nominal Zakat"
-              placeholder="Masukkan jumlah"
-              value={Math.round(zakatAmount)}
-              onChange={(newAmount) => setZakatAmount(newAmount)}
-            />
-            <PrayerTextArea onChange={handlePrayerChange} />
-            <Checkbox
-              label="Sembunyikan nama saya (donasi sebagai anonim)"
-              checked={false}
-              onChange={(checked) => setBeAnonim(checked)}
-            />
-            {
-              !isLoggedIn && (
-                <div>
-                  <h1 className="text-md font-semibold mb-4"><span className="text-green-700 cursor-pointer" onClick={() => loginWithGoogle()}>Masuk</span> atau lengkapi data dibawah ini</h1>
-                  <TextInput
-                    label="Nama"
-                    placeholder="Masukkan nama Anda"
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    validationMessage={nameError}
-                  />
-                  <TextInput
-                    label="Email"
-                    placeholder="Masukkan email Anda"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    validationMessage={emailError}
-                  />
-                  <TextInput
-                    label="Nomor Handphone"
-                    placeholder="Masukkan nomor handphone Anda"
-                    type="tel"
-                    value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                    validationMessage={phoneError}
-                  />
-                </div>
-              )
-            }
-          </div>
-        </Modal.Body>
-        <Modal.Footer className="flex justify-center">
-          <button
-            onClick={submitZakatForm}
-            className="flex items-center space-x-2 bg-green-700 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-green-800 transition duration-300"
-          >
-            <span className="text-xs">Bayar Zakat</span>
-          </button>
-        </Modal.Footer>
-      </Modal> */}
     </div>
   );
 }
@@ -382,8 +322,9 @@ interface ZakatAlertConfirmProps {
   openModal: boolean;
   setOpenModal: (value: boolean) => void;
   hideAlert: () => void;
+  setIsSedekah: (value: boolean) => void;
 }
-function ZakatAlertConfirm({openModal, setOpenModal, hideAlert}:ZakatAlertConfirmProps) {
+function ZakatAlertConfirm({openModal, setOpenModal, hideAlert, setIsSedekah}:ZakatAlertConfirmProps) {
   return (
     <>
       <div className="mb-4 mt-2 text-sm font-bold text-yellow-700 dark:text-yellow-800">
@@ -391,7 +332,7 @@ function ZakatAlertConfirm({openModal, setOpenModal, hideAlert}:ZakatAlertConfir
       </div>
       <div className="flex">
         <button
-          onClick={() => setOpenModal(true)}
+          onClick={() => {setOpenModal(true); setIsSedekah(true)}}
           type="button"
           className="mr-2 inline-flex items-center rounded-lg bg-cyan-700 px-3 py-1.5 text-center text-xs font-medium text-white hover:bg-cyan-800 focus:ring-4 focus:ring-cyan-300 dark:bg-cyan-800 dark:hover:bg-cyan-900"
         >
