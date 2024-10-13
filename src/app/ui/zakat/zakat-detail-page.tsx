@@ -44,6 +44,7 @@ export const ZakatDetailPage = ({id}:ZakatDetailPageProps) => {
     const [nameError, setNameError] = useState<string>("");
     const [emailError, setEmailError] = useState<string>("");
     const [phoneError, setPhoneError] = useState<string>("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const {isLoggedIn, authData, loading, loginWithGoogle} = useAuth();
 
@@ -111,6 +112,8 @@ export const ZakatDetailPage = ({id}:ZakatDetailPageProps) => {
     }
   
     const submitZakatForm = async () => {
+      if (isSubmitting) return;
+      setIsSubmitting(true);
       if (!validateZakatForm() && !isLoggedIn) {
         return;
       }
@@ -133,6 +136,7 @@ export const ZakatDetailPage = ({id}:ZakatDetailPageProps) => {
         router.replace(`${id}/zakat-confirm`);
       } else {
         console.error("Failed to create donation:", res.error);
+        setIsSubmitting(false);
       }
     }
 
@@ -234,6 +238,7 @@ export const ZakatDetailPage = ({id}:ZakatDetailPageProps) => {
             submitZakatForm={submitZakatForm}
             loginWithGoogle={loginWithGoogle}
             loading={loading}
+            isSubmitting={isSubmitting}
         />
         <div className="fixed bottom-0 w-full bg-white shadow-lg max-w-[480px] mx-auto left-0 right-0">
             <div className="flex justify-around items-center py-3">

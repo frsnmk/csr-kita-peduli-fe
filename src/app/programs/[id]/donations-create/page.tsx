@@ -122,7 +122,6 @@ const handleSumit = async () => {
   if (res.success) {
     localStorage.setItem('donation_id', JSON.stringify(res.data.id))
     router.replace('donation-confirm');
-    setIsSubmitting(false)
   } else {
     console.error("Failed to create donation:", res.error);
     setIsSubmitting(false)

@@ -42,7 +42,7 @@ export default function Page({params}: {params: {id: string}}) {
   const [phoneError, setPhoneError] = useState<string>("");
 
   const [alertVisibility, setAlertVisibility] = useState(false);
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [loading, setLoading] = useState(true);
   const {isLoggedIn, authData, loginWithGoogle} = useAuth();
@@ -124,6 +124,8 @@ export default function Page({params}: {params: {id: string}}) {
   }
 
   const submitZakatForm = async () => {
+    if(isSubmitting) return;
+    setIsSubmitting(true);
     if (!validateZakatForm() && !isLoggedIn) {
       return;
     }
@@ -146,6 +148,7 @@ export default function Page({params}: {params: {id: string}}) {
       router.replace('zakat-confirm');
     } else {
       console.error("Failed to create donation:", res.error);
+      setIsSubmitting(false);
     }
   }
   return (
@@ -303,6 +306,7 @@ export default function Page({params}: {params: {id: string}}) {
         submitZakatForm={submitZakatForm}
         loginWithGoogle={loginWithGoogle}
         loading={loading}
+        isSubmitting = {isSubmitting}
       />
       {/* <Modal
         show={openModal}
