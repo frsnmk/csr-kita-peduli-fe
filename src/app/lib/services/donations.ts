@@ -40,8 +40,11 @@ export const createDonation = async (data:DonationDTO): Promise<Result<Donation>
         return { success: true, data: response.data.data };
     } catch (error) {
         console.error('Failed to create donation', error);
-        const statusCode  = error.response.status;
-        return { success: false, error, statusCode };
+        if(axios.isAxiosError(error)) {
+            const statusCode = error.response?.status || 500; // Handle cases where response might be undefined
+            return { success: false, error, statusCode };
+        }
+        return { success: false, error };
     }
 }
 
