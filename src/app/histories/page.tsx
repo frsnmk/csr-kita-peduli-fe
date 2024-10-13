@@ -18,7 +18,7 @@ export default function Page() {
   const [failedDonation, setFailedDonation] = useState<Donation[]|undefined>();
   const [isLoading, setIsLoading] = useState(true);
 
-  const {authData} = useAuth();
+  const {authData, isLoggedIn, loginWithGoogle, loading} = useAuth();
 
   useEffect(()=>{
     const fetchData = async () => {
@@ -40,7 +40,7 @@ export default function Page() {
     }
 
     fetchData();
-    console.log('fetch lagi dong')
+
   },[authData]);
 
   return (
@@ -93,74 +93,82 @@ export default function Page() {
           </Tab>
         </TabList>
         <TabPanels>
-          <TabPanel>
-            <div className="p-4">
-              {(pendingDonation && pendingDonation.length > 0) ?
-                pendingDonation?.map((item, index) => (
-                  <Link href={`histories/${item.id}`} key={index}>
-                    <HistoryCard
-                      key={index}
-                      title={item.program.title}
-                      amount={item.amount}
-                      date={item.created_at}
-                      imageUrl={item.program.banner}
-                    />
-                  </Link>
-                ))
-                : <EmptyComponent />
-              }
-            </div>
-          </TabPanel>
-          <TabPanel>
-            <div className="p-4">
-              {(paidDonation && paidDonation.length > 0)
-              ? paidDonation.map((item, index) => (
-                <Link href={`histories/${item.id}/paid`} key={index}>
-                  <HistoryCard
-                    key={index}
-                    title={item.program.title}
-                    amount={item.amount}
-                    date={item.created_at}
-                    imageUrl={item.program.banner}
-                  />
-                </Link>
-              ))
-              : <EmptyComponent />
-            }
-            </div>
-          </TabPanel>
-          <TabPanel>
-            <div className="p-4">
-              {confirmedDonation && confirmedDonation.length > 0 
-                ? confirmedDonation.map((item, index) => (
-                <Link href={`histories/${item.id}/confirmed`} key={index}>
-                  <HistoryCard
-                    key={index}
-                    title={item.program.title}
-                    amount={item.amount}
-                    date={item.created_at}
-                    imageUrl={item.program.banner}
-                  />
-                </Link>
-              )): <EmptyComponent/>}
-            </div>
-          </TabPanel>
-          <TabPanel>
-            <div className="p-4">
-              {failedDonation && failedDonation.length>0  
-              ? failedDonation.map((item, index) => (
-                <Link href={`histories/${item.id}/failed`} key={index}>
-                  <HistoryCard
-                    key={index}
-                    title={item.program.title}
-                    amount={item.amount}
-                    date={item.created_at}
-                    imageUrl={item.program.banner}
-                  />
-                </Link>
-              )):<EmptyComponent/>}
-            </div>
-          </TabPanel>
+          {
+            loading || isLoading 
+            ? <div className="flex justify-content align-center">Loading...</div>
+            : (
+              <>
+              <TabPanel>
+                <div className="p-4">
+                  {(pendingDonation && pendingDonation.length > 0) ?
+                    pendingDonation?.map((item, index) => (
+                      <Link href={`histories/${item.id}`} key={index}>
+                        <HistoryCard
+                          key={index}
+                          title={item.program.title}
+                          amount={item.amount}
+                          date={item.created_at}
+                          imageUrl={item.program.banner}
+                        />
+                      </Link>
+                    ))
+                    : (isLoggedIn ? <EmptyComponent />: <div className="flex justify-center align-center p-10">Silahkan <span className="text-green-700 font-bold cursor-pointer" onClick={()=>loginWithGoogle()}>&nbsp;login&nbsp;</span> untuk melihat Riwayat</div>)
+                  }
+                </div>
+              </TabPanel>
+              <TabPanel>
+                <div className="p-4">
+                  {(paidDonation && paidDonation.length > 0)
+                  ? paidDonation.map((item, index) => (
+                    <Link href={`histories/${item.id}/paid`} key={index}>
+                      <HistoryCard
+                        key={index}
+                        title={item.program.title}
+                        amount={item.amount}
+                        date={item.created_at}
+                        imageUrl={item.program.banner}
+                      />
+                    </Link>
+                  ))
+                  : <EmptyComponent />
+                }
+                </div>
+              </TabPanel>
+              <TabPanel>
+                <div className="p-4">
+                  {confirmedDonation && confirmedDonation.length > 0 
+                    ? confirmedDonation.map((item, index) => (
+                    <Link href={`histories/${item.id}/confirmed`} key={index}>
+                      <HistoryCard
+                        key={index}
+                        title={item.program.title}
+                        amount={item.amount}
+                        date={item.created_at}
+                        imageUrl={item.program.banner}
+                      />
+                    </Link>
+                  )): <EmptyComponent/>}
+                </div>
+              </TabPanel>
+              <TabPanel>
+                <div className="p-4">
+                  {failedDonation && failedDonation.length>0  
+                  ? failedDonation.map((item, index) => (
+                    <Link href={`histories/${item.id}/failed`} key={index}>
+                      <HistoryCard
+                        key={index}
+                        title={item.program.title}
+                        amount={item.amount}
+                        date={item.created_at}
+                        imageUrl={item.program.banner}
+                      />
+                    </Link>
+                  )):<EmptyComponent/>}
+                </div>
+              </TabPanel>
+              </>
+            )
+          }
         </TabPanels>
       </TabGroup>
     </div>

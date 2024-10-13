@@ -28,11 +28,12 @@ const [name, setName] = useState<string>('');
 const [email, setEmail] = useState<string>('');
 const [phoneNumber, setPhoneNumber] = useState<string>('');
 const [loading, setLoading] = useState(true);
-const {isLoggedIn, authData, loginWithGoogle} = useAuth();
+const {isLoggedIn, authData, loginWithGoogle, logout} = useAuth();
 
 const [nameError, setNameError] = useState<string>('');
 const [emailError, setEmailError] = useState<string>('');
 const [phoneError, setPhoneError] = useState<string>('');
+const [isSubmitting, setIsSubmitting] = useState(false);
 
 useEffect(() => {
   const fetchData = async () => {
@@ -97,9 +98,11 @@ const validateForm = () => {
 
 
 const handleSumit = async () => {
+  if (isSubmitting) return;
   if (!validateForm() && !isLoggedIn) {
     return;
   }
+  setIsSubmitting(true)
 
   const reqBody = {
     email: isLoggedIn ? authData?.email : email,
@@ -223,8 +226,19 @@ return (
 
       </div>
       <div className="fixed bottom-0 w-full bg-white shadow-lg max-w-[480px] mx-auto left-0 right-0 p-4">
-        <button onClick={handleSumit} className="w-full bg-green-700 text-white font-bold p-3 rounded-lg mt-4">
-          Lanjut
+        <button onClick={handleSumit} disabled={isSubmitting} className={`w-full flex justify-center ${ isSubmitting ? 'bg-green-300 cursor-not-allowed' : 'bg-green-700'} text-white font-bold p-3 rounded-lg mt-4`}>
+          {
+            isSubmitting ? (
+              <>
+                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Sedang memproses
+              </>
+              
+            ): "Lanjut"
+          }
         </button>
       </div>
     </div>

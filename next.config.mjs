@@ -9,7 +9,10 @@ const nextConfig = {
       "localhost:8000/storage/logos",
       "admin.kitapeduli.id"
     ],
-  }
+  },
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
+  },
 };
 
 export default nextConfig;

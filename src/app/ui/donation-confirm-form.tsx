@@ -108,7 +108,7 @@ const DonationConfirmationForm = () => {
       <Image src="/payment-waiting.png" alt="Payment Waiting" width={400} height={200} />
       
       <h1 className="text-orange-600 text-md font-bold my-4">Menunggu Pembayaran</h1>
-      <p className="text-gray-600 mb-2 text-xs">Silahkan melakukan pembayaran ke nomor BCA Virtual Akun dibawah ini</p>
+      <p className="text-gray-600 mb-2 text-xs">Silahkan melakukan pembayaran dengan melakukan transfer ke nomor rekening dibawah ini</p>
       {
         banks.length > 0
         ? banks.map((bank, key) => (
