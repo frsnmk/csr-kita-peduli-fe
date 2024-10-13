@@ -17,6 +17,8 @@ import StoryCard from "./component/story-card";
 import { fetchProgramReport } from "@/app/lib/services/reports";
 import { Report } from "@/app/lib/types/report";
 import { ReportListView } from "../report-list-view";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 interface ProgramDetailPageProps {
   id: string;
@@ -28,6 +30,7 @@ export const ProgramDetailPage = ({id}: ProgramDetailPageProps) => {
   const [donations, setDonations] = useState<Donation[]>([]);
   const [prayers, setPrayers] = useState<Prayer[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -52,6 +55,12 @@ export const ProgramDetailPage = ({id}: ProgramDetailPageProps) => {
 
     fetchDetails();
   }, [id]);
+
+  const onShareClick = () => {
+    const link = `${window.location.href}`; 
+    navigator.clipboard.writeText(link)
+    toast.success('Link program berhasil disalin');
+  }
 
   if (isLoading) return <ProgramDetailSkeleton />;
 
@@ -222,7 +231,7 @@ export const ProgramDetailPage = ({id}: ProgramDetailPageProps) => {
       </div>
       <div className="fixed bottom-0 w-full bg-white shadow-lg max-w-[480px] mx-auto left-0 right-0">
         <div className="flex justify-around items-center py-3">
-          <button className="flex justify-center space-x-4 w-[40%] border border-green-700 py-2 rounded-lg text-green-700">
+          <button className="flex justify-center space-x-4 w-[40%] border border-green-700 py-2 rounded-lg text-green-700" onClick={() => onShareClick()}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="24px"
