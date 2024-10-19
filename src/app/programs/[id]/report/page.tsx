@@ -11,6 +11,7 @@ import CalendarIcon from "@/app/ui/icon/calendar";
 import { SkeletonList } from "@/app/ui/skeleton-list";
 import { Timeline } from "flowbite-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Page({ params }: { params: { id: string } }) {
@@ -24,34 +25,14 @@ export default function Page({ params }: { params: { id: string } }) {
     const fetchdata = async () => {
       setLoading(true);
       const newReports = await fetchProgramReport(programId, {page:page, limit:15});
-    
-      if(newReports.length == 0) {
-        setHasMore(false)
-      } else {
-        setReports((prev) => [...prev, ...newReports]);
-      }
+      setReports(newReports);
+      
       setLoading(false);
     }
 
     fetchdata();
   },[page, programId]);
 
-  const loadMoreDonations = () => {
-    if (hasMore && !loading) {
-      setPage((prev) => prev + 1);
-    }
-  };  
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight || loading) return;
-      loadMoreDonations();
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, [loading, hasMore]);
-console.log(reports)
   return (
     <div className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md relative">
       <ArrowBackIconButton />
@@ -67,12 +48,13 @@ console.log(reports)
               <Timeline.Content>
                 <Timeline.Time>{formatDateIdn(report.created_at)}</Timeline.Time>
                 <Timeline.Title>{report.title}</Timeline.Title>
-                <Timeline.Body dangerouslySetInnerHTML={{__html:report.description}}>
+                <Timeline.Body className="truncate-multiline" dangerouslySetInnerHTML={{__html:report.description}}>
                 </Timeline.Body>
-                <Image  width={300}
-                    height={300}
-                    src={"/empty_data_csr.svg"}
-                    alt="" />
+                <div className="flex justify-center pt-4">
+                  <Link href={`report/${report.id}`} className="text-green-700 font-medium">
+                    Selengkapnya
+                  </Link>
+                </div>
               </Timeline.Content>
             </Timeline.Item>
           ))

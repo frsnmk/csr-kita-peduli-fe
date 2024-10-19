@@ -26,7 +26,6 @@ interface ProgramDetailPageProps {
 
 export const ProgramDetailPage = ({id}: ProgramDetailPageProps) => {
   const [program, setProgram] = useState<Program | null>(null);
-  const [reports, setReports] = useState<Report[] | null>(null);
   const [donations, setDonations] = useState<Donation[]>([]);
   const [prayers, setPrayers] = useState<Prayer[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -45,8 +44,6 @@ export const ProgramDetailPage = ({id}: ProgramDetailPageProps) => {
         const prayerRes = await fetchProgramPrayer(id, {limit: 3});
         setPrayers(prayerRes);
 
-        const reportRes = await fetchProgramReport(id, {limit:3});
-        setReports(reportRes)
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching data", error);
@@ -141,31 +138,12 @@ export const ProgramDetailPage = ({id}: ProgramDetailPageProps) => {
         <h2 className="text-md font-semibold">
           Kabar Terbaru
         </h2>
-        {reports && reports.length < 1 && (
-          <p className="py-6 text-center italic font-thin text-sm">
-            Belum ada kabar terbaru
-          </p>
-        )}
-        {reports && reports.length > 0 &&
-          reports.map((report, key) => (
-            <ReportListView
-              key={key}
-              title={report.title}
-              text={report.description}
-              createdAt={report.created_at}
-              avatarUrl={report.picture}
-            />
-          ))}
-
-        {
-          reports && reports.length > 2 && (
-            <div className="flex justify-center pt-4">
-              <Link href={`${id}/report`} className="text-green-700 font-medium">
-                Lihat semua
-              </Link>
-            </div>
-          )
-        }
+        <div className="flex justify-center pt-4">
+          <Link href={`${id}/report`} className="text-green-700 font-medium">
+            Lihat kabar terbaru
+          </Link>
+        </div>
+        
       </div>
 
       <div className="bg-white p-4 rounded-lg shadow-md">

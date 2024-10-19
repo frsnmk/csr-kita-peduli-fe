@@ -19,3 +19,13 @@ export const fetchProgramReport = async (id:string, queryParam:ReportQueryParams
         return [];
     }
 }
+
+export const getReport = async (reportId:string) : Promise<Report|null> => {
+    try {
+        const response = await axiosInstance.get<Report>(`${API_URL}programs/reports/${reportId}`);
+        return response.data;
+    } catch (error) {
+        console.error('Failed to get programs', error);
+        return null;
+    }
+}
