@@ -17,27 +17,25 @@ const GridView = ({title, data}: GridViewProps) => {
   console.log(data)
   return (
     <Suspense>
-      <div className="">
         <div className="flex justify-between p-3">
           <h1 className="text-md font-bold">{title}</h1>
         </div>
         {searchQuery && <p className="py-6 text-center font-thin italic">Hasil pencarian {searchQuery}</p>}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        {
-          (data.length > 0)
-          && data.map((program) => (
-            <>
-              <ProgramCard key={program.id} program={program} />
-            </>
-          ))
-        }
+          {
+            (data.length > 0)
+            && data.map((program) => (
+              <div key={program.id}>
+                <ProgramCard program={program} />
+              </div>
+            ))
+          }
         </div>
         {
           data.length < 1 && <div className="flex justify-center">
           <Image width={300} height={300} src={'/empty_data_csr.svg'} alt="" />
         </div>
         }
-      </div>
     </Suspense>
   );
 };

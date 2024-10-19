@@ -2,28 +2,34 @@ import Link from "next/link";
 import React from "react";
 import { Program } from "../lib/types/program";
 import { percentProgress } from "../lib/helper";
+import Image from "next/image";
 
 interface ProgramCardProps {
   program: Program;
 }
 
 const ProgramCard = ({ program }: ProgramCardProps) => {
-  console.log(program.total_donations_amount, 'dari program card')
+  console.log(program.banners, 'card')
   return (
     <Link href={`programs/${program.id}`}>
       <div className="flex-none w-[225px]">
         <div className="rounded-lg shadow-md overflow-hidden max-w-full mx-auto">
-          <img
-            src={`${program.banner}`}
-            alt="Program Image"
-            className="w-full h-40 object-cover"
-          />
+        <Image
+          src={program.banners.length > 0 ? program.banners[0].banner_url : '/placeholder_image.webp'}
+          alt="Program Image"
+          width={400} // Tentukan width sesuai dengan ukuran yang dibutuhkan
+          height={160} // Tentukan height sesuai dengan ukuran yang dibutuhkan
+          className="w-full h-40 object-cover"
+          layout="responsive" // Optional, untuk membuat gambar responsif
+        />
           <div className="p-3">
             <div className="flex items-center mb-2">
-              <img
-                src={`${program.pic.photo}`}
+              <Image
+                src={`${program.pic.photo ?? '/default-avatar-2.png'}`}
                 alt="Organization Logo"
-                className="w-6 h-6 rounded-full"
+                width={25}
+                height={25}
+                className="rounded-full"
               />
               <h3 className="ml-2 text-xs font-medium">{program.pic.name}</h3>
             </div>

@@ -26,9 +26,18 @@ export interface Program {
     tags: Tag[];
     gold_price?: GoldPrice;
     silver_price?: SilverPrice;
+    banners:Banner[]
 }
 
-
+interface Banner {
+    id: number;
+    program_id: number;
+    picture: string;
+    created_at?: string;
+    updated_at?: string;
+    deleted_at?: null | string;
+    banner_url?: string;
+  }
 interface GoldPrice {
     program_id: number;
     amount: number;
