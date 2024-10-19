@@ -69,7 +69,6 @@ export const getProgramDonor = async (id:string, queryParam?:DonationQueryParams
                 params: filledQueryParam
             }
         );
-        console.log('dari fungsi fetching ...  ', response)
         return response.data.data;
     } catch (error) {
         console.error('Failed to get programs donor', error);

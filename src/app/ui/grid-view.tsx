@@ -14,7 +14,7 @@ interface GridViewProps {
 const GridView = ({title, data}: GridViewProps) => {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get('search');
-  
+  console.log(data)
   return (
     <Suspense>
       <div className="">
