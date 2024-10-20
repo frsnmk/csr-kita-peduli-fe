@@ -12,15 +12,14 @@ const ProgramCard = ({ program }: ProgramCardProps) => {
   console.log(program.banners, 'card')
   return (
     <Link href={`programs/${program.id}`}>
-      <div className="flex-none w-[225px]">
-        <div className="rounded-lg shadow-md overflow-hidden max-w-full mx-auto">
+      <div className="flex-none w-[225px] h-full">
+        <div className="rounded-lg shadow-md overflow-hidden max-w-full mx-auto flex-grow">
         <Image
           src={program.banners.length > 0 && program.banners[0].banner_url ? program.banners[0].banner_url : '/placeholder_image.webp'}
           alt="Program Image"
           width={400} // Tentukan width sesuai dengan ukuran yang dibutuhkan
           height={160} // Tentukan height sesuai dengan ukuran yang dibutuhkan
           className="w-full h-40 object-cover"
-          layout="responsive" // Optional, untuk membuat gambar responsif
         />
           <div className="p-3">
             <div className="flex items-center mb-2">
