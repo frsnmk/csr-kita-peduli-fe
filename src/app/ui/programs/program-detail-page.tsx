@@ -19,6 +19,7 @@ import { Report } from "@/app/lib/types/report";
 import { ReportListView } from "../report-list-view";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { Carousel } from "flowbite-react";
 
 interface ProgramDetailPageProps {
   id: string;
@@ -64,14 +65,28 @@ export const ProgramDetailPage = ({id}: ProgramDetailPageProps) => {
   return (
     <div className="space-y-2 relative">
       <ArrowBackIconButton />
-      <div className="rounded-t-lg">
-        <Image
-          width={480}
-          height={200}
-          src={program?.banner ?? ""}
-          alt="Banner Image"
-        />
-      </div>
+      {
+        program?.banners && program?.banners.length < 1 ?
+          <div className="rounded-t-lg">
+            <Image
+              width={480}
+              height={200}
+              className="w-full h-96 object-cover"
+              src={'/placeholder_image.webp'}
+              alt="Banner Image"
+            />
+          </div>
+        :
+        <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
+          <Carousel indicators={(program?.banners && program?.banners.length < 2) ? false : true}>
+            {
+              program?.banners && program.banners.map((b,i) => (
+                <img key={i} src={b.banner_url} alt={b.picture} />
+              ))
+            }
+          </Carousel>
+        </div>
+      }
       <div className="bg-white p-4 space-y-4 shadow-md rounded-lg">
         <h2 className="text-md font-medium">{program?.title}</h2>
 
@@ -114,7 +129,7 @@ export const ProgramDetailPage = ({id}: ProgramDetailPageProps) => {
         <div className="flex items-center p-4">
           <div className="w-10 h-10 relative">
             <Image
-              src={program?.pic.photo ?? ""}
+              src={program?.pic.photo ?? '/default-avatar-2.png'}
               alt="Avatar"
               layout="fill"
               objectFit="cover"
