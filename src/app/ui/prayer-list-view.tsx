@@ -17,7 +17,7 @@ export default function PrayerList({prayer}: PrayerListProps) {
   const { isLoggedIn } = useAuth();
 
   const [hasAminedPrayer,setHasAminedPrayer] = useState(false);
-
+  const [amenOrUnamen, setAmenOrUnamen] = useState<boolean|undefined>();
   useEffect(() => {
     const fetchData = async () => {
       const hasAminedPrayerRes = await getHasAminedPrayer(prayer.id);
@@ -35,8 +35,14 @@ export default function PrayerList({prayer}: PrayerListProps) {
   const handleAmenButton = async (prayerId:string|number) => {
     if(isLoggedIn) {
       const res = await toggleAmen(prayerId)
+      setAmenOrUnamen(res.data)
+      setHasAminedPrayer(prev => !prev)
       if(res.success) {
-        toast.success('Anda sudah mengamini doa ini.')
+        if(res.data) {
+          toast.success('Anda sudah mengamini doa ini.')
+        } else {
+          toast.success('Anda sudah membatalkan amin.')
+        }
       } else {
         toast.error('Gagal mengamini doa')
       }
@@ -78,7 +84,7 @@ export default function PrayerList({prayer}: PrayerListProps) {
       <div className="mt-2 text-gray-700 text-sm">{prayer.description}</div>
       <div className="flex mt-4 text-gray-500 text-sm justify-end">
         <button className="flex" onClick={()=>handleAmenButton(prayer.id)}>
-          <span className="pr-2">{prayer.total_amen}</span>
+          <span className="pr-2">{+prayer.total_amen+(amenOrUnamen == undefined ? 0 : (amenOrUnamen? 1:-1))}</span>
           <span className="material-icons-outlined mr-1">
             <div className="flex">
               <svg className={clsx({

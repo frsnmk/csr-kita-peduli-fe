@@ -24,7 +24,7 @@ export const fetchProgramPrayer = async (id:string, queryParam:PrayerQueryParams
 export const toggleAmen = async (prayerId:string|number) => {
     try {
         const response = await axiosInstance.post(`${API_URL}prayers/${prayerId}/amen`)
-        return { success: true, data: response.data.data };
+        return { success: true, data: response.data.has_amened };
     } catch (error) {
         console.error('Failed to toggle aamiin prayers', error);
         return { success: false, error };
