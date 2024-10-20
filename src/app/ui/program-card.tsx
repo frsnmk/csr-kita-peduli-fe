@@ -15,7 +15,7 @@ const ProgramCard = ({ program }: ProgramCardProps) => {
       <div className="flex-none w-[225px]">
         <div className="rounded-lg shadow-md overflow-hidden max-w-full mx-auto">
         <Image
-          src={program.banners.length > 0 ? program.banners[0].banner_url : '/placeholder_image.webp'}
+          src={program.banners.length > 0 && program.banners[0].banner_url ? program.banners[0].banner_url : '/placeholder_image.webp'}
           alt="Program Image"
           width={400} // Tentukan width sesuai dengan ukuran yang dibutuhkan
           height={160} // Tentukan height sesuai dengan ukuran yang dibutuhkan
