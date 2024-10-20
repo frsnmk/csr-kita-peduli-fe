@@ -1,3 +1,4 @@
+import axiosInstance from "../axiosInstance";
 import { Prayer, PrayerQueryParams } from "../types/prayer";
 import axios from "axios";
 
@@ -17,5 +18,25 @@ export const fetchProgramPrayer = async (id:string, queryParam:PrayerQueryParams
     } catch (error) {
         console.error('Failed to get programs prayers', error);
         return [];
+    }
+}
+
+export const toggleAmen = async (prayerId:string|number) => {
+    try {
+        const response = await axiosInstance.post(`${API_URL}prayers/${prayerId}/amen`)
+        return { success: true, data: response.data.data };
+    } catch (error) {
+        console.error('Failed to toggle aamiin prayers', error);
+        return { success: false, error };
+    }
+}
+
+export const getHasAminedPrayer = async (prayerId:string|number) => {
+    try {
+        const response = await axiosInstance.post(`${API_URL}prayers/${prayerId}/amen`)
+        return { success: true, data: response.data.has_amened };
+    } catch (error) {
+        console.error('Failed to get has amined prayers', error);
+        return { success: false, error };
     }
 }

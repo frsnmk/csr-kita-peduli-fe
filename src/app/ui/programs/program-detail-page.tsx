@@ -1,7 +1,7 @@
 "use client";
 
 import {percentProgress} from "@/app/lib/helper";
-import {fetchProgramPrayer} from "@/app/lib/services/prayer";
+import {fetchProgramPrayer, toggleAmen} from "@/app/lib/services/prayer";
 import {getProgram, getProgramDonor} from "@/app/lib/services/programs";
 import {Donation} from "@/app/lib/types/donation";
 import {Prayer} from "@/app/lib/types/prayer";
@@ -20,6 +20,7 @@ import { ReportListView } from "../report-list-view";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { Carousel } from "flowbite-react";
+import { useAuth } from "@/app/lib/context/auth-context";
 
 interface ProgramDetailPageProps {
   id: string;
@@ -31,6 +32,7 @@ export const ProgramDetailPage = ({id}: ProgramDetailPageProps) => {
   const [prayers, setPrayers] = useState<Prayer[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
+  const {isLoggedIn} = useAuth();
 
   useEffect(() => {
     const fetchDetails = async () => {
