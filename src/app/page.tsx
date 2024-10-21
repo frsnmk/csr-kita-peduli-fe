@@ -1,6 +1,6 @@
 import ListView from "@/app/ui/list-view";
 import Carousel from "@/app/ui/carousel";
-import { fetchFeaturedProgram, fetchZakat } from "./lib/services/programs";
+import {fetchFeaturedProgram, fetchZakat} from "./lib/services/programs";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -10,8 +10,16 @@ export default async function Home() {
   return (
     <div className="space-y-2">
       <div className="bg-white shadow-md rounded-lg">
-        <Link href={`zakat/${zakat?.id}`} className="rounded-t-lg cursor-pointer">
-            <Image width={480} height={200} src={'/banner_zakat.svg'} alt="Banner Image"/>
+        <Link
+          href={`zakat/${zakat?.id}`}
+          className="rounded-t-lg cursor-pointer"
+        >
+          <Image
+            width={480}
+            height={200}
+            src={"/banner_zakat.svg"}
+            alt="Banner Image"
+          />
         </Link>
         {/* <Carousel /> */}
       </div>
@@ -19,6 +27,5 @@ export default async function Home() {
         <ListView data={programs} />
       </div>
     </div>
-
   );
 }
