@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default async function Home() {
-  const programs = await fetchFeaturedProgram();
   const zakat = await fetchZakat();
   return (
     <div className="space-y-2">
@@ -24,7 +23,7 @@ export default async function Home() {
         {/* <Carousel /> */}
       </div>
       <div className="bg-white p-4 shadow-md rounded-lg">
-        <ListView data={programs} />
+        <ListView />
       </div>
     </div>
   );
