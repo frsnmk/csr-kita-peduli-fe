@@ -14,13 +14,13 @@ import Link from "next/link";
 import React, {useEffect, useState} from "react";
 import {ProgramDetailSkeleton} from "./program-detail-skeleton";
 import StoryCard from "./component/story-card";
-import { fetchProgramReport } from "@/app/lib/services/reports";
-import { Report } from "@/app/lib/types/report";
-import { ReportListView } from "../report-list-view";
+import {fetchProgramReport} from "@/app/lib/services/reports";
+import {Report} from "@/app/lib/types/report";
+import {ReportListView} from "../report-list-view";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
-import { Carousel } from "flowbite-react";
-import { useAuth } from "@/app/lib/context/auth-context";
+import {useRouter} from "next/navigation";
+import {Carousel} from "flowbite-react";
+import {useAuth} from "@/app/lib/context/auth-context";
 
 interface ProgramDetailPageProps {
   id: string;
@@ -57,38 +57,40 @@ export const ProgramDetailPage = ({id}: ProgramDetailPageProps) => {
   }, [id]);
 
   const onShareClick = () => {
-    const link = `${window.location.href}`; 
-    navigator.clipboard.writeText(link)
-    toast.success('Link program berhasil disalin');
-  }
+    const link = `${window.location.href}`;
+    navigator.clipboard.writeText(link);
+    toast.success("Link program berhasil disalin");
+  };
 
   if (isLoading) return <ProgramDetailSkeleton />;
 
   return (
     <div className="space-y-2 relative">
       <ArrowBackIconButton />
-      {
-        program?.banners && program?.banners.length < 1 ?
-          <div className="rounded-t-lg">
-            <Image
-              width={480}
-              height={200}
-              className="w-full h-96 object-cover"
-              src={'/placeholder_image.webp'}
-              alt="Banner Image"
-            />
-          </div>
-        :
+      {program?.banners && program?.banners.length < 1 ? (
+        <div className="rounded-t-lg">
+          <Image
+            width={480}
+            height={200}
+            className="w-full h-96 object-cover"
+            src={"/placeholder_image.webp"}
+            alt="Banner Image"
+          />
+        </div>
+      ) : (
         <div className="h-56 sm:h-64 xl:h-80 2xl:h-96">
-          <Carousel indicators={(program?.banners && program?.banners.length < 2) ? false : true}>
-            {
-              program?.banners && program.banners.map((b,i) => (
-                <img key={i} src={b.banner_url} alt={b.picture} />
-              ))
+          <Carousel
+            indicators={
+              program?.banners && program?.banners.length < 2 ? false : true
             }
+          >
+            {program?.banners &&
+              program.banners.map((b, i) => (
+                <img key={i} src={b.banner_url} alt={b.picture} />
+              ))}
           </Carousel>
         </div>
-      }
+      )}
       <div className="bg-white p-4 space-y-4 shadow-md rounded-lg">
         <h2 className="text-md font-medium">{program?.title}</h2>
 
@@ -131,7 +133,9 @@ export const ProgramDetailPage = ({id}: ProgramDetailPageProps) => {
         <div className="flex items-center p-4">
           <div className="w-10 h-10 relative">
             <Image
-              src={program?.pic.photo ?? '/default-avatar-2.png'}
+              src={
+                (program?.pic && program?.pic.photo) ?? "/default-avatar-2.png"
+              }
               alt="Avatar"
               layout="fill"
               objectFit="cover"
@@ -139,7 +143,9 @@ export const ProgramDetailPage = ({id}: ProgramDetailPageProps) => {
             />
           </div>
           <div className="ml-4">
-            <div className="font-bold text-sm">{program?.pic.name}</div>
+            <div className="font-bold text-sm">
+              {(program?.pic && program?.pic.name) ?? "-"}
+            </div>
             <div className="text-gray-700 italic text-sm">
               {program?.pic.is_verified
                 ? "Terverifikasi"
@@ -148,19 +154,20 @@ export const ProgramDetailPage = ({id}: ProgramDetailPageProps) => {
           </div>
         </div>
       </div>
-      <StoryCard id={id} shortText={program?.short_story!} text={program?.story} />
+      <StoryCard
+        id={id}
+        shortText={program?.short_story!}
+        text={program?.story}
+      />
 
       {/* <ReportCard id={id} shortText={program?.short_story!} text={program?.story} /> */}
       <div className="bg-white p-4 rounded-lg shadow-md">
-        <h2 className="text-md font-semibold">
-          Kabar Terbaru
-        </h2>
+        <h2 className="text-md font-semibold">Kabar Terbaru</h2>
         <div className="flex justify-center pt-4">
           <Link href={`${id}/report`} className="text-green-700 font-medium">
             Lihat kabar terbaru
           </Link>
         </div>
-        
       </div>
 
       <div className="bg-white p-4 rounded-lg shadow-md">
@@ -192,15 +199,16 @@ export const ProgramDetailPage = ({id}: ProgramDetailPageProps) => {
             />
           ))}
 
-        {
-          donations.length > 2 && (
-            <div className="flex justify-center pt-4">
-              <Link href={`${id}/donation`} className="text-green-700 font-medium">
-                Lihat semua
-              </Link>
-            </div>
-          )
-        }
+        {donations.length > 2 && (
+          <div className="flex justify-center pt-4">
+            <Link
+              href={`${id}/donation`}
+              className="text-green-700 font-medium"
+            >
+              Lihat semua
+            </Link>
+          </div>
+        )}
       </div>
       {/* Do'a */}
       <div className="bg-white p-4 rounded-lg shadow-md">
@@ -214,19 +222,20 @@ export const ProgramDetailPage = ({id}: ProgramDetailPageProps) => {
           prayers.map((prayer, key) => (
             <PrayerList key={key} prayer={prayer} />
           ))}
-          {
-            prayers.length > 2 && (
-              <div className="flex justify-center pt-4">
-                <Link href={`${id}/prayer`} className="text-green-700 font-medium">
-                  Lihat semua
-                </Link>
-              </div>
-            ) 
-          }
+        {prayers.length > 2 && (
+          <div className="flex justify-center pt-4">
+            <Link href={`${id}/prayer`} className="text-green-700 font-medium">
+              Lihat semua
+            </Link>
+          </div>
+        )}
       </div>
       <div className="fixed bottom-0 w-full bg-white shadow-lg max-w-[480px] mx-auto left-0 right-0">
         <div className="flex justify-around items-center py-3">
-          <button className="flex justify-center space-x-4 w-[40%] border border-green-700 py-2 rounded-lg text-green-700" onClick={() => onShareClick()}>
+          <button
+            className="flex justify-center space-x-4 w-[40%] border border-green-700 py-2 rounded-lg text-green-700"
+            onClick={() => onShareClick()}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="24px"
