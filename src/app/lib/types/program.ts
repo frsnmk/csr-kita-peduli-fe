@@ -4,6 +4,7 @@ import { Tag } from "@/app/lib/types/tag";
 
 export interface Program {
     id: number;
+    slug:string;
     title: string;
     category_id: number;
     administrator_id: number;
