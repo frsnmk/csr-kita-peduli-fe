@@ -9,7 +9,16 @@ import {useEffect, useState} from "react";
 import {Donation} from "../lib/types/donation";
 import {useAuth} from "../lib/context/auth-context";
 import EmptyComponent from "../ui/empty-component";
-import {ListOfUnpaidDonations} from "../ui/histories/list-of-unpaid-donations";
+import dynamic from "next/dynamic";
+
+
+const ListOfUnpaidDonations = dynamic(() => import("@/app/ui/histories/list-of-unpaid-donations").then((mod) => mod.ListOfUnpaidDonations), {
+  loading: () => <p>Loading</p>
+});
+
+const ListOfConfirmedDonations = dynamic(() => import("@/app/ui/histories/list-of-confirmed-donations").then((mod) => mod.ListOfConfirmedDonations), {
+  loading: () => <p>Loading</p>
+})
 
 export default function Page() {
   const [activeState, setActiveState] = useState(1);
@@ -64,6 +73,8 @@ export default function Page() {
   const renderTab = () => {
     if (activeState == 1) {
       return <ListOfUnpaidDonations authData={authData} />;
+    } else if(activeState == 2) {
+      return <ListOfConfirmedDonations authData={authData} />
     }
   };
 

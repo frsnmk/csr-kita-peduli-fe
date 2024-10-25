@@ -5,7 +5,7 @@ import { GoogleAuthProvider } from "firebase/auth/web-extension";
 import toast from "react-hot-toast";
 import { validatedToken } from "../services/auth";
 
-interface IAuthData {
+export interface IAuthData {
     token: string|null;
     customer_id: string|null;
     displayName: string;

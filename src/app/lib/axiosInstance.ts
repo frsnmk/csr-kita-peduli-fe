@@ -43,7 +43,7 @@ axiosInstance.interceptors.response.use(
     if (error.response.status === 401) {
       console.log(error);
       // Misalnya redirect ke halaman login jika unauthorized
-      // toast.error('Sesi sudah habis, silahkan login lagi')
+      toast.error('Sesi sudah habis, silahkan login lagi')
       // localStorage.removeItem('authData'); // Hapus token dari localStorage
       // window.location.href = '/profiles'; // R
     }
