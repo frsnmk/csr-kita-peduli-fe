@@ -10,18 +10,18 @@ import HistoryCard from "../history-card";
 import {SkeletonList} from "../skeleton-list";
 import EmptyComponent from "../empty-component";
 
-interface ListOfUnpaidProps {
+interface ListOfPaidProps {
   authData: IAuthData | null;
 }
 
-export const ListOfUnpaidDonations = ({authData}: ListOfUnpaidProps) => {
+export const ListOfPaidDonations = ({authData}: ListOfPaidProps) => {
   const [donations, setDonations] = useState<Donation[] | undefined>();
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
       const res = await fetchDonations({
-        payment_status: "pending",
+        payment_status: "paid",
         customer_id: authData?.customer_id,
       });
       setDonations(res);
@@ -37,7 +37,7 @@ export const ListOfUnpaidDonations = ({authData}: ListOfUnpaidProps) => {
           <SkeletonList />
         ) : donations && donations.length > 0 ? (
           donations?.map((item, index) => (
-            <Link href={`histories/${item.id}`} key={index}>
+            <Link href={`histories/${item.id}/paid`} key={index}>
               <HistoryCard
                 key={index}
                 title={item.program.title}

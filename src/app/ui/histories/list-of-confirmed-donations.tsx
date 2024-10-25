@@ -21,7 +21,7 @@ export const ListOfConfirmedDonations = ({authData}: ListOfConfirmedProps) => {
     const fetchData = async () => {
       setIsLoading(true);
       const res = await fetchDonations({
-        payment_status: "paid",
+        payment_status: "confirmed",
         customer_id: authData?.customer_id,
       });
       setDonations(res);
@@ -32,13 +32,12 @@ export const ListOfConfirmedDonations = ({authData}: ListOfConfirmedProps) => {
   }, []);
 
   return (
-    <TabPanel>
       <div className="p-4">
         {isLoading ? (
           <SkeletonList />
         ) : donations && donations.length > 0 ? (
           donations?.map((item, index) => (
-            <Link href={`histories/${item.id}`} key={index}>
+            <Link href={`histories/${item.id}/confirmed`} key={index}>
               <HistoryCard
                 key={index}
                 title={item.program.title}
@@ -52,6 +51,5 @@ export const ListOfConfirmedDonations = ({authData}: ListOfConfirmedProps) => {
           <EmptyComponent />
         )}
       </div>
-    </TabPanel>
   );
 };
