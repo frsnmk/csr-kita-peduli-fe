@@ -14,7 +14,7 @@ export const AvatarListView = ({ avatarUrl, name, amount, createdAt }: DonationI
     <div className="flex items-center p-4 border-b border-gray-200">
       <div className="w-10 h-10 relative">
         <Image
-          src={avatarUrl}
+          src={avatarUrl ?? '/default-avatar-2.png'}
           alt="Avatar"
           layout="fill"
           objectFit="cover"
