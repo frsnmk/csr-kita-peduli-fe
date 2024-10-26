@@ -39,7 +39,7 @@ useEffect(() => {
   const fetchData = async () => {
     setLoading(true);
     const packages = await getProgramPackagePrice(programId)
-    setCustomAmount(packages[0].amount)
+    setCustomAmount(packages.length == 0 ? 0: packages[0].amount)
     setPackages(packages)
     setLoading(false);
   }
@@ -53,6 +53,15 @@ const handlePackageChange = (index: number) => {
   setCustomAmount(packages[index].amount);
 };
 
+const handleCustomAmountChange = (value: string) => {
+  const numericValue = parseInt(value.replace(/\D/g, ""), 10); // Mengambil hanya angka dari input
+  if (!isNaN(numericValue)) {
+    setCustomAmount(numericValue); // Set nilai custom amount
+    setSelectedPackage(-1); // Hapus seleksi paket ketika pengguna memasukkan nominal custom
+  } else {
+    setCustomAmount(0); // Set nilai 0 jika input kosong atau tidak valid
+  }
+};
 
 const handlePrayerChange = (value: string) => {
   setPrayerDonation(value);
@@ -148,7 +157,7 @@ return (
             <input
               type="text"
               value={`Rp ${customAmount.toLocaleString()}`}
-              readOnly
+              onChange={(e) => handleCustomAmountChange(e.target.value)}
               className="flex-1 p-2 border rounded-lg text-center bg-gray-100"
             />
           </div>

@@ -98,7 +98,7 @@ const DonationConfirmationForm = () => {
       if(res.success) {
         toast.success('Berhasil melakukan konfirmasi pembayaran');
         localStorage.removeItem('donation_id')
-        router.replace(`/programs/${res.data.program_id}/`)
+        router.replace(`/programs/${res.data.program_slug}/`)
       } else {
         console.log(res.error)
         setIsSubmitting(false)
@@ -107,7 +107,7 @@ const DonationConfirmationForm = () => {
     } else {
       setIsSubmitting(false)
       toast.error('Donasi tidak ditemukan')
-    }
+    } 
   }
 
   return (

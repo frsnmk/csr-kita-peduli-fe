@@ -3,6 +3,7 @@ export interface Donation {
   customer_id: number;
   name: string|null;
   program_id: number;
+  program_slug: string;
   administrator_id: number | null;
   amount: number;
   created_at: string;
