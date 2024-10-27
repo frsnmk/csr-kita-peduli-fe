@@ -30,7 +30,7 @@ export interface Program {
     banners:Banner[]
 }
 
-interface Banner {
+export interface Banner {
     id: number;
     program_id: number;
     picture: string;

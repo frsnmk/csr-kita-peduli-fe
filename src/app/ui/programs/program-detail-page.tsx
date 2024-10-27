@@ -39,8 +39,12 @@ export const ProgramDetailPage = ({id}: ProgramDetailPageProps) => {
       try {
         setIsLoading(true);
         const programRes = await getProgram(id);
+        if (!programRes) {
+          router.replace('/404');
+          return;
+        }
         setProgram(programRes);
-
+        
         const donationsRes = await getProgramDonor(id, {limit: 3});
         setDonations(donationsRes);
 

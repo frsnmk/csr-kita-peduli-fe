@@ -35,7 +35,7 @@ const UnpaidDetailHistoryForm = ({id, data}:UnpaidDetailHistoryFormProps) => {
             <div className="bg-gray-50 shadow-md rounded-lg flex mb-4 mx-4">
                 <div className="w-1/4 relative">
                     <Image
-                        src={data.program.banner ?? '/placeholder_image.webp'}
+                        src={data.program.banners[0].banner_url ?? '/placeholder_image.webp'}
                         alt="programs porro"
                         layout="fill"
                         objectFit="cover"

@@ -1,3 +1,5 @@
+import { Banner } from "./program";
+
 export interface Donation {
   id: number;
   customer_id: number;
@@ -30,6 +32,7 @@ export interface Donation {
     id: number;
     title: string;
     banner: string;
+    banners:Banner[];
     created_at:string;
   };
 }

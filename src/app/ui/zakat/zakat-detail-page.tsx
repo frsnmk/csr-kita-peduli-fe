@@ -63,6 +63,11 @@ export const ZakatDetailPage = ({id}: ZakatDetailPageProps) => {
         const programRes = await getProgram(id);
         setProgram(programRes);
 
+        if (!programRes) {
+          router.replace('/404');
+          return;
+        }
+
         const donationsRes = await getProgramDonor(id, {limit: 3});
         setDonations(donationsRes);
 
