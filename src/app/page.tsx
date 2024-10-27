@@ -10,7 +10,7 @@ export default async function Home() {
     <div className="space-y-2">
       <div className="bg-white shadow-md rounded-lg">
         <Link
-          href={`zakat/${zakat?.id}`}
+          href={`zakat/${zakat?.slug}`}
           className="rounded-t-lg cursor-pointer"
         >
           <Image

@@ -53,7 +53,6 @@ export const ZakatDetailPage = ({id}: ZakatDetailPageProps) => {
   const {isLoggedIn, authData, loading, loginWithGoogle} = useAuth();
 
   const handlePrayerChange = (value: string) => {
-    console.log("Handle prayer change : ", value);
     setPrayerDonation(value);
   };
 
