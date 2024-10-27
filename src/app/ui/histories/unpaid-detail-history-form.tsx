@@ -3,6 +3,7 @@
 import { formatDateIdn } from "@/app/lib/helper";
 import { Donation } from "@/app/lib/types/donation";
 import ArrowBackIconButton from "@/app/ui/icon/arrow-back";
+import clsx from "clsx";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -19,8 +20,9 @@ const UnpaidDetailHistoryForm = ({id, data}:UnpaidDetailHistoryFormProps) => {
         router.push(`/programs/${data?.program_id}/donation-confirm`)
     };
 
-    if(!data) {
-        return '404';
+    if(!data || data?.payment_status != 'unpaid') {
+        router.replace('/404');
+        return;
     }
   
     return ( 
@@ -69,7 +71,12 @@ const UnpaidDetailHistoryForm = ({id, data}:UnpaidDetailHistoryFormProps) => {
                 </div>
             </div>
             <div className="fixed bottom-0 w-full bg-white shadow-lg max-w-[480px] mx-auto left-0 right-0 p-4">
-                <button onClick={handleSubmit} className="bg-green-600 text-white py-2 px-4 rounded-full w-full font-bold">Bayar Sekarang</button>
+                <button onClick={handleSubmit}
+                disabled={data.payment_status != 'unpaid'}
+                className={clsx("text-white py-2 px-4 rounded-full w-full font-bold", {
+                    'bg-green-200 cursor-not-allowed': data.payment_status != 'unpaid',
+                    'bg-green-600': data.payment_status == 'unpaid'
+                    })}>Bayar Sekarang</button>
             </div>
         </div>
      );

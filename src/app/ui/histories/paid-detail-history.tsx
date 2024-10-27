@@ -12,8 +12,9 @@ interface PaidDetailHistoryProps {
 
 const PaidDetailHistory = ({data}:PaidDetailHistoryProps) => {
     const router = useRouter();
-    if(!data) {
-        return '404';
+    if(!data || data.payment_status != 'paid') {
+        router.replace('/404');
+        return;
     }
     return ( 
         <div className="p-4 relative">

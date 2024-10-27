@@ -13,8 +13,9 @@ interface FailedDetailHistoryProps {
 const FailedDetailHistory = ({data}:FailedDetailHistoryProps) => {
     const router = useRouter();
 
-    if(!data) {
-        return '404';
+    if(!data || data.payment_status != 'failed') {
+        router.replace('/404');
+        return;
     }
     
     return ( 

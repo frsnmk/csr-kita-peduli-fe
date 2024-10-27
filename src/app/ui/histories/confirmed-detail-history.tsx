@@ -13,8 +13,9 @@ interface ConfirmedDetailHistoryProps {
 const ConfirmedDetailHistory = ({data}:ConfirmedDetailHistoryProps) => {
     const router = useRouter();
 
-    if(!data) {
-        return '404';
+    if(!data || data.payment_status != 'confirmed') {
+        router.replace('/404');
+        return;
     }
 
     return ( 
