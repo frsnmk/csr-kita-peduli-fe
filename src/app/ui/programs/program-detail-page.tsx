@@ -40,16 +40,21 @@ export const ProgramDetailPage = ({id}: ProgramDetailPageProps) => {
         setIsLoading(true);
         const programRes = await getProgram(id);
         if (!programRes) {
-          router.replace('/404');
+          router.replace("/404");
           return;
         }
         setProgram(programRes);
-        
-        const donationsRes = await getProgramDonor(id, {limit: 3});
-        setDonations(donationsRes);
 
-        const prayerRes = await fetchProgramPrayer(id, {limit: 3});
-        setPrayers(prayerRes);
+        Promise.all([
+          async () => {
+            const donationsRes = await getProgramDonor(id, {limit: 3});
+            setDonations(donationsRes);
+          },
+          async () => {
+            const prayerRes = await fetchProgramPrayer(id, {limit: 3});
+            setPrayers(prayerRes);
+          },
+        ]);
 
         setIsLoading(false);
       } catch (error) {
