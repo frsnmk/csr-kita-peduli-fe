@@ -44,16 +44,15 @@ export const ProgramDetailPage = ({id}: ProgramDetailPageProps) => {
           return;
         }
         setProgram(programRes);
-
         Promise.all([
-          async () => {
+          (async () => {
             const donationsRes = await getProgramDonor(id, {limit: 3});
             setDonations(donationsRes);
-          },
-          async () => {
+          })(),
+          (async () => {
             const prayerRes = await fetchProgramPrayer(id, {limit: 3});
             setPrayers(prayerRes);
-          },
+          })(),
         ]);
 
         setIsLoading(false);
