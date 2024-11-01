@@ -13,7 +13,7 @@ const ProgramCard = ({program}: ProgramCardProps) => {
     <Link href={`programs/${program.slug}`}>
       <div className="flex-none w-[225px] h-full">
         <div className="rounded-lg shadow-md overflow-hidden max-w-full mx-auto flex-grow">
-          <Image
+          <img
             src={
               program.banners.length > 0 && program.banners[0].banner_url
                 ? program.banners[0].banner_url
