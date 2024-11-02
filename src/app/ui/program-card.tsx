@@ -26,7 +26,7 @@ const ProgramCard = ({program}: ProgramCardProps) => {
           />
           <div className="p-3">
             <div className="flex items-center mb-2">
-              <Image
+              <img
                 src={`${
                   (program.pic && program.pic.photo) ?? "/default-avatar-2.png"
                 }`}
