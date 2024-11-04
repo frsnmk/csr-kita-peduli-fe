@@ -44,8 +44,8 @@ axiosInstance.interceptors.response.use(
       console.log(error);
       // Misalnya redirect ke halaman login jika unauthorized
       toast.error('Sesi sudah habis, silahkan login lagi')
-      // localStorage.removeItem('authData'); // Hapus token dari localStorage
-      // window.location.href = '/profiles'; // R
+      localStorage.removeItem('authData'); // Hapus token dari localStorage
+      window.location.href = '/profiles'; // R
     }
     return Promise.reject(error);
   }

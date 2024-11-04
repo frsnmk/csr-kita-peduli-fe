@@ -42,7 +42,7 @@ const AppBar = () => {
         <Suspense>
           <div className="flex justify-between items-center p-5 bg-white">
               <div>
-                <Image
+                <img
                   src="/kitapeduli.png"
                   alt="Example Image"
                   width={150}

@@ -77,7 +77,7 @@ export const ProgramDetailPage = ({id}: ProgramDetailPageProps) => {
       <ArrowBackIconButton />
       {program?.banners && program?.banners.length < 1 ? (
         <div className="rounded-t-lg">
-          <Image
+          <img
             width={480}
             height={200}
             className="w-full h-96 object-cover"
@@ -158,11 +158,11 @@ export const ProgramDetailPage = ({id}: ProgramDetailPageProps) => {
             <div className="font-bold text-sm">
               {(program?.pic && program?.pic.name) ?? "-"}
             </div>
-            <div className="text-gray-700 italic text-sm">
+            {/* <div className="text-gray-700 italic text-sm">
               {program?.pic.is_verified
                 ? "Terverifikasi"
                 : "Belum Terverifikasi"}
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

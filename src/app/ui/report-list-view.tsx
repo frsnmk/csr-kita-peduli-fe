@@ -14,12 +14,16 @@ export const ReportListView = ({ avatarUrl, title, text, createdAt }: DonationIt
     return (
     <div className="flex items-center p-4 border-b border-gray-200">
       <div className="w-10 h-10 relative">
-        <Image
+        <img
           src={avatarUrl??'/default-avatar-2.png'}
           alt="Avatar"
-          layout="fill"
-          objectFit="cover"
           className="rounded-full"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            position: "absolute",
+          }}
         />
       </div>
       <div className="ml-4">

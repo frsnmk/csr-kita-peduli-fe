@@ -154,7 +154,7 @@ export const ZakatDetailPage = ({id}: ZakatDetailPageProps) => {
     <div className="space-y-2 relative">
       <ArrowBackIconButton />
       <div className="rounded-t-lg">
-        <Image
+        <img
           width={480}
           height={200}
           src={"/banner_zakat.svg"}

@@ -61,7 +61,7 @@ export default function Page({ params }: { params: { id: string } }) {
             <PrayerList key={i} prayer={d} />
           ))
           : !loading &&  <div className="flex justify-center">
-              <Image width={300} height={300} src={'/empty_data_csr.svg'} alt="" />
+              <img width={300} height={300} src={'/empty_data_csr.svg'} alt="" />
             </div>
         }
         {loading && <SkeletonList />}

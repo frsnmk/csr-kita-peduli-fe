@@ -13,7 +13,7 @@ export default async function Home() {
           href={`zakat/${zakat?.slug}`}
           className="rounded-t-lg cursor-pointer"
         >
-          <Image
+          <img
             width={480}
             height={200}
             src={"/banner_zakat.svg"}

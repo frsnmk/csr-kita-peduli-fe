@@ -112,7 +112,7 @@ export default function Page() {
   
     return (
       <div className="max-w-md mx-auto bg-white p-2 rounded-lg mt-3 text-center space-y-4">
-        <Image src="/payment-waiting.png" alt="Payment Waiting" width={400} height={200} />
+        <img src="/payment-waiting.png" alt="Payment Waiting" width={400} height={200} />
         
         <h1 className="text-orange-600 text-md font-bold my-4">Menunggu Pembayaran</h1>
         <p className="text-gray-600 mb-2 text-xs">Silahkan melakukan pembayaran dengan melakukan transfer ke nomor rekening dibawah ini</p>

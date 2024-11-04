@@ -29,13 +29,18 @@ const ConfirmedDetailHistory = ({data}:ConfirmedDetailHistoryProps) => {
 
             <div className="bg-gray-50 shadow-md rounded-lg flex mb-4 mx-4">
                 <div className="w-1/4 relative">
-                    <Image
-                        src={data.program.banners[0].banner_url ?? '/placeholder_image.webp'}
-                        alt="programs porro"
-                        layout="fill"
-                        objectFit="cover"
-                        className="rounded-tl-lg rounded-bl-lg"
-                    />
+                <img
+                    src={data.program.banners[0].banner_url ?? '/placeholder_image.webp'}
+                    alt="programs porro"
+                    className="rounded-tl-lg rounded-bl-lg"
+                    style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        position: "absolute",
+                    }}
+                />
+
                 </div>
                 <div className="w-3/4 pl-4 space-y-2 p-4">
                     <p className="text-xs font-semibold truncate-multiline">{data.program.title}</p>
@@ -66,7 +71,7 @@ const ConfirmedDetailHistory = ({data}:ConfirmedDetailHistoryProps) => {
             <div className="bg-white rounded-lg p-4 space-y-4">
                 <h3 className="text-md font-semibold mb-4">Bukti Pembayaran</h3>
                 <div className="flex justify-center">
-                    <Image
+                    <img
                         src={data.receipt_image_full_path??'/no-images.png'}
                         width={250}
                         height={250}

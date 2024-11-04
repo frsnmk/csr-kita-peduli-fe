@@ -42,7 +42,7 @@ export default function Page({params}: {params: {id: string}}) {
         ) : (
           !loading && (
             <div className="flex justify-center">
-              <Image
+              <img
                 width={300}
                 height={300}
                 src={"/empty_data_csr.svg"}

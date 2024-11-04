@@ -61,7 +61,7 @@ export default function Page({ params }: { params: { id: string } }) {
             <AvatarListView key={i} name={(d.be_anonim) ? 'Hamba Allah' :d.customer == null ? d.name! :d.customer.name} amount={d.amount} createdAt={d.created_at} avatarUrl={d.customer == null ? '/default-avatar-2.png' : d.customer.photo!} />
           ))
           : !loading &&  <div className="flex justify-center">
-              <Image width={300} height={300} src={'/empty_data_csr.svg'} alt="" />
+              <img width={300} height={300} src={'/empty_data_csr.svg'} alt="" />
             </div>
         }
         {loading && <SkeletonList />}

@@ -33,7 +33,7 @@ const GridView = ({title, data}: GridViewProps) => {
         </div>
         {
           data.length < 1 && <div className="flex justify-center">
-          <Image width={300} height={300} src={'/empty_data_csr.svg'} alt="" />
+          <img width={300} height={300} src={'/empty_data_csr.svg'} alt="" />
         </div>
         }
     </Suspense>

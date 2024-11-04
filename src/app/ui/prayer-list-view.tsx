@@ -54,16 +54,20 @@ export default function PrayerList({prayer}: PrayerListProps) {
     <div className="flex flex-col p-4 border-b border-gray-200">
       <div className="flex items-center">
         <div className="w-10 h-10 relative">
-          <Image
+          <img
             src={
               prayer.donation == null || prayer.donation.customer == null
                 ? "/default-avatar-2.png"
                 : prayer.donation.customer.photo ?? "/default-avatar-2.png"
             }
             alt="Avatar"
-            layout="fill"
-            objectFit="cover"
             className="rounded-full"
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              position: "absolute",
+            }}
           />
         </div>
         <div className="ml-4">
