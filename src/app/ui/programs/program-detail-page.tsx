@@ -140,14 +140,18 @@ export const ProgramDetailPage = ({id}: ProgramDetailPageProps) => {
         <h2 className="text-md font-medium">Informasi Penggalang Dana</h2>
         <div className="flex items-center p-4">
           <div className="w-10 h-10 relative">
-            <Image
+            <img
               src={
                 (program?.pic && program?.pic.photo) ?? "/default-avatar-2.png"
               }
               alt="Avatar"
-              layout="fill"
-              objectFit="cover"
               className="rounded-full"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                position: "absolute",
+              }}
             />
           </div>
           <div className="ml-4">
