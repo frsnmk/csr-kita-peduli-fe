@@ -61,10 +61,10 @@ export default function Page() {
         </div>
       </div>
       <div className="bg-gray-50 shadow-md rounded-lg p-4 space-y-2">
-        <div className="flex items-center space-x-4 p-2">
+        {/* <div className="flex items-center space-x-4 p-2">
           <LocalOfferIcon className="text-green-700" />
           <p className="text-sm font-semibold">Program Unggulan</p>
-        </div>
+        </div> */}
         <div
           className="flex items-center space-x-4 cursor-pointer hover:bg-slate-100 p-2 rounded"
           onClick={logout}
