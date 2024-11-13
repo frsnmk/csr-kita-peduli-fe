@@ -25,7 +25,7 @@ const GridView = ({title, data}: GridViewProps) => {
           Hasil pencarian {searchQuery}
         </p>
       )}
-      <div className="grid grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 justify-items-center">
         {data.length > 0 &&
           data.map((program) => (
             <div key={program.id}>

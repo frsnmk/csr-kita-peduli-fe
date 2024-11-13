@@ -11,7 +11,7 @@ interface ProgramCardProps {
 const ProgramCard = ({program}: ProgramCardProps) => {
   return (
     <Link href={`programs/${program.slug}`}>
-      <div className="flex-none w-[185px] sm:w-[225px] h-full">
+      <div className="flex-none w-[225px] h-full">
         <div className="rounded-lg shadow-md overflow-hidden max-w-full mx-auto flex-grow">
           <img
             src={

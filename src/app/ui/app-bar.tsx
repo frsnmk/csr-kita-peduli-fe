@@ -51,7 +51,7 @@ const AppBar = () => {
                 />
               </div>
 
-              <div className="flex items-center border border-gray-300 rounded-lg">
+              <div className="flex items-center border border-gray-300 w-44 sm:w-auto rounded-lg">
                 <input
                   onClick={handleOnClick}
                   onChange={handleSearchChange}
@@ -67,7 +67,7 @@ const AppBar = () => {
                 }
                 
 
-                <button className="p-2" onClick={handleSearchSubmit}>
+                <button className="absolute p-2 right-7 sm:static" onClick={handleSearchSubmit}>
                   <svg
                     width="24"
                     height="24"
