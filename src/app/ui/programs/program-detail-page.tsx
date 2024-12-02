@@ -18,7 +18,7 @@ import {fetchProgramReport} from "@/app/lib/services/reports";
 import {Report} from "@/app/lib/types/report";
 import {ReportListView} from "../report-list-view";
 import toast from "react-hot-toast";
-import {useRouter} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import {Carousel} from "flowbite-react";
 import {useAuth} from "@/app/lib/context/auth-context";
 
@@ -34,6 +34,8 @@ export const ProgramDetailPage = ({id}: ProgramDetailPageProps) => {
   const router = useRouter();
   const {isLoggedIn} = useAuth();
 
+  const searchParams = useSearchParams();
+  const affiliateCode = searchParams.get('affiliate_code');
   useEffect(() => {
     const fetchDetails = async () => {
       try {
@@ -260,7 +262,7 @@ export const ProgramDetailPage = ({id}: ProgramDetailPageProps) => {
             <span>Share</span>
           </button>
           <Link
-            href={`${id}/donations-create`}
+            href={`${id}/donations-create?${affiliateCode ? `affiliate_code=${affiliateCode}` : ''}`}
             className="bg-green-700 flex space-x-4 w-1/2 py-2 rounded-lg text-white font-bold justify-center"
           >
             <svg
