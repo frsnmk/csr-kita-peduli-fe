@@ -11,9 +11,11 @@ import {GoogleAuthProvider, signInWithPopup, signOut} from "firebase/auth";
 import {auth, provider} from "../lib/firebase-config";
 import {getFirstLetter} from "../lib/helper";
 import {useAuth} from "../lib/context/auth-context";
+import Link from "next/link";
 
 export default function Page() {
   const {isLoggedIn, authData, loading, loginWithGoogle, logout} = useAuth();
+
   if (loading) {
     // Tampilkan loading state saat memeriksa status login
     return (
@@ -61,10 +63,10 @@ export default function Page() {
         </div>
       </div>
       <div className="bg-gray-50 shadow-md rounded-lg p-4 space-y-2">
-        {/* <div className="flex items-center space-x-4 p-2">
+        <Link href={`profiles/edit`} className="flex items-center space-x-4 p-2">
           <LocalOfferIcon className="text-green-700" />
-          <p className="text-sm font-semibold">Program Unggulan</p>
-        </div> */}
+          <p className="text-sm font-semibold">Edit Profile</p>
+        </Link>
         <div
           className="flex items-center space-x-4 cursor-pointer hover:bg-slate-100 p-2 rounded"
           onClick={logout}
