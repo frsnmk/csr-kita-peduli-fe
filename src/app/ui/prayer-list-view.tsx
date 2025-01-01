@@ -22,8 +22,7 @@ export default function PrayerList({prayer}: PrayerListProps) {
     const fetchData = async () => {
       const hasAminedPrayerRes = await getHasAminedPrayer(prayer.id);
       if(hasAminedPrayerRes.success) {
-        setHasAminedPrayer(hasAminedPrayerRes.data)
-        console.log(hasAminedPrayerRes)
+        setHasAminedPrayer(hasAminedPrayerRes.data.data)
       }
     } 
     
@@ -37,10 +36,13 @@ export default function PrayerList({prayer}: PrayerListProps) {
       const res = await toggleAmen(prayerId)
       setAmenOrUnamen(res.data)
       setHasAminedPrayer(prev => !prev)
+
       if(res.success) {
         if(res.data) {
+          prayer.total_amen += 1;
           toast.success('Anda sudah mengamini doa ini.')
         } else {
+          prayer.total_amen -= 1;
           toast.success('Anda sudah membatalkan amin.')
         }
       } else {
@@ -50,6 +52,7 @@ export default function PrayerList({prayer}: PrayerListProps) {
       toast.error('Anda harus login terlebih dahulu untuk mengamini doa ini.')
     }
   }
+
   return (
     <div className="flex flex-col p-4 border-b border-gray-200">
       <div className="flex items-center">
@@ -88,7 +91,7 @@ export default function PrayerList({prayer}: PrayerListProps) {
       <div className="mt-2 text-gray-700 text-sm">{prayer.description}</div>
       <div className="flex mt-4 text-gray-500 text-sm justify-end">
         <button className="flex" onClick={()=>handleAmenButton(prayer.id)}>
-          <span className="pr-2">{+prayer.total_amen+(amenOrUnamen == undefined ? 0 : (amenOrUnamen? 1:-1))}</span>
+          <span className="pr-2">{prayer.total_amen}</span>
           <span className="material-icons-outlined mr-1">
             <div className="flex">
               <svg className={clsx({

@@ -33,8 +33,8 @@ export const toggleAmen = async (prayerId:string|number) => {
 
 export const getHasAminedPrayer = async (prayerId:string|number) => {
     try {
-        const response = await axiosInstance.post(`${API_URL}prayers/${prayerId}/amen`)
-        return { success: true, data: response.data.has_amened };
+        const response = await axiosInstance.get(`${API_URL}prayers/${prayerId}/amen`)
+        return { success: true, data: response.data };
     } catch (error) {
         console.error('Failed to get has amined prayers', error);
         return { success: false, error };

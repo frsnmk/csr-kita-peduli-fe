@@ -16,7 +16,7 @@ export default async function Home() {
           <img
             width={480}
             height={200}
-            src={zakat?.banners[0].banner_url ?? "/banner_zakat.svg"}
+            src={"/banner_zakat.svg"}
             alt="Banner Image"
           />
         </Link>
