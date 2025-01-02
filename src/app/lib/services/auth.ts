@@ -34,3 +34,13 @@ export const getProfile = async () => {
         return { success: false, error };
     }
 }
+
+export const deleteAccount = async () => {
+    try {
+        const response = await axiosInstance.delete(`${API_URL}delete-account`);
+        return { success: true, data: response.data };
+    } catch (error) {
+        console.error('Failed to get profile', error);
+        return { success: false, error };
+    }
+}
