@@ -10,6 +10,7 @@ export interface IAuthData {
     customer_id: string|null;
     displayName: string;
     email:string;
+    phone_number:string;
 }
 
 interface IAuthContext {
@@ -59,8 +60,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
                 localStorage.setItem('authData', JSON.stringify({
                     token: validatedTokenRes.data[0].token,
                     customer_id:validatedTokenRes.data[0].customer_id,
-                    displayName: user.displayName,
-                    email:user.email
+                    displayName: validatedTokenRes.data[0].name,
+                    email:validatedTokenRes.data[0].email,
+                    phone_number:validatedTokenRes.data[0].phone_number
                 }));
                 setIsLoggedIn(true);
                 loadExistingData()

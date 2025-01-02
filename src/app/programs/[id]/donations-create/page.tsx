@@ -188,7 +188,7 @@ return (
           </div>
         </div>
         {
-          !isLoggedIn && (
+          !isLoggedIn ? (
             <div>
               <h1 className="text-md font-semibold mb-4"><span className="text-green-700 cursor-pointer" onClick={() => loginWithGoogle()}>Masuk</span> atau lengkapi data dibawah ini</h1>
               <TextInput
@@ -216,7 +216,24 @@ return (
                 validationMessage={phoneError}
               />
             </div>
-          )
+          ) :
+          (
+            !authData?.phone_number ? (
+            <div>
+              <small className={`italic text-bold pb-4`}>Hai, {authData?.displayName}. Kamu belum melengkapi nomor handphone kamu.</small>
+              <TextInput
+                  label="Nomor Handphone"
+                  placeholder="Masukkan nomor handphone Anda"
+                  type="tel"
+                  value={phoneNumber}
+                  onChange={(e) => setPhoneNumber(e.target.value)}
+                  validationMessage={phoneError}
+                />
+            </div>
+
+          ): (
+            <></>
+          ))
         }
 
         <div>

@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link rel="icon" type="ico" href="/kitapeduli.ico" />
+        <link rel="icon" type="ico" href="/kitapeduli.ico" sizes="12x12"/>
         {/* Meta Pixel Code */}
         <script
           dangerouslySetInnerHTML={{
